@@ -3,8 +3,25 @@ using UnityEngine;
 public class FieldCell : MonoBehaviour
 {
     public int X, Y;
-    public Shape occupiedBy;
+    Shape occupiedBy;
     public FieldMatrix matrix;
+    SpriteRenderer _sr;
+
+    public Shape OccupiedBy
+    {
+        get => occupiedBy;
+        set
+        {
+            Debug.Log($"update");
+            occupiedBy = value;
+            _sr.color = _sr.color.ChangeAlpha(value == null ? 0.3f : 0f);
+        }
+    }
+
+    void Awake()
+    {
+        _sr = GetComponent<SpriteRenderer>();
+    }
 
     void SetCoords(int x, int y)
     {

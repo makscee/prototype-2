@@ -24,13 +24,13 @@ public class FieldMatrix : MonoBehaviour
         get
         {
             if (attachedShape.UpDirection == Vector2Int.up)
-                return attachedShape.X;
+                return attachedShape.pos.x;
             if (attachedShape.UpDirection == Vector2Int.right)
-                return sizeY - 1 - attachedShape.Y;
+                return sizeY - 1 - attachedShape.pos.y;
             if (attachedShape.UpDirection == Vector2Int.down)
-                return sizeX - 1 - attachedShape.X;
+                return sizeX - 1 - attachedShape.pos.x;
             if (attachedShape.UpDirection == Vector2Int.left)
-                return attachedShape.Y;
+                return attachedShape.pos.y;
             return -1;
         }
     }
@@ -49,6 +49,13 @@ public class FieldMatrix : MonoBehaviour
 
         var shapePos = pos - attachedShape.UpDirection * attachedShape.sizeY;
         attachedShape.Translate(shapePos.x, shapePos.y);
+    }
+
+    public void InsertShape()
+    {
+        if (attachedShape == null) throw new Exception("No shape attached");
+        if (attachedShape.InsertToMatrix())
+            attachedShape = null;
     }
 
     public void MoveAttachedShape(bool right)
@@ -75,6 +82,16 @@ public class FieldMatrix : MonoBehaviour
                 MoveAttachedShapeAccordingToDir(MaxShapeOffset);
             }
         }
+    }
+
+    public void UpdateShapePlacement(Shape shape)
+    {
+        foreach (var cell in _cells)
+            if (cell.OccupiedBy == shape)
+                cell.OccupiedBy = null;
+        foreach (var shapeCell in shape.cells)
+            if (shapeCell != null && CheckIndex(shapeCell.FieldPos))
+                this[shapeCell.FieldPos].OccupiedBy = shape;
     }
     
     void OnValidate()
@@ -115,8 +132,17 @@ public class FieldMatrix : MonoBehaviour
         return x >= 0 && y >= 0 && x < _cells.GetLength(0) && y < _cells.GetLength(1);
     }
 
+    public bool CheckIndex(Vector2Int pos)
+    {
+        return CheckIndex(pos.x, pos.y);
+    }
+
     public FieldCell this[int x, int y]
     {
         get => !CheckIndex(x, y) ? null : _cells[x, y];
+    }
+    public FieldCell this[Vector2Int pos]
+    {
+        get => this[pos.x, pos.y];
     }
 }

@@ -24,5 +24,16 @@ public class GameManager : MonoBehaviour
             var matrix = FindObjectOfType<FieldMatrix>();
             matrix.MoveAttachedShape(true);
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            var matrix = FindObjectOfType<FieldMatrix>();
+            matrix.attachedShape.RotateClockwise();
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            var matrix = FindObjectOfType<FieldMatrix>();
+            matrix.InsertShape();
+        }
     }
 }
