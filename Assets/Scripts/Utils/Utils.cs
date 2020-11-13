@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public static class Utils
 {
@@ -37,9 +35,14 @@ public static class Utils
         return new Vector2(x, y);
     }
 
-    public static Vector2Int Rotate90(this Vector2Int v, bool right)
+    public static Vector2Int Rotate90(this Vector2Int v, bool clockwise)
     {
-        return right ? new Vector2Int(v.y, -v.x) : new Vector2Int(-v.y, v.x);
+        return clockwise ? new Vector2Int(v.y, -v.x) : new Vector2Int(-v.y, v.x);
+    }
+
+    public static T Random<T>(this T[] obj)
+    {
+        return obj[UnityEngine.Random.Range(0, obj.Length - 1)];
     }
 
     public static int DirFromCoords(int x, int y)
@@ -61,8 +64,8 @@ public static class Utils
     {
         for (var i = 0; i < a.Length; i++)
         {
-            var ind1 = Random.Range(0, a.Length);
-            var ind2 = Random.Range(0, a.Length);
+            var ind1 = UnityEngine.Random.Range(0, a.Length);
+            var ind2 = UnityEngine.Random.Range(0, a.Length);
             var t = a[ind2];
             a[ind2] = a[ind1];
             a[ind1] = t;

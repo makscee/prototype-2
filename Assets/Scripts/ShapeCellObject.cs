@@ -7,6 +7,7 @@ public class ShapeCellObject : MonoBehaviour
         var sco = Instantiate(Prefabs.Instance.shapeCellObject, shape.shapeObject.transform)
             .GetComponent<ShapeCellObject>();
         sco.transform.localPosition = new Vector3(x, y);
+        sco.GetComponent<SpriteRenderer>().color = shape.color;
         return sco;
     }
 }

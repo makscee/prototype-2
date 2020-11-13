@@ -4,17 +4,21 @@ using UnityEngine;
 public class Shape
 {
     public Vector2Int pos;
-    public int sizeX, sizeY;
     FieldMatrix matrix;
     public ShapeObject shapeObject;
     Vector2Int upDirection = Vector2Int.up;
     public ShapeCell[,] cells;
+    public Vector2Int size;
+    public Color color;
+
+    public int Width => Mathf.RoundToInt((upDirection.Rotate90(true) * size).magnitude);
+    public int Height => Mathf.RoundToInt((upDirection * size).magnitude);
 
     Shape(string[] shapeCells)
     {
-        sizeX = shapeCells[0].Length;
-        sizeY = shapeCells.Length;
-        cells = new ShapeCell[sizeX, sizeY];
+        color = Random.ColorHSV(0f, 1f, 0.5f, 1f);
+        size = new Vector2Int(shapeCells[0].Length, shapeCells.Length);
+        cells = new ShapeCell[size.x, size.y];
         shapeObject = ShapeObject.Create(this);
         for (var i = 0; i < shapeCells.Length; i++)
         {
@@ -34,6 +38,7 @@ public class Shape
         {
             matrix = value;
             shapeObject.transform.SetParent(matrix.transform);
+            shapeObject.transform.localRotation = Quaternion.identity;
         }
     }
 
@@ -43,17 +48,16 @@ public class Shape
         set
         {
             upDirection = value;
-            shapeObject.transform.localRotation = 
-                Quaternion.AngleAxis(-90 * Utils.DirFromCoords(UpDirection), Vector3.forward);
+            // shapeObject.transform.localRotation = 
+            //     Quaternion.AngleAxis(-90 * Utils.DirFromCoords(UpDirection), Vector3.forward);
         }
     }
 
     public bool InsertToMatrix()
     {
-        var height = sizeY;
+        var height = Height;
         var dir = upDirection;
-        RotateToUp();
-        if (!CanMove(dir))
+        if (!CanMove(dir, height))
         {
             Debug.Log($"Cant move");
             return false;
@@ -66,33 +70,32 @@ public class Shape
         return true;
     }
 
-    void RotateToUp()
+    public void SetRotation(Vector2Int dir)
     {
-        while (upDirection != Vector2Int.up)
+        while (upDirection != dir)
             RotateClockwise();
     }
 
     public void RotateClockwise()
     {
-        var newCells = new ShapeCell[sizeY, sizeX];
-        UpDirection = UpDirection.Rotate90(false);
-        pos -= upDirection * (sizeX - 1);
-        Translate(pos);
-        for (var x = 0; x < sizeX; x++)
+        var newCells = new ShapeCell[size.y, size.x];
+        UpDirection = UpDirection.Rotate90(true);
+        pos -= upDirection * (size.x - 1);
+        for (var x = 0; x < size.x; x++)
         {
-            for (var y = 0; y < sizeY; y++)
+            for (var y = 0; y < size.y; y++)
             {
                 var newX = y;
-                var newY = sizeX - x - 1;
+                var newY = size.x - x - 1;
                 var cell = cells[x, y];
                 if (cell == null) continue;
                 cell.LocalPos = new Vector2Int(newX, newY);
                 newCells[newX, newY] = cell;
             }
         }
+
         cells = newCells;
-        sizeX = sizeY;
-        sizeY = newCells.GetLength(1);
+        size = new Vector2Int(size.y, size.x);
     }
 
     public void Translate(Vector2Int pos)
@@ -103,8 +106,8 @@ public class Shape
     {
         pos = new Vector2Int(x, y);
         shapeObject.transform.localPosition = new Vector2(x, y) + matrix.ZeroPos;
-        shapeObject.transform.localRotation = 
-            Quaternion.AngleAxis(-90 * Utils.DirFromCoords(UpDirection), Vector3.forward);
+        // shapeObject.transform.localRotation = 
+        //     Quaternion.AngleAxis(-90 * Utils.DirFromCoords(UpDirection), Vector3.forward);
         matrix.UpdateShapePlacement(this);
     }
 
@@ -119,9 +122,9 @@ public class Shape
         Translate(pos + dir);
     }
 
-    public bool CanMove(Vector2Int dir)
+    public bool CanMove(Vector2Int dir, int moves = 1)
     {
-        return Matrix == null || cells.Cast<ShapeCell>().All(cell => cell == null || cell.CanMove(dir));
+        return Matrix == null || cells.Cast<ShapeCell>().All(cell => cell == null || cell.CanMove(dir, moves));
     }
 
     public static Shape Create(string[] cells)
@@ -134,12 +137,23 @@ public class Shape
 
 public static class ShapeStrings
 {
-    public static string[] L = {
-        "000",
-        "0--",
-    };
-    public static string[] J = {
-        "000",
-        "--0",
+    public static string[][] AllShapes = new string[][]
+    {
+        new []{
+            "000",
+            "0--"
+        },
+        new []{
+            "000",
+            "--0"
+        },
+        new []{
+            "000",
+            "-0-"
+        },
+        new []{
+            "00",
+            "00"
+        },
     };
 }

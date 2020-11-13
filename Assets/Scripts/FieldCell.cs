@@ -12,8 +12,8 @@ public class FieldCell : MonoBehaviour
         get => occupiedBy;
         set
         {
-            Debug.Log($"update");
             occupiedBy = value;
+            Debug.Log($"update {X} {Y}");
             _sr.color = _sr.color.ChangeAlpha(value == null ? 0.3f : 0f);
         }
     }

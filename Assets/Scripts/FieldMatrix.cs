@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class FieldMatrix : MonoBehaviour
 {
-    public int sizeX, sizeY;
+    public Vector2Int size;
     public Shape attachedShape;
-    public Vector2 ZeroPos => new Vector2(-(sizeX - 1) / 2f, -(sizeY - 1) / 2f);
+    public Vector2 ZeroPos => new Vector2(-(size.x - 1) / 2f, -(size.y - 1) / 2f);
 
     FieldCell[,] _cells;
 
@@ -17,37 +17,22 @@ public class FieldMatrix : MonoBehaviour
         MoveAttachedShapeAccordingToDir(MaxShapeOffset / 2);
     }
 
-    int MaxShapeOffset => attachedShape.UpDirection.x == 0 ? 
-        sizeX - attachedShape.sizeX : sizeY - attachedShape.sizeX;
-    int CurrentShapeOffset
-    {
-        get
-        {
-            if (attachedShape.UpDirection == Vector2Int.up)
-                return attachedShape.pos.x;
-            if (attachedShape.UpDirection == Vector2Int.right)
-                return sizeY - 1 - attachedShape.pos.y;
-            if (attachedShape.UpDirection == Vector2Int.down)
-                return sizeX - 1 - attachedShape.pos.x;
-            if (attachedShape.UpDirection == Vector2Int.left)
-                return attachedShape.pos.y;
-            return -1;
-        }
-    }
+    int MaxShapeOffset => Mathf.RoundToInt((attachedShape.UpDirection.Rotate90(true) * size).magnitude -
+                          (attachedShape.UpDirection.Rotate90(true) * attachedShape.size).magnitude);
+    int CurrentShapeOffset =>
+        Mathf.RoundToInt(Vector2Int.Distance(attachedShape.pos, ZeroOffsetPos(attachedShape.UpDirection)));
 
+    Vector2Int ZeroOffsetPos(Vector2Int upDir)
+    {
+        var zeroOffsetPos = (-(upDir + upDir.Rotate90(true)) + Vector2Int.one) / 2 * (size - Vector2Int.one) - upDir;
+        var startOffset = upDir.Rotate90(true) - upDir;
+        startOffset.Clamp(-Vector2Int.one, Vector2Int.zero);
+        zeroOffsetPos +=  startOffset * (attachedShape.size - Vector2Int.one);
+        return zeroOffsetPos;
+    }
     void MoveAttachedShapeAccordingToDir(int offset)
     {
-        var pos = Vector2Int.zero;
-        if (attachedShape.UpDirection == Vector2Int.up)
-            pos = new Vector2Int(offset, 0);
-        else if (attachedShape.UpDirection == Vector2Int.right)
-            pos = new Vector2Int(0, sizeY - 1 - offset);
-        else if (attachedShape.UpDirection == Vector2Int.down)
-            pos = new Vector2Int(sizeX - 1 - offset, sizeY - 1);
-        else if (attachedShape.UpDirection == Vector2Int.left)
-            pos = new Vector2Int(sizeX - 1, 0 + offset);
-
-        var shapePos = pos - attachedShape.UpDirection * attachedShape.sizeY;
+        var shapePos = ZeroOffsetPos(attachedShape.UpDirection) + attachedShape.UpDirection.Rotate90(true) * offset;
         attachedShape.Translate(shapePos.x, shapePos.y);
     }
 
@@ -68,7 +53,7 @@ public class FieldMatrix : MonoBehaviour
                 MoveAttachedShapeAccordingToDir(curOffset + 1);
             else
             {
-                attachedShape.UpDirection = attachedShape.UpDirection.Rotate90(!right);
+                attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(false));
                 MoveAttachedShapeAccordingToDir(0);
             }
         }
@@ -78,7 +63,7 @@ public class FieldMatrix : MonoBehaviour
                 MoveAttachedShapeAccordingToDir(curOffset - 1);
             else
             {
-                attachedShape.UpDirection = attachedShape.UpDirection.Rotate90(!right);
+                attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(true));
                 MoveAttachedShapeAccordingToDir(MaxShapeOffset);
             }
         }
@@ -96,7 +81,7 @@ public class FieldMatrix : MonoBehaviour
     
     void OnValidate()
     {
-        if (_cells == null || sizeX != _cells.GetLength(0) || sizeY != _cells.GetLength(1))
+        if (_cells == null || size.x != _cells.GetLength(0) || size.y != _cells.GetLength(1))
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.delayCall += CreateField;
@@ -117,10 +102,10 @@ public class FieldMatrix : MonoBehaviour
         foreach (var cell in GetComponentsInChildren<FieldCell>())
             cell.Destroy();
     
-        _cells = new FieldCell[sizeX, sizeY];
-        for (var x = 0; x < sizeX; x++)
+        _cells = new FieldCell[size.x, size.y];
+        for (var x = 0; x < size.x; x++)
         {
-            for (var y = 0; y < sizeY; y++)
+            for (var y = 0; y < size.y; y++)
             {
                 _cells[x, y] = FieldCell.Create(this, x, y);
             }

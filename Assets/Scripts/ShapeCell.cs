@@ -25,16 +25,25 @@ public class ShapeCell
         shapeCellObject = ShapeCellObject.Create(x, y, shape);
     }
     
-    public bool CanMove(Vector2Int dir)
+    public bool CanMove(Vector2Int dir, int moves = 1)
     {
         if (Matrix == null) return true;
         var pos = FieldPos;
-        var newPos = FieldPos + dir;
-        if (!Matrix.CheckIndex(newPos))
-            return !Matrix.CheckIndex(pos);
+        for (var i = 1; i <= moves; i++)
+        {
+            var newPos = FieldPos + dir * i;
+            if (!Matrix.CheckIndex(newPos))
+            {
+                if (Matrix.CheckIndex(pos))
+                    return false;
+                continue;
+            }
+            var fieldCell = Matrix[newPos];
+            if (fieldCell.OccupiedBy != null && fieldCell.OccupiedBy != shape)
+                return fieldCell.OccupiedBy.CanMove(dir, moves - i + 1);
+        }
 
-        var fieldCell = Matrix[newPos];
-        return fieldCell.OccupiedBy == null || fieldCell.OccupiedBy == shape || fieldCell.OccupiedBy.CanMove(dir);
+        return true;
     }
 
     Vector2Int _lastPos = new Vector2Int(-1, -1);
