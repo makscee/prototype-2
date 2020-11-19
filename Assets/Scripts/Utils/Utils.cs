@@ -42,7 +42,7 @@ public static class Utils
 
     public static T Random<T>(this T[] obj)
     {
-        return obj[UnityEngine.Random.Range(0, obj.Length - 1)];
+        return obj[UnityEngine.Random.Range(0, obj.Length)];
     }
 
     public static int DirFromCoords(int x, int y)

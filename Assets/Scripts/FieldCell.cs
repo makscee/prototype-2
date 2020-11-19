@@ -7,14 +7,14 @@ public class FieldCell : MonoBehaviour
     public FieldMatrix matrix;
     SpriteRenderer _sr;
 
+    [SerializeField] bool debug;
     public Shape OccupiedBy
     {
         get => occupiedBy;
         set
         {
             occupiedBy = value;
-            Debug.Log($"update {X} {Y}");
-            _sr.color = _sr.color.ChangeAlpha(value == null ? 0.3f : 0f);
+            if (debug) _sr.color = _sr.color.ChangeAlpha(value == null ? 0.3f : 0f);
         }
     }
 

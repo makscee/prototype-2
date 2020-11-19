@@ -3,18 +3,20 @@ using UnityEngine;
 
 public class FieldMatrix : MonoBehaviour
 {
+    public static FieldMatrix current;
+    
     public Vector2Int size;
     public Shape attachedShape;
     public Vector2 ZeroPos => new Vector2(-(size.x - 1) / 2f, -(size.y - 1) / 2f);
 
     FieldCell[,] _cells;
 
-    public void AttachShape(Shape shape)
+    public void AttachShape(Shape shape, int offset, Vector2Int dir)
     {
         shape.Matrix = this;
         attachedShape = shape;
-
-        MoveAttachedShapeAccordingToDir(MaxShapeOffset / 2);
+        shape.SetRotation(dir);
+        MoveAttachedShapeAccordingToDir(offset);
     }
 
     int MaxShapeOffset => Mathf.RoundToInt((attachedShape.UpDirection.Rotate90(true) * size).magnitude -
@@ -33,14 +35,18 @@ public class FieldMatrix : MonoBehaviour
     void MoveAttachedShapeAccordingToDir(int offset)
     {
         var shapePos = ZeroOffsetPos(attachedShape.UpDirection) + attachedShape.UpDirection.Rotate90(true) * offset;
-        attachedShape.Translate(shapePos.x, shapePos.y);
+        attachedShape.Translate(shapePos);
+        attachedShape.PlaceShapeObject();
     }
 
     public void InsertShape()
     {
         if (attachedShape == null) throw new Exception("No shape attached");
+        var curOffset = CurrentShapeOffset;
         if (attachedShape.InsertToMatrix())
-            attachedShape = null;
+        {
+            AttachShape(Shape.Create(ShapeStrings.AllShapes.Random()), curOffset, attachedShape.UpDirection);
+        }
     }
 
     public void MoveAttachedShape(bool right)
@@ -94,6 +100,14 @@ public class FieldMatrix : MonoBehaviour
     void OnEnable()
     {
         CreateField();
+        current = this;
+        var shape = Shape.Create(ShapeStrings.AllShapes.Random());
+        AttachShape(shape, shape.Width / 2, Vector2Int.up);
+    }
+
+    void OnDisable()
+    {
+        if (current == this) current = null;
     }
 
     void CreateField()
