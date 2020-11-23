@@ -35,9 +35,24 @@ public static class Utils
         return new Vector2(x, y);
     }
 
-    public static Vector2Int Rotate90(this Vector2Int v, bool clockwise)
+    public static Vector2Int Rotate90(this Vector2Int v, bool clockwise, int count = 1)
     {
-        return clockwise ? new Vector2Int(v.y, -v.x) : new Vector2Int(-v.y, v.x);
+        for (var i = 0; i < count; i++)
+            v = clockwise ? new Vector2Int(v.y, -v.x) : new Vector2Int(-v.y, v.x);
+        return v;
+    }
+    public static Vector2 Rotate90(this Vector2 v, bool clockwise, int count = 1)
+    {
+        for (var i = 0; i < count; i++)
+            v = clockwise ? new Vector2(v.y, -v.x) : new Vector2(-v.y, v.x);
+        return v;
+    }
+
+    public static Vector2Int Abs(this Vector2Int v)
+    {
+        v.x = Mathf.Abs(v.x);
+        v.y = Mathf.Abs(v.y);
+        return v;
     }
 
     public static T Random<T>(this T[] obj)

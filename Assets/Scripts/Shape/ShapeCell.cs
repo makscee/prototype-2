@@ -34,10 +34,11 @@ public class ShapeCell
             var newPos = FieldPos + dir * i;
             if (!Matrix.CheckIndex(newPos))
             {
-                if (Matrix.CheckIndex(pos))
+                if (moves > (Matrix.size * dir).magnitude || Matrix.CheckIndex(pos))
                     return false;
                 continue;
             }
+
             var fieldCell = Matrix[newPos];
             if (fieldCell.OccupiedBy != null && fieldCell.OccupiedBy != shape)
                 return fieldCell.OccupiedBy.CanMove(dir, moves - i + 1);

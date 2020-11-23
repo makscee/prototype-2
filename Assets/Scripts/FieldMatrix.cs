@@ -6,53 +6,71 @@ public class FieldMatrix : MonoBehaviour
     public static FieldMatrix current;
     
     public Vector2Int size;
+    ShapesContainer _container;
     public Shape attachedShape;
     public Vector2 ZeroPos => new Vector2(-(size.x - 1) / 2f, -(size.y - 1) / 2f);
 
     FieldCell[,] _cells;
 
-    public void AttachShape(Shape shape, int offset, Vector2Int dir)
+    public Vector2Int MatrixAttachLocalPosition =>
+        ZeroOffsetPos + currentShapeDir.Rotate90(true) * currentShapeOffset;
+
+
+    int MaxShapeOffset => Mathf.RoundToInt((attachedShape.UpDirection.Rotate90(true) * size).magnitude -
+                                           (attachedShape.UpDirection.Rotate90(true) * attachedShape.size).magnitude);
+
+    public int currentShapeOffset;
+
+    public Vector2Int currentShapeDir = Vector2Int.up;
+
+    Vector2Int AttachedShapePosition => MatrixAttachLocalPosition + ShapeStartOffset(attachedShape);
+
+    Vector2Int ZeroOffsetPos =>
+        (-(currentShapeDir + currentShapeDir.Rotate90(true)) + Vector2Int.one) / 2 * (size - Vector2Int.one) -
+        currentShapeDir;
+
+    Vector2Int ShapeStartOffset(Shape shape)
+    {
+        var upDir = shape.UpDirection;
+        var startOffset = upDir.Rotate90(true) - upDir;
+        startOffset.Clamp(-Vector2Int.one, Vector2Int.zero);
+        return startOffset * (attachedShape.size - Vector2Int.one);
+    }
+
+    public void AttachShape(Shape shape)
     {
         shape.Matrix = this;
         attachedShape = shape;
-        shape.SetRotation(dir);
-        MoveAttachedShapeAccordingToDir(offset);
+        shape.SetRotation(currentShapeDir);
+        shape.shapeObject.targetScale = Vector3.one;
+        MoveAttachedShapeAccordingToDir(currentShapeOffset);
     }
 
-    int MaxShapeOffset => Mathf.RoundToInt((attachedShape.UpDirection.Rotate90(true) * size).magnitude -
-                          (attachedShape.UpDirection.Rotate90(true) * attachedShape.size).magnitude);
-    int CurrentShapeOffset =>
-        Mathf.RoundToInt(Vector2Int.Distance(attachedShape.pos, ZeroOffsetPos(attachedShape.UpDirection)));
-
-    Vector2Int ZeroOffsetPos(Vector2Int upDir)
-    {
-        var zeroOffsetPos = (-(upDir + upDir.Rotate90(true)) + Vector2Int.one) / 2 * (size - Vector2Int.one) - upDir;
-        var startOffset = upDir.Rotate90(true) - upDir;
-        startOffset.Clamp(-Vector2Int.one, Vector2Int.zero);
-        zeroOffsetPos +=  startOffset * (attachedShape.size - Vector2Int.one);
-        return zeroOffsetPos;
-    }
     void MoveAttachedShapeAccordingToDir(int offset)
     {
-        var shapePos = ZeroOffsetPos(attachedShape.UpDirection) + attachedShape.UpDirection.Rotate90(true) * offset;
-        attachedShape.Translate(shapePos);
+        currentShapeOffset = Mathf.Min(offset, MaxShapeOffset);
+        currentShapeDir = attachedShape.UpDirection;
+        attachedShape.Translate(AttachedShapePosition);
         attachedShape.PlaceShapeObject();
+        RefreshProjection();
     }
 
     public void InsertShape()
     {
-        if (attachedShape == null) throw new Exception("No shape attached");
-        var curOffset = CurrentShapeOffset;
+        if (attachedShape == null) return;
         if (attachedShape.InsertToMatrix())
         {
-            AttachShape(Shape.Create(ShapeStrings.AllShapes.Random()), curOffset, attachedShape.UpDirection);
+            var shape = _container.Pop();
+            if (shape != null)
+                AttachShape(shape);
+            else attachedShape = null;
         }
     }
 
     public void MoveAttachedShape(bool right)
     {
-        if (attachedShape == null) throw new Exception("No shape attached");
-        var curOffset = CurrentShapeOffset;
+        if (attachedShape == null) return;
+        var curOffset = currentShapeOffset;
         if (right)
         {
             if (curOffset < MaxShapeOffset)
@@ -72,6 +90,38 @@ public class FieldMatrix : MonoBehaviour
                 attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(true));
                 MoveAttachedShapeAccordingToDir(MaxShapeOffset);
             }
+        }
+
+        RefreshProjection();
+    }
+
+    public void RefreshProjection()
+    {
+        if (attachedShape == null) return;
+        var maxMoves = attachedShape.MaxMoves(currentShapeDir);
+        var point1 = ZeroOffsetPos + currentShapeDir.Rotate90(true) * currentShapeOffset + attachedShape.UpDirection;
+        var point2 = point1 + (maxMoves - 1) * currentShapeDir +
+                     currentShapeDir.Rotate90(true) * (attachedShape.Width - 1);
+
+        var xMin = Mathf.Min(point1.x, point2.x);
+        var xMax = Mathf.Max(point1.x, point2.x);
+        var yMin = Mathf.Min(point1.y, point2.y);
+        var yMax = Mathf.Max(point1.y, point2.y);
+
+        foreach (var cell in _cells)
+        {
+            var val = 0;
+            if (cell.X >= xMin && cell.X <= xMax && cell.Y >= yMin && cell.Y <= yMax)
+                val = 1;
+            cell.SetProjection(val);
+        }
+
+        var maxMoveVec = maxMoves * currentShapeDir;
+        foreach (var shapeCell in attachedShape.cells)
+        {
+            var pos = shapeCell.LocalPos + attachedShape.pos + maxMoveVec;
+            if (CheckIndex(pos))
+                this[pos].SetProjection(2);
         }
     }
 
@@ -101,8 +151,17 @@ public class FieldMatrix : MonoBehaviour
     {
         CreateField();
         current = this;
-        var shape = Shape.Create(ShapeStrings.AllShapes.Random());
-        AttachShape(shape, shape.Width / 2, Vector2Int.up);
+        
+        _container = new ShapesContainer(this);
+        _container.Add(Shape.Create(ShapeStrings.AllShapes[0]));
+        _container.Add(Shape.Create(ShapeStrings.AllShapes[0]));
+        _container.Add(Shape.Create(ShapeStrings.AllShapes[3]));
+        _container.Add(Shape.Create(ShapeStrings.AllShapes[3]));
+        _container.Add(Shape.Create(ShapeStrings.AllShapes[3]));
+        
+        var shape = _container.Pop();
+        currentShapeOffset = shape.Width / 2; 
+        AttachShape(shape);
     }
 
     void OnDisable()
@@ -124,6 +183,7 @@ public class FieldMatrix : MonoBehaviour
                 _cells[x, y] = FieldCell.Create(this, x, y);
             }
         }
+        RefreshProjection();
     }
 
     public bool CheckIndex(int x, int y)
