@@ -34,5 +34,25 @@ public class GameManager : MonoBehaviour
             var matrix = FindObjectOfType<FieldMatrix>();
             matrix.InsertShape();
         }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            FieldMatrix.current.shapesContainer.SaveToFile("testLevel");
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            var container = ShapeContainerSerialized
+                .LoadFromJson(FileStorage.ReadJsonFile("testLevel"))
+                .Deserialize(FieldMatrix.current);
+            FieldMatrix.current.AddContainer(container);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            var container = FieldMatrix.current.shapesContainer; 
+            container
+                .InsertAtCurrent(ShapeSerialized.CreateFromString(new[] {"*"})
+                .Deserialize());
+            if (FieldMatrix.current.attachedShape == null)
+                FieldMatrix.current.AttachShape(container.GetNext());
+        }
     }
 }

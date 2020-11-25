@@ -5,15 +5,22 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public class ShapeSerialized
+public class ShapeSerialized : JsonUtilitySerializable
 {
     public int sizeX, sizeY;
-    public List<CellSerialized> cells = new List<CellSerialized>();
+    public List<ShapeCellSerialized> cells = new List<ShapeCellSerialized>();
 
     public ShapeSerialized(int sizeX, int sizeY)
     {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+    }
+
+    public ShapeSerialized(Shape shape)
+    {
+        sizeX = shape.size.x;
+        sizeY = shape.size.y;
+        foreach (var shapeCell in shape.cells) cells.Add(new ShapeCellSerialized(shapeCell));
     }
 
     public Shape Deserialize()
@@ -22,8 +29,7 @@ public class ShapeSerialized
         var shapeCells = new List<ShapeCell>();
         var shape = new Shape(shapeCells) {color = color, size = new Vector2Int(sizeX, sizeY)};
         shape.shapeObject = ShapeObject.Create(shape);
-        shapeCells.AddRange(cells.Select(cellSerialized =>
-            new ShapeCell(shape, new Vector2Int(cellSerialized.x, cellSerialized.y))));
+        shapeCells.AddRange(cells.Select(cellSerialized => cellSerialized.Deserialize(shape)));
         return shape;
     }
 
@@ -36,7 +42,7 @@ public class ShapeSerialized
             for (var x = 0; x < shapeCells[0].Length; x++)
             {
                 if (shapeCells[i][x] == '-') continue;
-                shapeSerialized.cells.Add(new CellSerialized(x, y));
+                shapeSerialized.cells.Add(new ShapeCellSerialized(x, y));
             }
         }
         return shapeSerialized;

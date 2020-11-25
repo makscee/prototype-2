@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShapeContainer : IEnumerable<Shape>
+public class ShapeContainer
 {
-    List<Shape> shapes = new List<Shape>();
+    public List<Shape> shapes = new List<Shape>();
     FieldMatrix _matrix;
     ShapeContainerObject _containerObject;
 
@@ -12,32 +11,40 @@ public class ShapeContainer : IEnumerable<Shape>
     {
         _matrix = matrix;
         _containerObject = new GameObject("Container Object").AddComponent<ShapeContainerObject>();
-        _containerObject.shapes = shapes;
+        _containerObject.container = this;
         _containerObject.transform.SetParent(matrix.transform);
         _containerObject.matrix = matrix;
     }
 
-    public void Add(Shape shape)
+    public void Add(Shape shape, int ind = -1)
     {
         shape.shapeObject.transform.SetParent(_containerObject.transform);
-        shapes.Add(shape);
+        ind = ind == -1 ? shapes.Count : ind;
+        shapes.Insert(ind, shape);
     }
 
-    public Shape Pop()
+    public void InsertAtCurrent(Shape shape)
     {
-        if (shapes.Count == 0) return null;
-        var shape = shapes[0];
-        shapes.RemoveAt(0);
-        return shape;
+        Add(shape, currentIndex);
     }
 
-    public IEnumerator<Shape> GetEnumerator()
+    public int currentIndex;
+    public Shape GetNext()
     {
-        return shapes.GetEnumerator();
+        if (currentIndex == shapes.Count) return null;
+        return shapes[currentIndex++];
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    public void SaveToFile(string filename)
     {
-        return GetEnumerator();
+        var serializedContainer = new ShapeContainerSerialized(this);
+        var json = serializedContainer.ToJson();
+        FileStorage.SaveJsonToFile(json, filename);
+    }
+
+    public void Destroy()
+    {
+        foreach (var shape in shapes) shape.Destroy();
+        Object.Destroy(_containerObject.gameObject);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = System.Object;
 
 public class Shape
 {
@@ -182,6 +183,12 @@ public class Shape
         var delta = -minPos;
         foreach (var cell in cells) cell.LocalPos += delta;
         return delta;
+    }
+
+    public void Destroy()
+    {
+        UnityEngine.Object.Destroy(shapeObject.gameObject);
+        FieldMatrix.current.RemoveShape(this);
     }
     
     public ShapeCell this[Vector2Int pos]

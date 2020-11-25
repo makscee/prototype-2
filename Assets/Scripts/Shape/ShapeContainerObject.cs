@@ -1,23 +1,26 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ShapeContainerObject : MonoBehaviour
 {
     public FieldMatrix matrix;
-    public IEnumerable<Shape> shapes;
-    [Range(-10f, 10f)] [SerializeField] float xMult = -1.3f, yMult = -0.9f, offsetX = -0.5f, offsetY = -1.4f;
-    [Range(1f, 10f)] [SerializeField] float scaleMult = 2.38f, xAccum = 1.1f, yAccum = 1.17f;
+    public ShapeContainer container;
+    const float xMult = -1.3f, yMult = -0.9f, offsetX = -0.5f, offsetY = -1.4f;
+    const float scaleMult = 2.38f, xAccum = 1.1f, yAccum = 1.17f;
     
     int _lastCount = -1;
 
     Vector2 _targetPosition;
     Quaternion _targetRotation;
+
+    public ShapeContainerObject(ShapeContainer container)
+    {
+        this.container = container;
+    }
+
     const float LerpMultiplier = 10;
     void Update()
     {
-        var cnt = shapes.Count();
+        var cnt = container.shapes.Count - container.currentIndex;
         if (_lastCount != cnt)
         {
             RefreshShapesPlacement();
@@ -44,18 +47,19 @@ public class ShapeContainerObject : MonoBehaviour
 
     void OnValidate()
     {
-        if (shapes != null)
+        if (container != null)
             RefreshShapesPlacement();
     }
 
     void RefreshShapesPlacement()
     {
-        var t = 1;
-        foreach (var shape in shapes)
+        for (var i = container.currentIndex; i < container.shapes.Count; i++)
         {
-            shape.shapeObject.targetPosition = new Vector3(t * xMult / Mathf.Pow(xAccum, t), t * yMult / Mathf.Pow(yAccum, t));
+            var shape = container.shapes[i];
+            var t = i - container.currentIndex + 1;
+            shape.shapeObject.targetPosition =
+                new Vector3(t * xMult / Mathf.Pow(xAccum, t), t * yMult / Mathf.Pow(yAccum, t));
             shape.shapeObject.targetScale = Vector3.one / t / scaleMult;
-            t++;
         }
     }
 }

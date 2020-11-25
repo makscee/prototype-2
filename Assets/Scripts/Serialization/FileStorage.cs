@@ -13,7 +13,9 @@ public static class FileStorage
     
     public static void SaveJsonToFile(string json, string filename)
     {
-        File.WriteAllText(Path(filename), json);
+        var path = Path(filename);
+        File.WriteAllText(path, json);
+        Debug.Log($"save json to {path}\n{json}");
     }
 
     static string Path(string fileName, string extension = "json")

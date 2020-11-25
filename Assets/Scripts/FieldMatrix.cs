@@ -6,7 +6,7 @@ public class FieldMatrix : MonoBehaviour
     public static FieldMatrix current;
     
     public Vector2Int size;
-    ShapeContainer _container;
+    public ShapeContainer shapesContainer;
     public Shape attachedShape;
     public Vector2 ZeroPos => new Vector2(-(size.x - 1) / 2f, -(size.y - 1) / 2f);
 
@@ -60,7 +60,7 @@ public class FieldMatrix : MonoBehaviour
         if (attachedShape == null) return;
         if (attachedShape.InsertToMatrix())
         {
-            var shape = _container.Pop();
+            var shape = shapesContainer.GetNext();
             if (shape != null)
                 AttachShape(shape);
             else attachedShape = null;
@@ -127,12 +127,17 @@ public class FieldMatrix : MonoBehaviour
 
     public void UpdateShapePlacement(Shape shape)
     {
-        foreach (var cell in _cells)
-            if (cell.OccupiedBy == shape)
-                cell.OccupiedBy = null;
+        RemoveShape(shape);
         foreach (var shapeCell in shape.cells)
             if (shapeCell != null && CheckIndex(shapeCell.FieldPos))
                 this[shapeCell.FieldPos].OccupiedBy = shape;
+    }
+
+    public void RemoveShape(Shape shape)
+    {
+        foreach (var cell in _cells)
+            if (cell.OccupiedBy == shape)
+                cell.OccupiedBy = null;
     }
     
     void OnValidate()
@@ -152,17 +157,24 @@ public class FieldMatrix : MonoBehaviour
         CreateField();
         current = this;
         
-        _container = new ShapeContainer(this);
-        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[0]).Deserialize());
-        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[3]).Deserialize());
-        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[2]).Deserialize());
-        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[5]).Deserialize());
-        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
-        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
-        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[4]).Deserialize());
-        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
+        var container = new ShapeContainer(this);
+        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[0]).Deserialize());
+        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[3]).Deserialize());
+        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[2]).Deserialize());
+        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[5]).Deserialize());
+        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
+        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
+        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[4]).Deserialize());
+        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
         
-        var shape = _container.Pop();
+        AddContainer(container);
+    }
+
+    public void AddContainer(ShapeContainer container)
+    {
+        shapesContainer?.Destroy();
+        shapesContainer = container;
+        var shape = shapesContainer.GetNext();
         currentShapeOffset = shape.Width / 2; 
         AttachShape(shape);
     }
