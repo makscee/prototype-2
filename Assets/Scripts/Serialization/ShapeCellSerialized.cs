@@ -11,6 +11,11 @@ public class ShapeCellSerialized : JsonUtilitySerializable
         this.x = x;
         this.y = y;
     }
+    public ShapeCellSerialized(Vector2Int pos)
+    {
+        x = pos.x;
+        y = pos.y;
+    }
 
     public ShapeCellSerialized(ShapeCell shapeCell)
     {

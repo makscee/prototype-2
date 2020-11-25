@@ -34,7 +34,8 @@ public class ShapeBuilder : MonoBehaviour
 
     void RefreshGameObjectPosition()
     {
-        transform.localPosition = CurPos.FromLocalShapeRotation(Shape).ToField() + Matrix.ZeroPos;
+        _curPos.Clamp(Vector2Int.zero, Matrix.attachedShape.ShapeRotationSize - Vector2Int.one);
+        transform.localPosition = _curPos.FromLocalShapeRotation(Shape).ToField() + Matrix.ZeroPos;
     }
 
     void Update()
@@ -67,8 +68,8 @@ public class ShapeBuilder : MonoBehaviour
         
         var curShape = Matrix.attachedShape;
         if (curShape == null) return;
-        CurPos = newPos;
-        CurPos += curShape.AddCell(newPos.FromLocalShapeRotation(curShape).ToLocalFieldRotation());
+        _curPos = newPos;
+        _curPos += curShape.AddCell(newPos.FromLocalShapeRotation(curShape).ToLocalFieldRotation());
         Matrix.MoveAttachedShapeAccordingToDir(Matrix.currentShapeOffset);
         RefreshGameObjectPosition();
     }
@@ -83,7 +84,7 @@ public class ShapeBuilder : MonoBehaviour
         if (shapeCell == null)
             delta = curShape.AddCell(localShapePos);
         else delta = curShape.RemoveCell(localShapePos);
-        CurPos += delta;
+        _curPos += delta;
         Matrix.MoveAttachedShapeAccordingToDir(Matrix.currentShapeOffset);
         RefreshGameObjectPosition();
     }

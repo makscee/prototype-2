@@ -18,9 +18,38 @@ public class ShapeSerialized : JsonUtilitySerializable
 
     public ShapeSerialized(Shape shape)
     {
-        sizeX = shape.size.x;
-        sizeY = shape.size.y;
-        foreach (var shapeCell in shape.cells) cells.Add(new ShapeCellSerialized(shapeCell));
+        var size = shape.ShapeRotationSize;
+        sizeX = size.x;
+        sizeY = size.y;
+        foreach (var shapeCell in shape.cells)
+        {
+            var pos = shapeCell.LocalPos
+                .FromLocalFieldRotation(shape)
+                .ToLocalShapeRotation();
+            cells.Add(new ShapeCellSerialized(pos));
+        }
+        RepackCells(cells);
+    }
+
+    static void RepackCells(List<ShapeCellSerialized> cells)
+    {
+        var minPos = new Vector2Int(cells[0].x, cells[0].y);
+        var maxPos = minPos;
+        foreach (var cell in cells)
+        {
+            minPos = new Vector2Int(Mathf.Min(minPos.x, cell.x), 
+                Mathf.Min(minPos.y, cell.y));
+            maxPos = new Vector2Int(Mathf.Max(maxPos.x, cell.x), 
+                Mathf.Max(maxPos.y, cell.y));
+        }
+
+        var size = maxPos - minPos + Vector2Int.one;
+        var delta = -minPos;
+        foreach (var cell in cells)
+        {
+            cell.x += delta.x;
+            cell.y += delta.y;
+        }
     }
 
     public Shape Deserialize()

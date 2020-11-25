@@ -13,6 +13,7 @@ public class Shape
     Vector2Int upDirection = Vector2Int.up;
     public List<ShapeCell> cells = new List<ShapeCell>();
     public Vector2Int size;
+    public Vector2Int ShapeRotationSize => new Vector2Int(Width, Height);
     public Color color;
 
     public int Width => Mathf.RoundToInt((upDirection.Rotate90(true) * size).magnitude);
@@ -136,18 +137,15 @@ public class Shape
         return toPush;
     }
 
-    public bool CanMove(Vector2Int dir, int amount = 1)
+    public bool CanMove(Vector2Int dir, int amount = 1, bool allowPush = true)
     {
-        return Matrix == null || cells.All(cell => cell == null || cell.CanMove(dir, amount));
+        return Matrix == null || cells.All(cell => cell == null || cell.CanMove(dir, amount, allowPush));
     }
 
-    public int MaxMoves(Vector2Int dir)
+    public int MaxMoves(Vector2Int dir, bool allowPush = true)
     {
         var amount = 1;
-        while (CanMove(dir, amount))
-        {
-            amount++;
-        }
+        while (CanMove(dir, amount, allowPush)) amount++;
 
         return amount - 1;
     }

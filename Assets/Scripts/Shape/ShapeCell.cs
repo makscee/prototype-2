@@ -25,7 +25,7 @@ public class ShapeCell
         shapeCellObject = ShapeCellObject.Create(localPos, shape);
     }
     
-    public bool CanMove(Vector2Int dir, int moves = 1)
+    public bool CanMove(Vector2Int dir, int moves = 1, bool allowPush = true)
     {
         if (Matrix == null) return true;
         var pos = FieldPos;
@@ -41,7 +41,7 @@ public class ShapeCell
 
             var fieldCell = Matrix[newPos];
             if (fieldCell.OccupiedBy != null && fieldCell.OccupiedBy != shape)
-                return fieldCell.OccupiedBy.CanMove(dir, moves - i + 1);
+                return allowPush && fieldCell.OccupiedBy.CanMove(dir, moves - i + 1);
         }
 
         return true;

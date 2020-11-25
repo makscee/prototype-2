@@ -98,7 +98,7 @@ public class FieldMatrix : MonoBehaviour
     public void RefreshProjection()
     {
         if (attachedShape == null) return;
-        var maxMoves = attachedShape.MaxMoves(currentShapeDir);
+        var maxMoves = attachedShape.MaxMoves(currentShapeDir, false);
         var point1 = ZeroOffsetPos + currentShapeDir.Rotate90(true) * currentShapeOffset + attachedShape.UpDirection;
         var point2 = point1 + (maxMoves - 1) * currentShapeDir +
                      currentShapeDir.Rotate90(true) * (attachedShape.Width - 1);
