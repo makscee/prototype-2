@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShapesContainer : IEnumerable<Shape>
+public class ShapeContainer : IEnumerable<Shape>
 {
     List<Shape> shapes = new List<Shape>();
     FieldMatrix _matrix;
     ShapeContainerObject _containerObject;
 
-    public ShapesContainer(FieldMatrix matrix)
+    public ShapeContainer(FieldMatrix matrix)
     {
         _matrix = matrix;
         _containerObject = new GameObject("Container Object").AddComponent<ShapeContainerObject>();

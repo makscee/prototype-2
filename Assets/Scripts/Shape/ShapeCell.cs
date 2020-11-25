@@ -18,11 +18,11 @@ public class ShapeCell
         }
     }
 
-    public ShapeCell(Shape shape, int x, int y)
+    public ShapeCell(Shape shape, Vector2Int localPos)
     {
         this.shape = shape;
-        localPos = new Vector2Int(x, y);
-        shapeCellObject = ShapeCellObject.Create(x, y, shape);
+        this.localPos = localPos;
+        shapeCellObject = ShapeCellObject.Create(localPos, shape);
     }
     
     public bool CanMove(Vector2Int dir, int moves = 1)
@@ -47,5 +47,8 @@ public class ShapeCell
         return true;
     }
 
-    Vector2Int _lastPos = new Vector2Int(-1, -1);
+    public void Destroy()
+    {
+        Object.Destroy(shapeCellObject.gameObject);
+    }
 }

@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public class ShapeSerialized
@@ -11,6 +14,17 @@ public class ShapeSerialized
     {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+    }
+
+    public Shape Deserialize()
+    {
+        var color = Random.ColorHSV(0f, 1f, 0.3f, 0.5f, 1f, 1f);
+        var shapeCells = new List<ShapeCell>();
+        var shape = new Shape(shapeCells) {color = color, size = new Vector2Int(sizeX, sizeY)};
+        shape.shapeObject = ShapeObject.Create(shape);
+        shapeCells.AddRange(cells.Select(cellSerialized =>
+            new ShapeCell(shape, new Vector2Int(cellSerialized.x, cellSerialized.y))));
+        return shape;
     }
 
     public static ShapeSerialized CreateFromString(string[] shapeCells)

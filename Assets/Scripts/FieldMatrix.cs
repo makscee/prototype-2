@@ -6,7 +6,7 @@ public class FieldMatrix : MonoBehaviour
     public static FieldMatrix current;
     
     public Vector2Int size;
-    ShapesContainer _container;
+    ShapeContainer _container;
     public Shape attachedShape;
     public Vector2 ZeroPos => new Vector2(-(size.x - 1) / 2f, -(size.y - 1) / 2f);
 
@@ -46,7 +46,7 @@ public class FieldMatrix : MonoBehaviour
         MoveAttachedShapeAccordingToDir(currentShapeOffset);
     }
 
-    void MoveAttachedShapeAccordingToDir(int offset)
+    public void MoveAttachedShapeAccordingToDir(int offset)
     {
         currentShapeOffset = Mathf.Min(offset, MaxShapeOffset);
         currentShapeDir = attachedShape.UpDirection;
@@ -152,12 +152,15 @@ public class FieldMatrix : MonoBehaviour
         CreateField();
         current = this;
         
-        _container = new ShapesContainer(this);
-        _container.Add(Shape.Create(ShapeStrings.AllShapes[0]));
-        _container.Add(Shape.Create(ShapeStrings.AllShapes[0]));
-        _container.Add(Shape.Create(ShapeStrings.AllShapes[3]));
-        _container.Add(Shape.Create(ShapeStrings.AllShapes[3]));
-        _container.Add(Shape.Create(ShapeStrings.AllShapes[3]));
+        _container = new ShapeContainer(this);
+        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[0]).Deserialize());
+        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[3]).Deserialize());
+        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[2]).Deserialize());
+        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[5]).Deserialize());
+        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
+        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
+        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[4]).Deserialize());
+        _container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
         
         var shape = _container.Pop();
         currentShapeOffset = shape.Width / 2; 

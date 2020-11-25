@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Shape
 {
@@ -23,24 +21,10 @@ public class Shape
         Quaternion.AngleAxis(RotationAngle, Vector3.forward);
 
     public float RotationAngle => -90f * Utils.DirFromCoords(UpDirection);
-
-    Shape(string[] shapeCells)
+    
+    public Shape(List<ShapeCell> cells)
     {
-        CreateFromSerialized(ShapeSerialized.CreateFromString(shapeCells));
-    }
-
-    Shape(ShapeSerialized shapeSerialized)
-    {
-        CreateFromSerialized(shapeSerialized);
-    }
-
-    void CreateFromSerialized(ShapeSerialized shapeSerialized)
-    {
-        color = Random.ColorHSV(0f, 1f, 0.3f, 0.5f, 1f, 1f);
-        size = new Vector2Int(shapeSerialized.sizeX, shapeSerialized.sizeY);
-        shapeObject = ShapeObject.Create(this);
-        foreach (var cellSerialized in shapeSerialized.cells)
-            cells.Add(new ShapeCell(this, cellSerialized.x, cellSerialized.y));
+        this.cells = cells;
     }
 
     public FieldMatrix Matrix
@@ -167,11 +151,42 @@ public class Shape
         return amount - 1;
     }
 
-    public static Shape Create(string[] cells)
+    public Vector2Int AddCell(Vector2Int localPos)
     {
-        var shape = new Shape(cells);
+        if (cells.Any(cell => cell.LocalPos == localPos)) return Vector2Int.zero;
+        cells.Add(new ShapeCell(this, localPos));
+        return RepackCells();
+    }
 
-        return shape;
+    public Vector2Int RemoveCell(Vector2Int localPos)
+    {
+        var cell = cells.Find(c => c.LocalPos == localPos);
+        if (!cells.Remove(cell)) return Vector2Int.zero;
+        cell.Destroy();
+        return RepackCells();
+    }
+
+    Vector2Int RepackCells()
+    {
+        var minPos = cells[0].LocalPos;
+        var maxPos = minPos;
+        foreach (var cell in cells)
+        {
+            minPos = new Vector2Int(Mathf.Min(minPos.x, cell.LocalPos.x), 
+                Mathf.Min(minPos.y, cell.LocalPos.y));
+            maxPos = new Vector2Int(Mathf.Max(maxPos.x, cell.LocalPos.x), 
+                Mathf.Max(maxPos.y, cell.LocalPos.y));
+        }
+
+        size = maxPos - minPos + Vector2Int.one;
+        var delta = -minPos;
+        foreach (var cell in cells) cell.LocalPos += delta;
+        return delta;
+    }
+    
+    public ShapeCell this[Vector2Int pos]
+    {
+        get => cells.FirstOrDefault(cell => cell.LocalPos == pos);
     }
 }
 

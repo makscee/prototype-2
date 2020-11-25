@@ -7,8 +7,8 @@ public class ShapeContainerObject : MonoBehaviour
 {
     public FieldMatrix matrix;
     public IEnumerable<Shape> shapes;
-    [Range(-10f, 0f)] [SerializeField] float xMult = -1.14f, yMult = -0.66f, offsetX = -1.46f, offsetY = -1.18f;
-    [Range(1f, 10f)] [SerializeField] float scaleMult = 2.38f;
+    [Range(-10f, 10f)] [SerializeField] float xMult = -1.3f, yMult = -0.9f, offsetX = -0.5f, offsetY = -1.4f;
+    [Range(1f, 10f)] [SerializeField] float scaleMult = 2.38f, xAccum = 1.1f, yAccum = 1.17f;
     
     int _lastCount = -1;
 
@@ -53,7 +53,7 @@ public class ShapeContainerObject : MonoBehaviour
         var t = 1;
         foreach (var shape in shapes)
         {
-            shape.shapeObject.targetPosition = new Vector3(t * xMult, t * yMult);
+            shape.shapeObject.targetPosition = new Vector3(t * xMult / Mathf.Pow(xAccum, t), t * yMult / Mathf.Pow(yAccum, t));
             shape.shapeObject.targetScale = Vector3.one / t / scaleMult;
             t++;
         }
