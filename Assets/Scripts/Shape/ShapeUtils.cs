@@ -64,14 +64,12 @@ public static class ShapeUtils
 
         Vector2Int FromShapeToFieldRotation(Vector2Int pos)
         {
-            var shape = FieldMatrix.current.attachedShape;
-            return PositionToRotation(Vector2Int.up, shape.size, pos, shape.UpDirection);
+            return PositionToRotation(Vector2Int.up, _shape.size, pos, _shape.UpDirection);
         }
 
         Vector2Int FromFieldToShapeRotation(Vector2Int pos)
         {
-            var shape = FieldMatrix.current.attachedShape;
-            return PositionToRotation(shape.UpDirection, shape.size, pos, Vector2Int.up);
+            return PositionToRotation(_shape.UpDirection, _shape.size, pos, Vector2Int.up);
         }
 
         Vector2Int PositionToRotation(Vector2Int originalDir, Vector2Int originalSize, Vector2Int originalPos, Vector2Int targetDir)

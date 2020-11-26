@@ -40,17 +40,19 @@ public class ShapeBuilder : MonoBehaviour
 
     void Update()
     {
+        if (ScreenBox.activeBox != null) return;
         if (Enabled && Input.GetKeyUp(KeyCode.LeftShift))
         {
             Enabled = false;
             return;
         }
 
-        if (!Enabled && Input.GetKeyDown(KeyCode.LeftShift))
+        if (!Enabled && Input.GetKeyDown(KeyCode.LeftShift) && Matrix.attachedShape != null)
         {
             Enabled = true;
             return;
         }
+        if (!Enabled) return;
 
         Vector2Int dir = Vector2Int.zero;
         if (Input.GetKeyDown(KeyCode.UpArrow)) dir = Vector2Int.up;

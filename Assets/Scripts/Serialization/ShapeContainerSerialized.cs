@@ -10,7 +10,11 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
     public ShapeContainerSerialized(ShapeContainer container)
     {
         shapes = new List<ShapeSerialized>(container.shapes.Count);
-        foreach (var shape in container.shapes) shapes.Add(new ShapeSerialized(shape));
+        foreach (var shape in container.shapes)
+        {
+            if (shape == null) Debug.Log($"found");
+            shapes.Add(new ShapeSerialized(shape));
+        }
     }
 
     public ShapeContainer Deserialize(FieldMatrix matrix)

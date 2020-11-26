@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     void DebugInput()
     {
-
+        if (ScreenBox.activeBox != null) return;
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(0);

@@ -6,7 +6,8 @@ public class Prefabs : ScriptableObject
 {
     public GameObject fieldCell;
     public GameObject shapeObject;
-    public GameObject shapeCellObject; 
+    public GameObject shapeCellObject;
+    public GameObject levelEntry;
     
     public static Prefabs Instance => GetInstance();
 
