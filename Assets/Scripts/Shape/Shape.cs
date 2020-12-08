@@ -1,11 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Object = System.Object;
 
 public class Shape
 {
     public const float AnimationTime = 0.3f;
+    public Vector2Int originalPos;
     
     public Vector2Int pos;
     FieldMatrix matrix;
@@ -38,8 +39,11 @@ public class Shape
             shapeObject.transform.SetParent(matrix.transform);
             shapeObject.targetPosition = pos + matrix.ZeroPos;
             shapeObject.transform.localRotation = Quaternion.identity;
+            onMatrixAttached?.Invoke(value);
         }
     }
+
+    public Action<FieldMatrix> onMatrixAttached;
 
     public Vector2Int UpDirection
     {

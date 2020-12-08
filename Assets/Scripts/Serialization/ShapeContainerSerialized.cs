@@ -12,7 +12,6 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
         shapes = new List<ShapeSerialized>(container.shapes.Count);
         foreach (var shape in container.shapes)
         {
-            if (shape == null) Debug.Log($"found");
             shapes.Add(new ShapeSerialized(shape));
         }
     }

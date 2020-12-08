@@ -8,6 +8,7 @@ public class FieldMatrix : MonoBehaviour
     public Vector2Int size;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
+    public Material patternMaterial;
     public Vector2 ZeroPos => new Vector2(-(size.x - 1) / 2f, -(size.y - 1) / 2f);
 
     FieldCell[,] _cells;

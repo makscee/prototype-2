@@ -7,13 +7,15 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class ShapeSerialized : JsonUtilitySerializable
 {
-    public int sizeX, sizeY;
+    public int sizeX, sizeY, originalX, originalY;
     public List<ShapeCellSerialized> cells = new List<ShapeCellSerialized>();
 
-    public ShapeSerialized(int sizeX, int sizeY)
+    public ShapeSerialized(int sizeX, int sizeY, int originalX = -1, int originalY = -1)
     {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+        this.originalX = originalX;
+        this.originalY = originalY;
     }
 
     public ShapeSerialized(Shape shape)
@@ -21,6 +23,8 @@ public class ShapeSerialized : JsonUtilitySerializable
         var size = shape.ShapeRotationSize;
         sizeX = size.x;
         sizeY = size.y;
+        originalX = shape.pos.x;
+        originalY = shape.pos.y;
         foreach (var shapeCell in shape.cells)
         {
             var pos = shapeCell.LocalPos

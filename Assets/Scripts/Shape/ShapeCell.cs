@@ -23,6 +23,10 @@ public class ShapeCell
         this.shape = shape;
         this.localPos = localPos;
         shapeCellObject = ShapeCellObject.Create(localPos, shape);
+        shape.onMatrixAttached += fm =>
+        {
+            if (fm.patternMaterial != null) shapeCellObject.sr.material = Matrix.patternMaterial;
+        };
     }
     
     public bool CanMove(Vector2Int dir, int moves = 1, bool allowPush = true)
