@@ -30,7 +30,7 @@ public class FieldCell : MonoBehaviour
     {
         X = x;
         Y = y;
-        transform.localPosition = matrix.ZeroPos + new Vector2(x, y);
+        transform.localPosition = (Vector3)(matrix.ZeroPos + new Vector2(x, y)) + new Vector3(0f, 0f, 0.1f);
     }
 
     public void SetProjection(int value)

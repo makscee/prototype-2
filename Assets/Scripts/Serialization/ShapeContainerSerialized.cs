@@ -10,16 +10,25 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
     public ShapeContainerSerialized(ShapeContainer container)
     {
         shapes = new List<ShapeSerialized>(container.shapes.Count);
-        foreach (var shape in container.shapes)
+
+        var maxInd = container.currentIndex < container.shapes.Count
+            ? container.currentIndex - 1
+            : container.shapes.Count;
+        for (var i = 0; i < maxInd; i++)
         {
-            shapes.Add(new ShapeSerialized(shape));
+            shapes.Add(new ShapeSerialized(container.shapes[i]));
         }
     }
 
     public ShapeContainer Deserialize(FieldMatrix matrix)
     {
         var container = new ShapeContainer(matrix);
-        foreach (var shapeSerialized in shapes) container.Add(shapeSerialized.Deserialize());
+        foreach (var shapeSerialized in shapes)
+        {
+            var shape = shapeSerialized.Deserialize();
+            shape.Matrix = matrix;
+            container.Add(shape);
+        }
         return container;
     }
 

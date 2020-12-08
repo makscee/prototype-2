@@ -62,6 +62,20 @@ public static class ShapeUtils
             throw new Exception("Couldn't translate coords");
         }
 
+        public Vector2Int ToRotation(int rotation)
+        {
+            switch (_from)
+            {
+                case Type.LocalFieldRotation:
+                    return PositionToRotation(_shape.UpDirection, _shape.size, _pos, Utils.CoordsFromDirInt(rotation));
+                case Type.LocalShapeRotation:
+                    return PositionToRotation(Vector2Int.up, _shape.size, _pos, Utils.CoordsFromDirInt(rotation));
+                case Type.Field:
+                    return PositionToRotation(_shape.UpDirection, _shape.size, _pos - _shape.pos, Utils.CoordsFromDirInt(rotation));
+            }
+            throw new Exception("Couldn't translate coords");
+        }
+
         Vector2Int FromShapeToFieldRotation(Vector2Int pos)
         {
             return PositionToRotation(Vector2Int.up, _shape.size, pos, _shape.UpDirection);

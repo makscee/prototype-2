@@ -35,6 +35,12 @@ public static class Utils
         return new Vector2(x, y);
     }
 
+    public static Vector2Int CoordsFromDirInt(int dir)
+    {
+        CoordsFromDir(dir, out var x, out var y);
+        return new Vector2Int(x, y);
+    }
+
     public static Vector2Int Rotate90(this Vector2Int v, bool clockwise, int count = 1)
     {
         for (var i = 0; i < count; i++)

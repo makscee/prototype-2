@@ -5,6 +5,7 @@ public class ShapeCell
     FieldMatrix Matrix => shape.Matrix;
     public Shape shape;
     public ShapeCellObject shapeCellObject;
+    public Vector2Int originalPos;
     Vector2Int localPos;
 
     public Vector2Int FieldPos => shape.pos + localPos;
@@ -23,10 +24,15 @@ public class ShapeCell
         this.shape = shape;
         this.localPos = localPos;
         shapeCellObject = ShapeCellObject.Create(localPos, shape);
-        shape.onMatrixAttached += fm =>
-        {
-            if (fm.patternMaterial != null) shapeCellObject.sr.material = Matrix.patternMaterial;
-        };
+        shape.onMatrixSet += CellObjectInitOnMatrixSet;
+        if (shape.Matrix != null) CellObjectInitOnMatrixSet(shape.Matrix);
+    }
+
+    void CellObjectInitOnMatrixSet(FieldMatrix matrix)
+    {
+        shapeCellObject.shaderSize = Vector2.one / matrix.size;
+        shapeCellObject.shaderPosition = originalPos * shapeCellObject.shaderSize;
+        if (matrix.patternMaterial != null) shapeCellObject.SetMaterial(Matrix.patternMaterial);
     }
     
     public bool CanMove(Vector2Int dir, int moves = 1, bool allowPush = true)
@@ -49,6 +55,12 @@ public class ShapeCell
         }
 
         return true;
+    }
+
+    public void UpdateRotation()
+    {
+        shapeCellObject.transform.localRotation = 
+            Quaternion.AngleAxis(90f * (shape.originalRotation - Utils.DirFromCoords(shape.UpDirection)), Vector3.forward);
     }
 
     public void Destroy()

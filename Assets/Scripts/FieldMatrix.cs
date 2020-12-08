@@ -41,6 +41,7 @@ public class FieldMatrix : MonoBehaviour
     public void AttachShape(Shape shape)
     {
         shape.Matrix = this;
+        shape.AttachToMatrix();
         attachedShape = shape;
         shape.SetRotation(currentShapeDir);
         shape.shapeObject.targetScale = Vector3.one;

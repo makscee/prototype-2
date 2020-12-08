@@ -7,6 +7,7 @@ public class Shape
 {
     public const float AnimationTime = 0.3f;
     public Vector2Int originalPos;
+    public int originalRotation;
     
     public Vector2Int pos;
     FieldMatrix matrix;
@@ -36,14 +37,11 @@ public class Shape
         set
         {
             matrix = value;
-            shapeObject.transform.SetParent(matrix.transform);
-            shapeObject.targetPosition = pos + matrix.ZeroPos;
-            shapeObject.transform.localRotation = Quaternion.identity;
-            onMatrixAttached?.Invoke(value);
+            onMatrixSet?.Invoke(value);
         }
     }
 
-    public Action<FieldMatrix> onMatrixAttached;
+    public Action<FieldMatrix> onMatrixSet;
 
     public Vector2Int UpDirection
     {
@@ -51,6 +49,12 @@ public class Shape
         private set => upDirection = value;
     }
 
+    public void AttachToMatrix()
+    {
+        shapeObject.transform.SetParent(matrix.transform);
+        shapeObject.targetPosition = pos + matrix.ZeroPos;
+        shapeObject.transform.localRotation = Quaternion.identity;
+    }
     public bool InsertToMatrix()
     {
         var height = Height;
@@ -93,9 +97,13 @@ public class Shape
     {
         while (upDirection != dir)
             RotateClockwise();
+        foreach (var shapeCell in cells)
+        {
+            shapeCell.UpdateRotation();
+        }
     }
 
-    public void RotateClockwise()
+    void RotateClockwise()
     {
         UpDirection = UpDirection.Rotate90(true);
         var deltaPos = -upDirection * (size.x - 1); 

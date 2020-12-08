@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class ShapeSerialized : JsonUtilitySerializable
 {
-    public int sizeX, sizeY, originalX, originalY;
+    public int sizeX, sizeY, originalX, originalY, originalRotation;
     public List<ShapeCellSerialized> cells = new List<ShapeCellSerialized>();
 
     public ShapeSerialized(int sizeX, int sizeY, int originalX = -1, int originalY = -1)
@@ -25,12 +25,13 @@ public class ShapeSerialized : JsonUtilitySerializable
         sizeY = size.y;
         originalX = shape.pos.x;
         originalY = shape.pos.y;
+        originalRotation = Utils.DirFromCoords(shape.UpDirection);
         foreach (var shapeCell in shape.cells)
         {
             var pos = shapeCell.LocalPos
                 .FromLocalFieldRotation(shape)
                 .ToLocalShapeRotation();
-            cells.Add(new ShapeCellSerialized(pos));
+            cells.Add(new ShapeCellSerialized(pos, shapeCell.LocalPos + shape.pos));
         }
         RepackCells(cells);
     }
@@ -60,7 +61,12 @@ public class ShapeSerialized : JsonUtilitySerializable
     {
         var color = Random.ColorHSV(0f, 1f, 0.3f, 0.5f, 1f, 1f);
         var shapeCells = new List<ShapeCell>();
-        var shape = new Shape(shapeCells) {color = color, size = new Vector2Int(sizeX, sizeY)};
+        var shape = new Shape(shapeCells) {
+            color = color,
+            size = new Vector2Int(sizeX, sizeY), 
+            originalPos = new Vector2Int(originalX, originalY),
+            originalRotation = originalRotation,
+        };
         shape.shapeObject = ShapeObject.Create(shape);
         shapeCells.AddRange(cells.Select(cellSerialized => cellSerialized.Deserialize(shape)));
         return shape;
