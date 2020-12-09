@@ -148,8 +148,6 @@ public class FieldMatrix : MonoBehaviour
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.delayCall += CreateField;
-#else 
-            CreateField();
 #endif
         }
     }
@@ -158,24 +156,20 @@ public class FieldMatrix : MonoBehaviour
     {
         CreateField();
         current = this;
+
+        var container = ShapeContainerSerialized.GetLastLoadedLevel()?.Deserialize(this);
         
-        var container = new ShapeContainer(this);
-        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[0]).Deserialize());
-        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[3]).Deserialize());
-        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[2]).Deserialize());
-        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[5]).Deserialize());
-        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
-        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
-        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[4]).Deserialize());
-        container.Add(ShapeSerialized.CreateFromString(ShapeStrings.AllShapes[6]).Deserialize());
-        
-        AddContainer(container);
+        if (container != null)
+            SetContainer(container);
     }
 
-    public void AddContainer(ShapeContainer container)
+    public void SetContainer(ShapeContainer container)
     {
         shapesContainer?.Destroy();
         shapesContainer = container;
+        size = container.matrixSize;
+        CreateField();
+        
         var shape = shapesContainer.GetNext();
         currentShapeOffset = shape.Width / 2; 
         AttachShape(shape);

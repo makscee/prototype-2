@@ -4,12 +4,13 @@ using UnityEngine;
 public class ShapeContainer
 {
     public List<Shape> shapes = new List<Shape>();
-    FieldMatrix _matrix;
+    public Vector2Int matrixSize;
+    public FieldMatrix matrix;
     ShapeContainerObject _containerObject;
 
     public ShapeContainer(FieldMatrix matrix)
     {
-        _matrix = matrix;
+        this.matrix = matrix;
         _containerObject = new GameObject("Container Object").AddComponent<ShapeContainerObject>();
         _containerObject.container = this;
         _containerObject.transform.SetParent(matrix.transform);

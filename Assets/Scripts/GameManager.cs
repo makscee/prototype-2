@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
             var container = ShapeContainerSerialized
                 .LoadFromJson(FileStorage.ReadJsonFile("testLevel"))
                 .Deserialize(FieldMatrix.current);
-            FieldMatrix.current.AddContainer(container);
+            FieldMatrix.current.SetContainer(container);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
