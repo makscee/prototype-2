@@ -20,6 +20,7 @@ public class ShapeContainer
     public void Add(Shape shape, int ind = -1)
     {
         shape.shapeObject.SetParent(_containerObject.transform);
+        shape.SetRotation(Vector2Int.up);
         ind = ind == -1 ? shapes.Count : ind;
         shapes.Insert(ind, shape);
     }
@@ -40,7 +41,10 @@ public class ShapeContainer
     {
         if (currentIndex == 0) return;
         currentIndex--;
-        shapes[currentIndex].shapeObject.SetParent(_containerObject.transform);
+        var shape = shapes[currentIndex]; 
+        shape.shapeObject.SetParent(_containerObject.transform);
+        shape.SetRotation(Vector2Int.up);
+        shape.shapeObject.transform.localRotation = Quaternion.identity;
     }
 
     public void SaveToFile(string filename)
