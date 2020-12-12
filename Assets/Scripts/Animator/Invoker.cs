@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-public class Invoker : IUpdateable
+public class Invoker : OwnedUpdatable
 {
     Action _action;
     public Invoker(Action action)
     {
         _action = action;
     }
-    public void Update()
+    public override void Update()
     {
         _in -= Time.deltaTime;
         if (_in < 0f)
@@ -43,7 +43,7 @@ public class Invoker : IUpdateable
         return this;
     }
 
-    public bool IsDone()
+    public override bool IsDone()
     {
         return _in < 0f && _repeat == 0;
     }

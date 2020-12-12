@@ -19,7 +19,7 @@ public class ShapeContainer
 
     public void Add(Shape shape, int ind = -1)
     {
-        shape.shapeObject.transform.SetParent(_containerObject.transform);
+        shape.shapeObject.SetParent(_containerObject.transform);
         ind = ind == -1 ? shapes.Count : ind;
         shapes.Insert(ind, shape);
     }
@@ -34,6 +34,13 @@ public class ShapeContainer
     {
         if (currentIndex == shapes.Count) return null;
         return shapes[currentIndex++];
+    }
+
+    public void ReturnPrevious()
+    {
+        if (currentIndex == 0) return;
+        currentIndex--;
+        shapes[currentIndex].shapeObject.SetParent(_containerObject.transform);
     }
 
     public void SaveToFile(string filename)

@@ -57,9 +57,9 @@ public class ShapeContainerObject : MonoBehaviour
         {
             var shape = container.shapes[i];
             var t = i - container.currentIndex + 1;
-            shape.shapeObject.targetPosition =
-                new Vector3(t * xMult / Mathf.Pow(xAccum, t), t * yMult / Mathf.Pow(yAccum, t));
-            shape.shapeObject.targetScale = Vector3.one / t / scaleMult;
+            shape.shapeObject.SetTargetPosition(
+                new Vector3(t * xMult / Mathf.Pow(xAccum, t), t * yMult / Mathf.Pow(yAccum, t)));
+            shape.shapeObject.SetTargetScale(Vector3.one / t / scaleMult);
         }
     }
 }

@@ -33,8 +33,8 @@ public class LevelSelectorEntry : MonoBehaviour, IPointerClickHandler
     void Refresh()
     {
         rawImage.color = transform.GetSiblingIndex() % 2 == 0
-            ? ScriptableConfigObject.Instance.levelSelectorEntry1
-            : ScriptableConfigObject.Instance.levelSelectorEntry2;
+            ? GlobalConfig.Instance.levelSelectorEntry1
+            : GlobalConfig.Instance.levelSelectorEntry2;
         nameText.text = _text;
     }
 

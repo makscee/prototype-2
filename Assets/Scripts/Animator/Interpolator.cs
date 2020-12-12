@@ -10,20 +10,19 @@ public enum InterpolationType
 }
 
 [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
-public class Interpolator<T> : IUpdateable
+public class Interpolator<T> : OwnedUpdatable
 {
     float _over, _t, _delay;
-    T _from, _to, _cur;
-    Func<T, T, T> _addFunc, _subtractFunc;
-    Func<T, float, T> _multiplyFunc;
-    public Interpolator(T from, T to, float over, Func<T, float, T> multiplyFunc, Func<T, T, T> addFunc, Func<T, T, T> subtractFunc)
+    T _from, _to, _curValue, _curValueDelta;
+    Func<T, T, float, T> _interpolateFunc;
+    Func<T, T, T> _subtractFunc;
+    public Interpolator(T from, T to, float over, Func<T, T, float, T> interpolateFunc, Func<T, T, T> subtractFunc)
     {
         _from = from;
-        _cur = from;
+        _curValue = from;
         _to = to;
         _over = over;
-        _multiplyFunc = multiplyFunc;
-        _addFunc = addFunc;
+        _interpolateFunc = interpolateFunc;
         _subtractFunc = subtractFunc;
     }
     
@@ -55,6 +54,14 @@ public class Interpolator<T> : IUpdateable
     public Interpolator<T> OnDeltaSignChange(Action action)
     {
         _onDeltaSignChange = action;
+        return this;
+    }
+
+    float _allowedDeltaFrom = 0f, _allowedDeltaTo = 1f;
+    public Interpolator<T> AllowedDelta(float from, float to) // [0f, 1f]
+    {
+        _allowedDeltaFrom = from;
+        _allowedDeltaTo = to;
         return this;
     }
     public Interpolator<T> Delay(float t)
@@ -110,7 +117,7 @@ public class Interpolator<T> : IUpdateable
     }
 
     bool _isDone, _isUpdating = true;
-    public void Update()
+    public override void Update()
     {
         if (!_isUpdating)
             return;
@@ -126,38 +133,44 @@ public class Interpolator<T> : IUpdateable
             if (_delay > 0f) return;
             delta = -_delay;
         }
-        var before = _cur;
+        var prevValue = _curValue;
         var x = _t / _over;
-        var f = 0f;
+        var fx = Fx(x);
 
-        switch (_interpolationType)
-        {
-            case InterpolationType.Linear:
-                f = x;
-                break;
-            case InterpolationType.Square:
-                f = x * x;
-                break;
-            case InterpolationType.InvSquare:
-                f = 1 - (1 - x) * (1 - x);
-                break;
-            case InterpolationType.OverflowReturn:
-                f = x * x * 0.194638370849f + Mathf.Sin(x * 2.3f) * 1.08f;
-                break;
-        }
-
+        var deltaF = fx - _lastF;
         if (_onDeltaSignChange != null)
         {
-            var deltaF = f - _lastF;
             if (deltaF * _lastDeltaF < 0)
                 _onDeltaSignChange();
-            _lastDeltaF = deltaF;
-            _lastF = f;
+        }
+
+        _curValue = _interpolateFunc(_from, _to, fx);
+
+        if (_allowedDeltaFrom > 0f)
+        {
+            if (fx < _allowedDeltaFrom)
+                _curValue = _from;
+            else
+            {
+                var divisor = _allowedDeltaTo - _allowedDeltaFrom;
+                _curValue = _interpolateFunc(_from, _to,
+                    (fx - _allowedDeltaFrom) / divisor);
+            }
+        }
+        if (_allowedDeltaTo < 1f)
+        {
+            if (fx > _allowedDeltaTo)
+                _curValue = _to;
         }
         
-        _cur = _addFunc(_from, _multiplyFunc(_subtractFunc(_to, _from), f));
-        _passDelta?.Invoke(_subtractFunc(_cur, before));
-        _passValue?.Invoke(_cur);
+        _curValueDelta = _subtractFunc(_curValue, prevValue);
+        
+        _passDelta?.Invoke(_curValueDelta);
+        _passValue?.Invoke(_curValue);
+        
+        _lastDeltaF = deltaF;
+        _lastF = fx;
+        
         if (_t == _over)
         {
             _isDone = true;
@@ -172,7 +185,29 @@ public class Interpolator<T> : IUpdateable
         }
     }
 
-    public bool IsDone()
+    float Fx(float x)
+    {
+        var fx = 0f;
+        switch (_interpolationType)
+        {
+            case InterpolationType.Linear:
+                fx = x;
+                break;
+            case InterpolationType.Square:
+                fx = x * x;
+                break;
+            case InterpolationType.InvSquare:
+                fx = 1 - (1 - x) * (1 - x);
+                break;
+            case InterpolationType.OverflowReturn:
+                fx = x * x * 0.194638370849f + Mathf.Sin(x * 2.3f) * 1.08f;
+                break;
+        }
+
+        return fx;
+    }
+
+    public override bool IsDone()
     {
         return _isDone;
     }

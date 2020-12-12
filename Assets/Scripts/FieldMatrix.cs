@@ -44,7 +44,7 @@ public class FieldMatrix : MonoBehaviour
         shape.AttachToMatrix();
         attachedShape = shape;
         shape.SetRotation(currentShapeDir);
-        shape.shapeObject.targetScale = Vector3.one;
+        shape.shapeObject.SetTargetScale(Vector3.one);
         MoveAttachedShapeAccordingToDir(currentShapeOffset);
     }
 
@@ -57,16 +57,32 @@ public class FieldMatrix : MonoBehaviour
         RefreshProjection();
     }
 
+
+    MoveTracker _moveTracker = new MoveTracker();
     public void InsertShape()
     {
         if (attachedShape == null) return;
-        if (attachedShape.InsertToMatrix())
+        var move = new ShapeMove(this, attachedShape).Do(); 
+        if (move != null)
         {
             var shape = shapesContainer.GetNext();
             if (shape != null)
                 AttachShape(shape);
             else attachedShape = null;
+            _moveTracker.AddMove(move);
         }
+    }
+
+    public void Undo()
+    {
+        if (_moveTracker.Moves == 0) return;
+        if (attachedShape != null)
+            shapesContainer.ReturnPrevious();
+        var direction = _moveTracker.Last.direction;
+        currentShapeOffset = _moveTracker.Last.offset;
+        currentShapeDir = direction;
+        var shape = _moveTracker.Undo();
+        AttachShape(shape);
     }
 
     public void MoveAttachedShape(bool right)

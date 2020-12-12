@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         DebugInput();
     }
 
+    FieldMatrix Matrix => FieldMatrix.current;
     void DebugInput()
     {
         if (ScreenBox.activeBox != null) return;
@@ -21,38 +22,39 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            var matrix = FindObjectOfType<FieldMatrix>();
-            matrix.MoveAttachedShape(false);
+            Matrix.MoveAttachedShape(false);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            var matrix = FindObjectOfType<FieldMatrix>();
-            matrix.MoveAttachedShape(true);
+            Matrix.MoveAttachedShape(true);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            var matrix = FindObjectOfType<FieldMatrix>();
-            matrix.InsertShape();
+            Matrix.InsertShape();
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Matrix.Undo();
         }
         if (Input.GetKeyDown(KeyCode.K))
         {
-            FieldMatrix.current.shapesContainer.SaveToFile("testLevel");
+            Matrix.shapesContainer.SaveToFile("testLevel");
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
             var container = ShapeContainerSerialized
                 .LoadFromJson(FileStorage.ReadJsonFile("testLevel"))
-                .Deserialize(FieldMatrix.current);
-            FieldMatrix.current.SetContainer(container);
+                .Deserialize(Matrix);
+            Matrix.SetContainer(container);
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            var container = FieldMatrix.current.shapesContainer; 
+            var container = Matrix.shapesContainer; 
             container
                 .InsertAtCurrent(ShapeSerialized.CreateFromString(new[] {"*"})
                 .Deserialize());
-            if (FieldMatrix.current.attachedShape == null)
-                FieldMatrix.current.AttachShape(container.GetNext());
+            if (Matrix.attachedShape == null)
+                Matrix.AttachShape(container.GetNext());
         }
     }
 }

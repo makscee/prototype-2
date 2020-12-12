@@ -1,37 +1,44 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public static class Animator
 {
-    static List<IUpdateable> _updateables = new List<IUpdateable>();
-    static List<IUpdateable> _updateablesToAdd = new List<IUpdateable>();
+    static List<OwnedUpdatable> _updateables = new List<OwnedUpdatable>();
+    static List<OwnedUpdatable> _updateablesToAdd = new List<OwnedUpdatable>();
     public static Interpolator<float> Interpolate(float from, float to, float over)
     {
         var result = new Interpolator<float>(from, to, over, 
-            (v, f) => v * f, (v1, v2) => v1 + v2, (v1, v2) => v1 - v2);
+            (v1, v2, t) => v1 + (v2 - v1) * t,
+            (v1, v2) => v1 - v2
+            );
         _updateablesToAdd.Add(result);
         return result;
     }
     public static Interpolator<Vector2> Interpolate(Vector2 from, Vector2 to, float over)
     {
-        var result = new Interpolator<Vector2>(from, to, over, 
-            (v, f) => v * f, (v1, v2) => v1 + v2, (v1, v2) => v1 - v2);
+        var result = new Interpolator<Vector2>(from, to, over, Vector2.LerpUnclamped,
+            (v1, v2) => v1 - v2);
         _updateablesToAdd.Add(result);
         return result;
     }
     public static Interpolator<Vector3> Interpolate(Vector3 from, Vector3 to, float over)
     {
-        var result = new Interpolator<Vector3>(from, to, over, 
-            (v, f) => v * f, (v1, v2) => v1 + v2, (v1, v2) => v1 - v2);
+        var result = new Interpolator<Vector3>(from, to, over, Vector3.LerpUnclamped,
+            (v1, v2) => v1 - v2);
         _updateablesToAdd.Add(result);
         return result;
     }
+    // public static Interpolator<Quaternion> Interpolate(Quaternion from, Quaternion to, float over)
+    // {
+    //     var result = new Interpolator<Quaternion>(from, to, over, Quaternion.LerpUnclamped);
+    //     _updateablesToAdd.Add(result);
+    //     return result;
+    // }
     public static Interpolator<Color> Interpolate(Color from, Color to, float over)
     {
-        var result = new Interpolator<Color>(from, to, over, 
-            (v, f) => v * f, (v1, v2) => v1 + v2, (v1, v2) => v1 - v2);
+        var result = new Interpolator<Color>(from, to, over, Color.LerpUnclamped,
+            (v1, v2) => v1 - v2);
         _updateablesToAdd.Add(result);
         return result;
     }
@@ -41,6 +48,17 @@ public static class Animator
         var result = new Invoker(action);
         _updateablesToAdd.Add(result);
         return result;
+    }
+
+    public static void ClearByOwner(object owner)
+    {
+        for (var i = 0; i < _updateables.Count; i++)
+            if (_updateables[i].IsOwnedBy(owner))
+                _updateables.RemoveAt(i--);
+
+        for (var i = 0; i < _updateablesToAdd.Count; i++)
+            if (_updateablesToAdd[i].IsOwnedBy(owner))
+                _updateablesToAdd.RemoveAt(i--);
     }
 
     public static void Update()

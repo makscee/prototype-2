@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Shape
 {
-    public const float AnimationTime = 0.3f;
     public Vector2Int originalPos;
     public int originalRotation;
     
@@ -51,46 +50,10 @@ public class Shape
 
     public void AttachToMatrix()
     {
-        shapeObject.transform.SetParent(matrix.transform);
-        shapeObject.targetPosition = pos + matrix.ZeroPos;
+        shapeObject.SetParent(matrix.transform);
+        shapeObject.SetTargetPosition(pos + matrix.ZeroPos);
+        shapeObject.SetTargetScale(Vector3.one);
         shapeObject.transform.localRotation = Quaternion.identity;
-    }
-    public bool InsertToMatrix()
-    {
-        var height = Height;
-        var dir = upDirection;
-        if (!CanMove(dir, height))
-        {
-            Debug.Log($"Cant move");
-            return false;
-        }
-
-        var moves = MaxMoves(dir);
-        var toPush = new Dictionary<Shape, float>();
-        toPush.Add(this, moves);
-        for (var i = 0; i < moves; i++)
-            foreach (var pushed in Move(dir))
-            {
-                if (!toPush.ContainsKey(pushed)) toPush.Add(pushed, 0);
-                toPush[pushed] += 1f;
-            }
-
-        float pushAmount = moves;
-        Animator.Interpolate(0f, moves, AnimationTime).PassDelta(v =>
-        {
-            pushAmount -= v;
-            foreach (var shape in toPush.Keys.ToArray())
-            {
-                if (toPush[shape] > pushAmount)
-                {
-                    var delta = toPush[shape] - pushAmount;
-                    shape.shapeObject.SetPositionDelta(delta * (Vector3) (Vector2) dir);
-                    toPush[shape] -= delta;
-                }
-            }
-        }).Type(InterpolationType.Square);
-
-        return true;
     }
 
     public void SetRotation(Vector2Int dir)
@@ -108,7 +71,7 @@ public class Shape
         UpDirection = UpDirection.Rotate90(true);
         var deltaPos = -upDirection * (size.x - 1); 
         pos += deltaPos;
-        shapeObject.SetPositionDelta((Vector2)deltaPos);
+        shapeObject.DirectPositionOffset((Vector2)deltaPos);
         foreach (var cell in cells)
         {
             var newX = cell.LocalPos.y;
@@ -126,7 +89,7 @@ public class Shape
 
     public void PlaceShapeObject()
     {
-        shapeObject.targetPosition = matrix.ZeroPos + pos;
+        shapeObject.SetTargetPosition(matrix.ZeroPos + pos);
     }
 
     public IEnumerable<Shape> Move(Vector2Int dir)
@@ -205,48 +168,4 @@ public class Shape
     {
         get => cells.FirstOrDefault(cell => cell.LocalPos == pos);
     }
-}
-
-public static class ShapeStrings
-{
-    public static string[][] AllShapes =
-    {
-        new[]
-        {
-            "000",
-            "0--"
-        },
-        new[]
-        {
-            "000",
-            "--0"
-        },
-        new[]
-        {
-            "000",
-            "-0-"
-        },
-        new[]
-        {
-            "00",
-            "00"
-        },
-        new[]
-        {
-            "00-",
-            "-00"
-        },
-        new[]
-        {
-            "-00",
-            "00-"
-        },
-        new[]
-        {
-            "0",
-            "0",
-            "0",
-            "0"
-        },
-    };
 }
