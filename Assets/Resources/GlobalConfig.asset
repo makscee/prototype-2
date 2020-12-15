@@ -10,7 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06cdd47b31124a92991595e2cf8c7931, type: 3}
-  m_Name: ConfigObject
+  m_Name: GlobalConfig
   m_EditorClassIdentifier: 
   levelSelectorEntry1: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
   levelSelectorEntry2: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
+  shapeAnimationTime: 0.3
+  outlineThickness: 0.1
+  shaderPatternMaterial: {fileID: 2100000, guid: eb297f7bd65b443c4a89fd45dc5829bd, type: 2}
+  palette0: {r: 0.95686275, g: 0.95686275, b: 0.9490196, a: 1}
+  palette1: {r: 0.9098039, g: 0.9098039, b: 0.9098039, a: 1}
+  palette2: {r: 0.73333335, g: 0.7490196, b: 0.7921569, a: 1}
+  palette3: {r: 0.28627452, g: 0.32941177, b: 0.39215687, a: 1}

@@ -6,6 +6,10 @@ public class GlobalConfig : ScriptableObject
 {
     [SerializeField] public Color levelSelectorEntry1, levelSelectorEntry2;
     [SerializeField] public float shapeAnimationTime;
+    [SerializeField] public float outlineThickness;
+    [SerializeField] public Material shaderPatternMaterial;
+
+    [SerializeField] public Color palette0, palette1, palette2, palette3;
     
     public static GlobalConfig Instance => GetInstance();
 

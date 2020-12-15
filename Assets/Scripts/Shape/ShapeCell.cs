@@ -23,16 +23,7 @@ public class ShapeCell
     {
         this.shape = shape;
         this.localPos = localPos;
-        shapeCellObject = ShapeCellObject.Create(localPos, shape);
-        shape.onMatrixSet += CellObjectInitOnMatrixSet;
-        if (shape.Matrix != null) CellObjectInitOnMatrixSet(shape.Matrix);
-    }
-
-    void CellObjectInitOnMatrixSet(FieldMatrix matrix)
-    {
-        shapeCellObject.shaderSize = Vector2.one / matrix.size;
-        shapeCellObject.shaderPosition = originalPos * shapeCellObject.shaderSize;
-        if (matrix.patternMaterial != null) shapeCellObject.SetMaterial(Matrix.patternMaterial);
+        shapeCellObject = ShapeCellObject.Create(localPos, shape, this);
     }
     
     public bool CanMove(Vector2Int dir, int moves = 1, bool allowPush = true)

@@ -16,3 +16,5 @@ MonoBehaviour:
   shapeObject: {fileID: 5598629549521729983, guid: 02a6989db6fe04d59ad2e9c90d31ada2, type: 3}
   shapeCellObject: {fileID: 7962846756057869799, guid: 0c00052e761e54d3eb8ba3836151b108, type: 3}
   levelEntry: {fileID: 3079544153736067523, guid: a1ca24dbcf60148c196de31161b176f5, type: 3}
+  carcassSpriteContainers:
+  - {fileID: 1085665505082918077, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}

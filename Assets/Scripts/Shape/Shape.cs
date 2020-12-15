@@ -9,7 +9,6 @@ public class Shape
     public int originalRotation;
     
     public Vector2Int pos;
-    FieldMatrix matrix;
     public ShapeObject shapeObject;
     Vector2Int upDirection = Vector2Int.up;
     public List<ShapeCell> cells = new List<ShapeCell>();
@@ -30,17 +29,7 @@ public class Shape
         this.cells = cells;
     }
 
-    public FieldMatrix Matrix
-    {
-        get => matrix;
-        set
-        {
-            matrix = value;
-            onMatrixSet?.Invoke(value);
-        }
-    }
-
-    public Action<FieldMatrix> onMatrixSet;
+    public FieldMatrix Matrix { get; set; }
 
     public Vector2Int UpDirection
     {
@@ -50,8 +39,8 @@ public class Shape
 
     public void AttachToMatrix()
     {
-        shapeObject.SetParent(matrix.transform);
-        shapeObject.SetTargetPosition(pos + matrix.ZeroPos);
+        shapeObject.SetParent(Matrix.transform);
+        shapeObject.SetTargetPosition(pos + Matrix.ZeroPos);
         shapeObject.SetTargetScale(Vector3.one);
         shapeObject.transform.localRotation = Quaternion.identity;
     }
@@ -84,12 +73,12 @@ public class Shape
     public void Translate(Vector2Int newPos)
     {
         pos = newPos;
-        matrix.UpdateShapePlacement(this);
+        Matrix.UpdateShapePlacement(this);
     }
 
     public void PlaceShapeObject()
     {
-        shapeObject.SetTargetPosition(matrix.ZeroPos + pos);
+        shapeObject.SetTargetPosition(Matrix.ZeroPos + pos);
     }
 
     public IEnumerable<Shape> Move(Vector2Int dir)
@@ -99,7 +88,7 @@ public class Shape
         {
             if (shapeCell == null)
                 continue;
-            var occupiedBy = matrix[shapeCell.FieldPos + dir]?.OccupiedBy;
+            var occupiedBy = Matrix[shapeCell.FieldPos + dir]?.OccupiedBy;
             if (occupiedBy != null && occupiedBy != this)
                 toPush.Add(occupiedBy);
         }
