@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.U2D;
 
-[RequireComponent(typeof(SpriteRenderer))]
 [ExecuteInEditMode]
 public class CarcassSprite : MonoBehaviour
 {
     protected int sortingOrder;
     protected Color color;
-    [SerializeField] SpriteRenderer sr;
+    [SerializeField] SpriteShapeRenderer sr;
 
     protected virtual void OnEnable()
     {
@@ -16,9 +16,8 @@ public class CarcassSprite : MonoBehaviour
 
     void Init()
     {
-        if (sr == null) sr = GetComponent<SpriteRenderer>();
+        if (sr == null) sr = GetComponent<SpriteShapeRenderer>();
         sr.sortingOrder = sortingOrder;
-        sr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
         sr.color = color;
     }
 }

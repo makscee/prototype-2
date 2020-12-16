@@ -15,7 +15,7 @@ public class ShapeCellCarcassObject : MonoBehaviour
         Refresh();
     }
 
-    void Refresh()
+    public void Refresh()
     {
         outline.color = GlobalConfig.Instance.palette3;
         outlineMask.SetClosedSides(closedSides);
