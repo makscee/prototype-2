@@ -12,6 +12,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1248108466018977381, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248108466018977381, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}
       propertyPath: m_LocalAABB.m_Center.x
       value: 0
       objectReference: {fileID: 0}
@@ -77,10 +81,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3315498316470865818, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}
       propertyPath: m_Name
-      value: SpritesContainer
+      value: SpritesContainer Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3981440844963595571, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}
       propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3981440844963595571, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}
+      propertyPath: m_MaskInteraction
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3981440844963595571, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}

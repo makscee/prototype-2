@@ -27,15 +27,19 @@ public class CarcassSpriteContainer : MonoBehaviour
     void Rotate()
     {
         transform.localRotation *= Quaternion.AngleAxis(-90f, Vector3.forward);
-        var closed0 = closedSides[0];
+        var closed3 = closedSides[3];
         for (var i = 3; i > 0; i--)
             closedSides[i] = closedSides[i - 1];
-        closedSides[3] = closed0;
+        closedSides[0] = closed3;
     }
 
     public static CarcassSpriteContainer Create(ShapeCellCarcassObject carcass)
     {
-        var closedSides = carcass.closedSides;
+        var closedSides = new bool[4];
+        for (var i = 0; i < 4; i++)
+        {
+            closedSides[i] = !carcass.GetSurroundingCell(Utils.CoordsFromDirInt(i));
+        }
         var closedCount = closedSides.Count(b => b);
         var prefabsFiltered = Prefabs.Instance.carcassSpriteContainers.ToArray();
         switch (closedCount)

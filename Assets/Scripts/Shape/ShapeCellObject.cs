@@ -26,13 +26,16 @@ public class ShapeCellObject : MonoBehaviour
 
     void InitCarcass()
     {
-        bool[] closedSides = new bool[4];
-        for (var i = 0; i < 4; i++)
+        var surroundingCells = new bool[3, 3];
+        for (var x = -1; x <= 1; x++)
         {
-            var dir = Utils.CoordsFromDirInt(i);
-            closedSides[i] = cell.shape[cell.LocalPos + dir] == null;
+            for (var y = -1; y <= 1; y++)
+            {
+                surroundingCells[x + 1, y + 1] = cell.shape[cell.LocalPos + new Vector2Int(x, y)] != null;
+            }
         }
-        _carcassObject.closedSides = closedSides;
+
+        _carcassObject.surroundingCells = surroundingCells;
         _carcassObject.Refresh();
         _carcassSpritesContainer = CarcassSpriteContainer.Create(_carcassObject);
     }

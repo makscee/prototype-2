@@ -75,7 +75,7 @@ SpriteShapeRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 7
   m_Color: {r: 0.28627452, g: 0.32941177, b: 0.39215687, a: 1}
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: b0582ca0188af446ab2cd84d3fef4b00, type: 3}
   m_Sprites: []
   m_LocalAABB:
@@ -279,7 +279,7 @@ SpriteShapeRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 8
   m_Color: {r: 0.73333335, g: 0.7490196, b: 0.7921569, a: 1}
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: b0582ca0188af446ab2cd84d3fef4b00, type: 3}
   m_Sprites: []
   m_LocalAABB:
