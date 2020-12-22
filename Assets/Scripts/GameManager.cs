@@ -40,13 +40,6 @@ public class GameManager : MonoBehaviour
         {
             Matrix.shapesContainer.SaveToFile("testLevel");
         }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            var container = ShapeContainerSerialized
-                .LoadFromJson(FileStorage.ReadJsonFile("testLevel"))
-                .Deserialize(Matrix);
-            Matrix.SetContainer(container);
-        }
         if (Input.GetKeyDown(KeyCode.F))
         {
             var container = Matrix.shapesContainer; 

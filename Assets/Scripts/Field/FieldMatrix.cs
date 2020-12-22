@@ -1,15 +1,15 @@
-using System;
+using UnityEditor;
 using UnityEngine;
 
 public class FieldMatrix : MonoBehaviour
 {
     public static FieldMatrix current;
     
-    public Vector2Int size;
+    public int size;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
     public Material patternMaterial;
-    public Vector2 ZeroPos => new Vector2(-(size.x - 1) / 2f, -(size.y - 1) / 2f);
+    public Vector2 ZeroPos => new Vector2(-(size - 1) / 2f, -(size - 1) / 2f);
 
     FieldCell[,] _cells;
 
@@ -27,7 +27,7 @@ public class FieldMatrix : MonoBehaviour
     Vector2Int AttachedShapePosition => MatrixAttachLocalPosition + ShapeStartOffset(attachedShape);
 
     Vector2Int ZeroOffsetPos =>
-        (-(currentShapeDir + currentShapeDir.Rotate90(true)) + Vector2Int.one) / 2 * (size - Vector2Int.one) -
+        (-(currentShapeDir + currentShapeDir.Rotate90(true)) + Vector2Int.one) / 2 * new Vector2Int(size - 1, size - 1) -
         currentShapeDir;
 
     Vector2Int ShapeStartOffset(Shape shape)
@@ -160,7 +160,7 @@ public class FieldMatrix : MonoBehaviour
     
     void OnValidate()
     {
-        if (_cells == null || size.x != _cells.GetLength(0) || size.y != _cells.GetLength(1))
+        if (_cells == null || size != _cells.GetLength(0) || size != _cells.GetLength(1))
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.delayCall += CreateField;
@@ -170,13 +170,6 @@ public class FieldMatrix : MonoBehaviour
 
     void OnEnable()
     {
-        CreateField();
-        current = this;
-
-        var container = ShapeContainerSerialized.GetLastLoadedLevel()?.Deserialize(this);
-        
-        if (container != null)
-            SetContainer(container);
     }
 
     public void SetContainer(ShapeContainer container)
@@ -196,21 +189,38 @@ public class FieldMatrix : MonoBehaviour
         if (current == this) current = null;
     }
 
+    Transform _cellParent;
     void CreateField()
     {
-        if (this == null) return;
-        foreach (var cell in GetComponentsInChildren<FieldCell>())
+        if (this == null ||
+            PrefabUtility.GetPrefabInstanceStatus(gameObject) == PrefabInstanceStatus.NotAPrefab &&
+            PrefabUtility.GetPrefabAssetType(gameObject) != PrefabAssetType.NotAPrefab) return;
+        
+        if (_cellParent == null)
+        {
+            _cellParent = new GameObject("Cells container").transform;
+            _cellParent.SetParent(transform);
+            _cellParent.localPosition = Vector3.zero; 
+            _cellParent.localRotation = Quaternion.identity;
+        }
+        foreach (var cell in _cellParent.GetComponentsInChildren<FieldCell>())
             cell.Destroy();
     
-        _cells = new FieldCell[size.x, size.y];
-        for (var x = 0; x < size.x; x++)
+        _cells = new FieldCell[size, size];
+        for (var x = 0; x < size; x++)
         {
-            for (var y = 0; y < size.y; y++)
+            for (var y = 0; y < size; y++)
             {
-                _cells[x, y] = FieldCell.Create(this, x, y);
+                _cells[x, y] = FieldCell.Create(this, x, y, _cellParent);
             }
         }
         RefreshProjection();
+    }
+
+    public static FieldMatrix Create()
+    {
+        var field = Instantiate(Prefabs.Instance.fieldMatrix).GetComponent<FieldMatrix>();
+        return field;
     }
 
     public bool CheckIndex(int x, int y)

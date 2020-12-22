@@ -54,9 +54,9 @@ public class FieldCell : MonoBehaviour
         DestroyImmediate(gameObject);
     }
 
-    public static FieldCell Create(FieldMatrix matrix, int x, int y)
+    public static FieldCell Create(FieldMatrix matrix, int x, int y, Transform parent)
     {
-        var go = Instantiate(Prefabs.Instance.fieldCell, matrix.transform);
+        var go = Instantiate(Prefabs.Instance.fieldCell, parent);
         var fc = go.GetComponent<FieldCell>();
         fc.matrix = matrix;
         fc.SetCoords(x, y);

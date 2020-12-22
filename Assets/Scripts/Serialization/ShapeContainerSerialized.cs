@@ -6,12 +6,11 @@ using UnityEngine;
 public class ShapeContainerSerialized : JsonUtilitySerializable
 {
     public List<ShapeSerialized> shapes;
-    public int sizeX, sizeY;
+    public int size;
 
     public ShapeContainerSerialized(ShapeContainer container)
     {
-        sizeX = container.matrix.size.x;
-        sizeY = container.matrix.size.y;
+        size = container.matrix.size;
         shapes = new List<ShapeSerialized>(container.shapes.Count);
 
         var maxInd = container.currentIndex < container.shapes.Count
@@ -32,27 +31,7 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
             shape.Matrix = matrix;
             container.Add(shape);
         }
-        container.matrixSize = new Vector2Int(sizeX, sizeY);
+        container.matrixSize = size;
         return container;
-    }
-
-    public static ShapeContainerSerialized LoadFromJson(string json)
-    {
-        return JsonUtility.FromJson<ShapeContainerSerialized>(json);
-    }
-
-    const string LastLevelPrefsKey = "last_loaded_level";
-    public static ShapeContainerSerialized LoadByName(string name)
-    {
-        var container = LoadFromJson(FileStorage.ReadJsonFile(FileStorage.LevelPath(name, false)));
-        if (container != null) PlayerPrefs.SetString(LastLevelPrefsKey, name);
-        return container;
-    }
-
-    public static ShapeContainerSerialized GetLastLoadedLevel()
-    {
-        if (!PlayerPrefs.HasKey(LastLevelPrefsKey)) return null;
-        var name = PlayerPrefs.GetString(LastLevelPrefsKey);
-        return LoadByName(name);
     }
 }

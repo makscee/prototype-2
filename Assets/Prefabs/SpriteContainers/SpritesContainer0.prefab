@@ -74,7 +74,7 @@ SpriteShapeRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Color: {r: 0.28627452, g: 0.32941177, b: 0.39215687, a: 1}
+  m_Color: {r: 0.023529412, g: 0.03529412, b: 0.1882353, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: b0582ca0188af446ab2cd84d3fef4b00, type: 3}
   m_Sprites: []
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 6588137324185039377}
   - component: {fileID: 6827760455451751845}
   m_Layer: 0
-  m_Name: SpritesContainer
+  m_Name: SpritesContainer0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,7 +183,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3091783481684377223}
-  - {fileID: 3143308315318343698}
+  - {fileID: 3670247620146074916}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -212,7 +212,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3143308315318343698}
+  - component: {fileID: 3670247620146074916}
   - component: {fileID: 3981440844963595571}
   - component: {fileID: 5738201888083347576}
   - component: {fileID: 2109102906708500250}
@@ -223,8 +223,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3143308315318343698
-Transform:
+--- !u!224 &3670247620146074916
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -237,6 +237,11 @@ Transform:
   m_Father: {fileID: 6588137324185039377}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1971053207 &3981440844963595571
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -278,7 +283,7 @@ SpriteShapeRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 8
-  m_Color: {r: 0.73333335, g: 0.7490196, b: 0.7921569, a: 1}
+  m_Color: {r: 0.95686275, g: 0.67058825, b: 0.76862746, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: b0582ca0188af446ab2cd84d3fef4b00, type: 3}
   m_Sprites: []

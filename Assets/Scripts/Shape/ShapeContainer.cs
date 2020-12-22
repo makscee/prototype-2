@@ -4,7 +4,7 @@ using UnityEngine;
 public class ShapeContainer
 {
     public List<Shape> shapes = new List<Shape>();
-    public Vector2Int matrixSize;
+    public int matrixSize;
     public FieldMatrix matrix;
     ShapeContainerObject _containerObject;
 

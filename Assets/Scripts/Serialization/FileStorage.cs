@@ -5,19 +5,19 @@ public static class FileStorage
 {
     static readonly string PathBase = Application.persistentDataPath + "/";
 
-    public static string ReadJsonFile(string filename)
+    public static string ReadJsonFile(string filePath)
     {
-        var path = Path(filename);
+        var path = ToFullPath(filePath);
         Debug.Log($"{path}");
-        if (!File.Exists(path)) return "{}";
+        if (!File.Exists(path)) return null;
         var text = File.ReadAllText(path);
-        Debug.Log($"Load file {filename}:\n{text}");
+        Debug.Log($"Load file {filePath}:\n{text}");
         return text;
     }
     
     public static void SaveJsonToFile(string json, string filename)
     {
-        var path = Path(filename);
+        var path = ToFullPath(filename);
         File.WriteAllText(path, json);
         Debug.Log($"save json to {path}:\n{json}");
     }
@@ -32,7 +32,7 @@ public static class FileStorage
         return (full ? PathBase : "") + "levels";
     }
 
-    public static string Path(string filename, string extension = "json")
+    public static string ToFullPath(string filename, string extension = "json")
     {
         if (!filename.EndsWith($".{extension}")) filename += $".{extension}";
         return $"{PathBase}{filename}";

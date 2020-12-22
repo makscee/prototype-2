@@ -51,8 +51,8 @@ public class ShapeCellShaderPattern : MonoBehaviour
         }
         mat.SetVector(PositionProperty, shaderPosition);
         mat.SetVector(SizeProperty, shaderSize);
-        mat.SetColor(Color0Property, GlobalConfig.Instance.palette0);
-        mat.SetColor(Color1Property, GlobalConfig.Instance.palette1);
+        mat.SetColor(Color0Property, GlobalConfig.Instance.palette2);
+        mat.SetColor(Color1Property, GlobalConfig.Instance.palette3);
     }
     
     public void SetClosedSides(bool[] sides)

@@ -32,7 +32,7 @@ public class ShapeCellCarcassObject : MonoBehaviour
             sides[i].IsCorner =
                 GetSurroundingCell(dir1) && GetSurroundingCell(dir2) && !GetSurroundingCell(dir1 + dir2);
             sides[i].Enable(sides[i].IsCorner || !GetSurroundingCell(dir1));
-            sides[i].SetColor(GlobalConfig.Instance.palette3);
+            sides[i].SetColor(GlobalConfig.Instance.palette1);
         }
     }
 }

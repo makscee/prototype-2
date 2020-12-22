@@ -19,3 +19,4 @@ MonoBehaviour:
   carcassSpriteContainers:
   - {fileID: 6827760455451751845, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}
   - {fileID: 9220957641639519613, guid: 45c14708d451e449fbc456036c010101, type: 3}
+  - {fileID: 2431058414336909890, guid: 4598ddd30a22940f4853f287e608adac, type: 3}
