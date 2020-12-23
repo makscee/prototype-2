@@ -16,8 +16,8 @@ MonoBehaviour:
   levelSelectorEntry2: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
   shapeAnimationTime: 0.3
   outlineThickness: 0.1
-  shaderPatternMaterial: {fileID: 2100000, guid: eb297f7bd65b443c4a89fd45dc5829bd, type: 2}
-  palette0: {r: 0.95686275, g: 0.95686275, b: 0.9490196, a: 1}
-  palette1: {r: 0.9098039, g: 0.9098039, b: 0.9098039, a: 1}
-  palette2: {r: 0.73333335, g: 0.7490196, b: 0.7921569, a: 1}
-  palette3: {r: 0.28627452, g: 0.32941177, b: 0.39215687, a: 1}
+  shaderPatternMaterial: {fileID: 2100000, guid: 177e448fff2a8448d9853fdc9c9bb9f3, type: 2}
+  palette0: {r: 0.95686275, g: 0.67058825, b: 0.76862746, a: 1}
+  palette1: {r: 0.34901962, g: 0.35686275, b: 0.5137255, a: 1}
+  palette2: {r: 0.2, g: 0.20392157, b: 0.3372549, a: 1}
+  palette3: {r: 0.023529412, g: 0.03529412, b: 0.1882353, a: 1}

@@ -3,22 +3,27 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    public static CameraScript current; 
-    
-    Vector2 _targetPosition;
-    Quaternion _targetRotation;
+    Vector2 _targetPosition = Vector2.zero;
+    Quaternion _targetRotation = Quaternion.identity;
+    float _targetSize = 5;
+
+    Camera _camera;
 
     void Awake()
     {
-        current = this;
+        _camera = GetComponent<Camera>();
     }
+
     void Update()
     {
-        if (FieldMatrix.current != null)
+        if (FieldMatrix.Active != null)
         {
-            if (FieldMatrix.current.attachedShape != null)
+            if (FieldMatrix.Active.attachedShape != null)
                 FollowShape();
             else FollowField();
+        } else if (FieldPack.active != null)
+        {
+            FollowFieldPack();
         }
         ApplyTarget();
     }
@@ -28,22 +33,40 @@ public class CameraScript : MonoBehaviour
     {
         Transform t;
         var targetPosition = new Vector3(_targetPosition.x, _targetPosition.y, transform.position.z);
-        (t = transform).position = Vector3.Lerp(t.position, targetPosition, Time.deltaTime * LerpMultiplier);
-        t.rotation = Quaternion.Lerp(t.rotation, _targetRotation, Time.deltaTime * LerpMultiplier);
+        var lerpDelta = Time.deltaTime * LerpMultiplier;
+        (t = transform).position = Vector3.Lerp(t.position, targetPosition, lerpDelta);
+        t.rotation = Quaternion.Lerp(t.rotation, _targetRotation, lerpDelta);
+        _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _targetSize, lerpDelta);
     }
 
     void FollowShape()
     {
-        var shape = FieldMatrix.current.attachedShape;
+        var shape = FieldMatrix.Active.attachedShape;
         // _targetPosition = (shape.shapeObject.transform.position + (Vector3)(Vector2)shape.size / 2 + FieldMatrix.current.transform.position) / 2;
         // _targetPosition = FieldMatrix.current.MatrixAttachLocalPosition + FieldMatrix.current.ZeroPos;
-        _targetPosition = FieldMatrix.current.transform.position;
+        _targetPosition = FieldMatrix.Active.transform.position;
         _targetRotation = shape.RotationQuaternion;
+        SetSizeTarget(FieldMatrix.Active.size);
     }
 
     void FollowField()
     {
-        _targetPosition = FieldMatrix.current.transform.position;
-        _targetRotation = FieldMatrix.current.transform.rotation;
+        _targetPosition = FieldMatrix.Active.transform.position;
+        _targetRotation = FieldMatrix.Active.transform.rotation;
+        SetSizeTarget(FieldMatrix.Active.size);
+    }
+
+    void FollowFieldPack()
+    {
+        var aspectRatio = (float) Screen.height / Screen.width;
+        SetSizeTarget(FieldPack.active.height);
+        _targetPosition = FieldPack.active.centerPosition;
+        _targetRotation = Quaternion.identity;
+    }
+
+    void SetSizeTarget(float sizeToFit)
+    {
+        var aspectRatio = (float) Screen.height / Screen.width;
+        _targetSize = sizeToFit * aspectRatio / 1.5f;
     }
 }

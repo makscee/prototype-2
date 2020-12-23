@@ -32,7 +32,7 @@ public class ShapeObject : MonoBehaviour
         CurrentPositionTarget = position;
 
         var interpolator = Animator.Interpolate(lastTarget, position, GlobalConfig.Instance.shapeAnimationTime)
-            .PassDelta(v => transform.localPosition += v).Type(InterpolationType.InvSquare);
+            .PassDelta(v => transform.localPosition += v).Type(InterpolationType.InvSquare).NullCheck(gameObject);
         interpolator.SetOwner(this);
         return interpolator;
     }
@@ -42,7 +42,7 @@ public class ShapeObject : MonoBehaviour
         CurrentScaleTarget = scale;
 
         var interpolator = Animator.Interpolate(lastTarget, scale, GlobalConfig.Instance.shapeAnimationTime)
-            .PassDelta(v => transform.localScale += v).Type(InterpolationType.InvSquare);
+            .PassDelta(v => transform.localScale += v).Type(InterpolationType.InvSquare).NullCheck(gameObject);
         return interpolator;
     }
 

@@ -8,7 +8,7 @@ public class ShapeBuilder : MonoBehaviour
     bool _enabled;
     Vector2Int _curPos;
     static Shape Shape => Matrix.attachedShape;
-    static FieldMatrix Matrix => FieldMatrix.current;
+    static FieldMatrix Matrix => FieldMatrix.Active;
 
     public bool Enabled
     {

@@ -1,9 +1,10 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
 public class FieldMatrix : MonoBehaviour
 {
-    public static FieldMatrix current;
+    static FieldMatrix _active;
     
     public int size;
     public ShapeContainer shapesContainer;
@@ -29,6 +30,17 @@ public class FieldMatrix : MonoBehaviour
     Vector2Int ZeroOffsetPos =>
         (-(currentShapeDir + currentShapeDir.Rotate90(true)) + Vector2Int.one) / 2 * new Vector2Int(size - 1, size - 1) -
         currentShapeDir;
+
+    public static Action onActiveFieldSet;
+    public static FieldMatrix Active
+    {
+        get => _active;
+        set
+        {
+            _active = value;
+            onActiveFieldSet?.Invoke();
+        }
+    }
 
     Vector2Int ShapeStartOffset(Shape shape)
     {
@@ -115,7 +127,11 @@ public class FieldMatrix : MonoBehaviour
 
     public void RefreshProjection()
     {
-        if (attachedShape == null) return;
+        if (attachedShape == null)
+        {
+            SetCellsState(FieldCellState.ActiveEmpty);
+            return;
+        }
         var maxMoves = attachedShape.MaxMoves(currentShapeDir, false);
         var point1 = ZeroOffsetPos + currentShapeDir.Rotate90(true) * currentShapeOffset + attachedShape.UpDirection;
         var point2 = point1 + (maxMoves - 1) * currentShapeDir +
@@ -128,10 +144,10 @@ public class FieldMatrix : MonoBehaviour
 
         foreach (var cell in _cells)
         {
-            var val = 0;
+            var val = FieldCellState.ActiveEmpty;
             if (cell.X >= xMin && cell.X <= xMax && cell.Y >= yMin && cell.Y <= yMax)
-                val = 1;
-            cell.SetProjection(val);
+                val = FieldCellState.ShapeProjectionTrail;
+            cell.SetState(val);
         }
 
         var maxMoveVec = maxMoves * currentShapeDir;
@@ -139,7 +155,7 @@ public class FieldMatrix : MonoBehaviour
         {
             var pos = shapeCell.LocalPos + attachedShape.pos + maxMoveVec;
             if (CheckIndex(pos))
-                this[pos].SetProjection(2);
+                this[pos].SetState(FieldCellState.ShapeProjection);
         }
     }
 
@@ -163,13 +179,25 @@ public class FieldMatrix : MonoBehaviour
         if (_cells == null || size != _cells.GetLength(0) || size != _cells.GetLength(1))
         {
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.delayCall += CreateField;
+            UnityEditor.EditorApplication.delayCall += CreateCells;
 #endif
         }
     }
 
     void OnEnable()
     {
+        onActiveFieldSet += NewActiveFieldHandle;
+    }
+
+    void OnDisable()
+    {
+        if (Active == this) Active = null;
+        onActiveFieldSet -= NewActiveFieldHandle;
+    }
+
+    void NewActiveFieldHandle()
+    {
+        if (_active != this) SetState(FieldState.OnSelectScreen);
     }
 
     public void SetContainer(ShapeContainer container)
@@ -177,20 +205,18 @@ public class FieldMatrix : MonoBehaviour
         shapesContainer?.Destroy();
         shapesContainer = container;
         size = container.matrixSize;
-        CreateField();
+        CreateCells();
         
         var shape = shapesContainer.GetNext();
-        currentShapeOffset = shape.Width / 2; 
-        AttachShape(shape);
-    }
-
-    void OnDisable()
-    {
-        if (current == this) current = null;
+        if (shape != null)
+        {
+            currentShapeOffset = shape.Width / 2;
+            AttachShape(shape);
+        }
     }
 
     Transform _cellParent;
-    void CreateField()
+    void CreateCells()
     {
         if (this == null ||
             PrefabUtility.GetPrefabInstanceStatus(gameObject) == PrefabInstanceStatus.NotAPrefab &&
@@ -198,7 +224,7 @@ public class FieldMatrix : MonoBehaviour
         
         if (_cellParent == null)
         {
-            _cellParent = new GameObject("Cells container").transform;
+            _cellParent = new GameObject("Cells Container").transform;
             _cellParent.SetParent(transform);
             _cellParent.localPosition = Vector3.zero; 
             _cellParent.localRotation = Quaternion.identity;
@@ -217,13 +243,48 @@ public class FieldMatrix : MonoBehaviour
         RefreshProjection();
     }
 
+    public void SetState(FieldState state)
+    {
+        switch (state)
+        {
+            case FieldState.Active:
+                gameObject.SetActive(true);
+                shapesContainer.SetEnabled(true);
+                attachedShape?.shapeObject.gameObject.SetActive(true);
+                RefreshProjection();
+                Active = this;
+                break;
+            case FieldState.Disabled:
+                gameObject.SetActive(false);
+                break;
+            case FieldState.OnSelectScreen:
+                gameObject.SetActive(true);
+                shapesContainer.SetEnabled(false);
+                attachedShape?.shapeObject.gameObject.SetActive(false);
+                SetCellsState(FieldCellState.SelectScreen);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+        }
+    }
+
+    void SetCellsState(FieldCellState state)
+    {
+        foreach (var cell in _cells) cell.SetState(state);
+    }
+
+    public void Destroy()
+    {
+        DestroyImmediate(gameObject);
+    }
+
     public static FieldMatrix Create()
     {
         var field = Instantiate(Prefabs.Instance.fieldMatrix).GetComponent<FieldMatrix>();
         return field;
     }
 
-    public bool CheckIndex(int x, int y)
+    bool CheckIndex(int x, int y)
     {
         return x >= 0 && y >= 0 && x < _cells.GetLength(0) && y < _cells.GetLength(1);
     }

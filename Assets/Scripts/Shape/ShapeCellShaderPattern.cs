@@ -41,7 +41,7 @@ public class ShapeCellShaderPattern : MonoBehaviour
         background.material = material;
         Material mat;
         var prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
-        if (prefabStage != null && prefabStage.mode == PrefabStage.Mode.InIsolation)
+        if (prefabStage != null && prefabStage.mode == PrefabStage.Mode.InIsolation || !Application.isPlaying)
         {
             mat = background.sharedMaterial;
         }
@@ -53,25 +53,5 @@ public class ShapeCellShaderPattern : MonoBehaviour
         mat.SetVector(SizeProperty, shaderSize);
         mat.SetColor(Color0Property, GlobalConfig.Instance.palette2);
         mat.SetColor(Color1Property, GlobalConfig.Instance.palette3);
-    }
-    
-    public void SetClosedSides(bool[] sides)
-    {
-        var size = GlobalConfig.Instance.outlineThickness;
-        var sizeVec = new Vector3(size, size, size);
-        var position = Vector3.zero;
-        var scale = Vector3.one - sizeVec;
-        for (var i = 0; i < 4; i++)
-        {
-            if (!sides[i])
-            {
-                var dir = (Vector3) Utils.CoordsFromDir(i);
-                position += dir * size / 4;
-                scale += new Vector3(Mathf.Abs(dir.x), Mathf.Abs(dir.y)) * size / 2;
-            }
-        }
-
-        transform.localPosition = position;
-        transform.localScale = scale;
     }
 }

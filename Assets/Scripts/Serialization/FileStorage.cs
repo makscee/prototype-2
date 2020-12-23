@@ -9,7 +9,12 @@ public static class FileStorage
     {
         var path = ToFullPath(filePath);
         Debug.Log($"{path}");
-        if (!File.Exists(path)) return null;
+        if (!File.Exists(path))
+        {
+            Debug.Log($"File not found");
+            return null;
+        }
+
         var text = File.ReadAllText(path);
         Debug.Log($"Load file {filePath}:\n{text}");
         return text;

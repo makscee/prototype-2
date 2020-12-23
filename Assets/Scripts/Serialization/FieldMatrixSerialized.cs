@@ -24,10 +24,16 @@ public class FieldMatrixSerialized : JsonUtilitySerializable
     }
 
     const string LevelsNameTemplate = "level_{0}_{1}_{2}"; // {pack_id}_{field_row}_{field_column}
+    const string LevelsFolder = "levels"; // {pack_id}_{field_row}_{field_column}
 
     public void SaveToFile(int packID, int rowID, int columnID)
     {
-        FileStorage.SaveJsonToFile(ToJson(), GetFileName(packID, rowID, columnID));
+        SaveToFile(GetFileName(packID, rowID, columnID));
+    }
+
+    public void SaveToFile(string name)
+    {
+        FileStorage.SaveJsonToFile(ToJson(), $"{LevelsFolder}/{name}");
     }
 
     static string GetFileName(int packID, int rowID, int columnID)
@@ -42,7 +48,7 @@ public class FieldMatrixSerialized : JsonUtilitySerializable
     
     public static FieldMatrixSerialized Load(string file)
     {
-        var json = FileStorage.ReadJsonFile(file);
+        var json = FileStorage.ReadJsonFile($"{LevelsFolder}/{file}");
         if (json == null) return null;
         var fieldSerialized = new FieldMatrixSerialized(json);
         return fieldSerialized;

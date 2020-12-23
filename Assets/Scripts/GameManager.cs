@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
         DebugInput();
     }
 
-    FieldMatrix Matrix => FieldMatrix.current;
+    FieldMatrix Matrix => FieldMatrix.Active;
     void DebugInput()
     {
         if (ScreenBox.activeBox != null) return;
@@ -36,10 +36,6 @@ public class GameManager : MonoBehaviour
         {
             Matrix.Undo();
         }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Matrix.shapesContainer.SaveToFile("testLevel");
-        }
         if (Input.GetKeyDown(KeyCode.F))
         {
             var container = Matrix.shapesContainer; 
@@ -48,6 +44,23 @@ public class GameManager : MonoBehaviour
                 .Deserialize());
             if (Matrix.attachedShape == null)
                 Matrix.AttachShape(container.GetNext());
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            var field = FieldMatrix.Create();
+            var container = new ShapeContainer(field) {matrixSize = 5};
+            field.SetContainer(container);
+            FieldMatrix.Active = field;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (FieldMatrix.Active != null)
+            {
+                FieldMatrix.Active.SetState(FieldState.OnSelectScreen);
+                FieldMatrix.Active = null;
+            }
         }
     }
 }

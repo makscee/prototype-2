@@ -1,52 +1,54 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class FieldCell : MonoBehaviour
+public class FieldCell : MonoBehaviour, IPointerClickHandler
 {
+    const float AlphaDefault = 0.3f, AlphaProjectionShape = 0.6f, AlphaProjectionTrail = 0.40f, AlphaSelectScreen = 0.15f;
+    
     public int X, Y;
-    Shape occupiedBy;
-    public FieldMatrix matrix;
-    const float AlphaDefault = 0.3f, AlphaProjection = 0.6f;
-    SpriteRenderer _sr;
-    Color original;
+    public FieldMatrix field;
+    [SerializeField] SpriteRenderer sr;
+    Color _originalColor;
 
-    [SerializeField] bool debug;
-    public Shape OccupiedBy
-    {
-        get => occupiedBy;
-        set
-        {
-            occupiedBy = value;
-            // if (debug) _sr.color = _sr.color.ChangeAlpha(value == null ? AlphaDefault : 0f);
-        }
-    }
+    public Shape OccupiedBy { get; set; }
 
     void Awake()
     {
-        _sr = GetComponent<SpriteRenderer>();
-        original = _sr.color;
+        sr = GetComponent<SpriteRenderer>();
+        sr.color = GlobalConfig.Instance.palette1;
+        _originalColor = sr.color;
     }
 
     void SetCoords(int x, int y)
     {
         X = x;
         Y = y;
-        transform.localPosition = (Vector3)(matrix.ZeroPos + new Vector2(x, y)) + new Vector3(0f, 0f, 0.1f);
+        transform.localPosition = (Vector3)(field.ZeroPos + new Vector2(x, y)) + new Vector3(0f, 0f, 0.1f);
     }
 
-    public void SetProjection(int value)
+    FieldCellState _state;
+    public void SetState(FieldCellState state)
     {
-        switch (value)
+        switch (state)
         {
-            case 0:
-                _sr.color = original.ChangeAlpha(AlphaDefault);
+            case FieldCellState.ShapeProjection:
+                sr.color = _originalColor.ChangeAlpha(AlphaProjectionShape);
                 break;
-            case 1:
-                _sr.color = original.ChangeAlpha(AlphaProjection);
+            case FieldCellState.ShapeProjectionTrail:
+                sr.color = _originalColor.ChangeAlpha(AlphaProjectionTrail);
                 break;
-            case 2:
-                _sr.color = matrix.attachedShape.color.ChangeAlpha(AlphaProjection);
+            case FieldCellState.ActiveEmpty:
+                sr.color = _originalColor.ChangeAlpha(AlphaDefault);
                 break;
+            case FieldCellState.SelectScreen:
+                sr.color = _originalColor.ChangeAlpha(AlphaSelectScreen);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
+
+        _state = state;
     }
 
     public void Destroy()
@@ -58,8 +60,14 @@ public class FieldCell : MonoBehaviour
     {
         var go = Instantiate(Prefabs.Instance.fieldCell, parent);
         var fc = go.GetComponent<FieldCell>();
-        fc.matrix = matrix;
+        fc.field = matrix;
         fc.SetCoords(x, y);
         return fc;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_state == FieldCellState.SelectScreen) 
+            field.SetState(FieldState.Active);
     }
 }

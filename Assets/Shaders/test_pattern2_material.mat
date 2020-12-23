@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: test_pattern_material
-  m_Shader: {fileID: -6465566751694194690, guid: a0bba8108584147f4b9f02fd6fd5edba, type: 3}
+  m_Name: test_pattern2_material
+  m_Shader: {fileID: -6465566751694194690, guid: ae77b794777264f9481a477ddb243d52, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -70,14 +70,15 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_DF8897DB: {r: 0.1761048, g: 0.1526789, b: 0.6886792, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color0: {r: 0.95686275, g: 0.95686275, b: 0.9490196, a: 1}
-    - _Color1: {r: 0.9098039, g: 0.9098039, b: 0.9098039, a: 1}
+    - _Color0: {r: 0.2, g: 0.20392157, b: 0.3372549, a: 1}
+    - _Color1: {r: 0.023529412, g: 0.03529412, b: 0.1882353, a: 1}
     - _Color2: {r: 0, g: 0, b: 0, a: 0.6039216}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Position: {r: 0.4, g: 0, b: 0, a: 0}
+    - _Size: {r: 0.2, g: 0.2, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &3516471802198100901

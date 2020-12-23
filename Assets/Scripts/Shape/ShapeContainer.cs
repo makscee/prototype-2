@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class ShapeContainer
 {
-    public List<Shape> shapes = new List<Shape>();
+    public readonly List<Shape> shapes = new List<Shape>();
     public int matrixSize;
-    public FieldMatrix matrix;
-    ShapeContainerObject _containerObject;
+    public readonly FieldMatrix matrix;
+    readonly ShapeContainerObject _containerObject;
 
     public ShapeContainer(FieldMatrix matrix)
     {
         this.matrix = matrix;
-        _containerObject = new GameObject("Container Object").AddComponent<ShapeContainerObject>();
+        _containerObject = new GameObject("Shapes Container").AddComponent<ShapeContainerObject>();
         _containerObject.container = this;
         _containerObject.transform.SetParent(matrix.transform);
         _containerObject.matrix = matrix;
@@ -47,16 +47,14 @@ public class ShapeContainer
         shape.shapeObject.transform.localRotation = Quaternion.identity;
     }
 
-    public void SaveToFile(string filename)
-    {
-        var serializedContainer = new ShapeContainerSerialized(this);
-        var json = serializedContainer.ToJson();
-        FileStorage.SaveJsonToFile(json, filename);
-    }
-
     public void Destroy()
     {
         foreach (var shape in shapes) shape.Destroy();
         Object.Destroy(_containerObject.gameObject);
+    }
+
+    public void SetEnabled(bool value)
+    {
+        _containerObject.gameObject.SetActive(value);
     }
 }

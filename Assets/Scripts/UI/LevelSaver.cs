@@ -19,7 +19,7 @@ public class LevelSaver : LevelSelectorBox
 
     public void Save(string name)
     {
-        FieldMatrix.current.shapesContainer.SaveToFile(FileStorage.LevelPath(name, false));
+        new FieldMatrixSerialized(FieldMatrix.Active).SaveToFile(name);
         Refresh();
     }
 }

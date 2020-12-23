@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class LevelLoader : LevelSelectorBox
 {
     protected override void OnEntryClick(LevelSelectorEntry entry)
@@ -5,7 +7,7 @@ public class LevelLoader : LevelSelectorBox
         var field = FieldMatrixSerialized.Load(entry.Text)?.Deserialize();
         if (field != null)
         {
-            FieldMatrix.current = field;
+            FieldMatrix.Active = field;
         }
         Hide();
     }
