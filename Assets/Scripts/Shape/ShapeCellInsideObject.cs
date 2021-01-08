@@ -2,11 +2,10 @@ using System;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class ShapeCellCarcassObject : MonoBehaviour
+public class ShapeCellInsideObject : MonoBehaviour
 {
-    [SerializeField] bool[] closedSides = new bool[4];
     [SerializeField] bool refresh;
-    [SerializeField] CarcassOutlineSide[] sides;
+    [SerializeField] ShapeCellInside[] sides;
 
     void OnValidate()
     {
@@ -28,10 +27,7 @@ public class ShapeCellCarcassObject : MonoBehaviour
         for (var i = 0; i < 4; i++)
         {
             var dir1 = Utils.CoordsFromDirInt(i);
-            var dir2 = dir1.Rotate90(false);
-            sides[i].IsCorner =
-                GetSurroundingCell(dir1) && GetSurroundingCell(dir2) && !GetSurroundingCell(dir1 + dir2);
-            sides[i].Enable(sides[i].IsCorner || !GetSurroundingCell(dir1));
+            sides[i].Enable(GetSurroundingCell(dir1));
             sides[i].SetColor(GlobalConfig.Instance.palette1);
         }
     }

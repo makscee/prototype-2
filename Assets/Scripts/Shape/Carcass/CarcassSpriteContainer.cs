@@ -33,12 +33,12 @@ public class CarcassSpriteContainer : MonoBehaviour
         closedSides[0] = closed3;
     }
 
-    public static CarcassSpriteContainer Create(ShapeCellCarcassObject carcass)
+    public static CarcassSpriteContainer Create(ShapeCellInsideObject inside)
     {
         var closedSides = new bool[4];
         for (var i = 0; i < 4; i++)
         {
-            closedSides[i] = !carcass.GetSurroundingCell(Utils.CoordsFromDirInt(i));
+            closedSides[i] = !inside.GetSurroundingCell(Utils.CoordsFromDirInt(i));
         }
         var closedCount = closedSides.Count(b => b);
         var prefabsFiltered = Prefabs.Instance.carcassSpriteContainers.ToArray();
@@ -65,7 +65,7 @@ public class CarcassSpriteContainer : MonoBehaviour
         var result = Instantiate(prefab);
         
         var t = result.transform;
-        t.SetParent(carcass.transform);
+        t.SetParent(inside.transform);
         t.localPosition = Vector3.zero;
         t.localRotation = Quaternion.identity;
 

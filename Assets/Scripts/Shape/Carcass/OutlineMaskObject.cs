@@ -9,7 +9,7 @@ public class OutlineMaskObject : MonoBehaviour
         for (var i = 0; i < 4; i++)
             closedSides[i] = sides[i] || alwaysClosedSides[i];
         
-        var size = GlobalConfig.Instance.outlineThickness;
+        var size = GlobalConfig.Instance.thickness;
         var sizeVec = new Vector3(size, size, size);
         var position = Vector3.zero;
         var scale = Vector3.one - sizeVec;

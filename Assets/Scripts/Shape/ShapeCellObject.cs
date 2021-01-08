@@ -13,18 +13,14 @@ public class ShapeCellObject : MonoBehaviour
         return sco;
     }
 
-    ShapeCellCarcassObject _carcassObject;
-    CarcassSpriteContainer _carcassSpritesContainer;
+    ShapeCellInsideObject _insideObject;
     void Start()
     {
-        if (_carcassSpritesContainer == null)
-        {
-            _carcassObject = GetComponentInChildren<ShapeCellCarcassObject>();
-            InitCarcass();
-        }
+        _insideObject = GetComponentInChildren<ShapeCellInsideObject>();
+        InitInsides();
     }
 
-    void InitCarcass()
+    void InitInsides()
     {
         var surroundingCells = new bool[3, 3];
         for (var x = -1; x <= 1; x++)
@@ -35,8 +31,7 @@ public class ShapeCellObject : MonoBehaviour
             }
         }
 
-        _carcassObject.surroundingCells = surroundingCells;
-        _carcassObject.Refresh();
-        _carcassSpritesContainer = CarcassSpriteContainer.Create(_carcassObject);
+        _insideObject.surroundingCells = surroundingCells;
+        _insideObject.Refresh();
     }
 }

@@ -61,6 +61,13 @@ public static class Utils
         return v;
     }
 
+    public static Vector2 Abs(this Vector2 v)
+    {
+        v.x = Mathf.Abs(v.x);
+        v.y = Mathf.Abs(v.y);
+        return v;
+    }
+
     public static T Random<T>(this T[] obj)
     {
         return obj[UnityEngine.Random.Range(0, obj.Length)];

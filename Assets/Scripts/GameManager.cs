@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         Animator.Update();
-        
+
+        var config = GlobalConfig.Instance;
+        config.thickness = config.thicknessBase + Mathf.Sin(Time.time * config.sinTimeScale) * config.sinScale;
         DebugInput();
     }
 
