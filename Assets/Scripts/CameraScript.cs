@@ -41,26 +41,29 @@ public class CameraScript : MonoBehaviour
 
     void FollowShape()
     {
-        var shape = FieldMatrix.Active.attachedShape;
+        var matrix = FieldMatrix.Active;
+        var shape = matrix.attachedShape;
         // _targetPosition = (shape.shapeObject.transform.position + (Vector3)(Vector2)shape.size / 2 + FieldMatrix.current.transform.position) / 2;
         // _targetPosition = FieldMatrix.current.MatrixAttachLocalPosition + FieldMatrix.current.ZeroPos;
-        _targetPosition = FieldMatrix.Active.transform.position;
+        var t = matrix.transform;
+        _targetPosition = t.position;
         _targetRotation = shape.RotationQuaternion;
-        SetSizeTarget(FieldMatrix.Active.size);
+        SetSizeTarget(matrix.Size * t.lossyScale.x);
     }
 
     void FollowField()
     {
-        _targetPosition = FieldMatrix.Active.transform.position;
-        _targetRotation = FieldMatrix.Active.transform.rotation;
-        SetSizeTarget(FieldMatrix.Active.size);
+        var matrix = FieldMatrix.Active;
+        var t = matrix.transform;
+        _targetPosition = t.position;
+        _targetRotation = t.rotation;
+        SetSizeTarget(matrix.Size * t.lossyScale.x);
     }
 
     void FollowFieldPack()
     {
-        var aspectRatio = (float) Screen.height / Screen.width;
-        SetSizeTarget(FieldPack.active.height);
-        _targetPosition = FieldPack.active.centerPosition;
+        SetSizeTarget(FieldPack.active.height * 1.5f);
+        _targetPosition = Vector2.zero;
         _targetRotation = Quaternion.identity;
     }
 

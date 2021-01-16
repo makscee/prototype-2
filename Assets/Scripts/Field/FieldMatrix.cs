@@ -1,16 +1,17 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class FieldMatrix : MonoBehaviour
+public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 {
     static FieldMatrix _active;
-    
-    public int size;
+
+    [SerializeField] GameObject backgroundInputSprite;
+    public int packId;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
-    public Material patternMaterial;
-    public Vector2 ZeroPos => new Vector2(-(size - 1) / 2f, -(size - 1) / 2f);
+    public Vector2 ZeroPos => new Vector2(-(Size - 1) / 2f, -(Size - 1) / 2f);
 
     FieldCell[,] _cells;
 
@@ -18,8 +19,9 @@ public class FieldMatrix : MonoBehaviour
         ZeroOffsetPos + currentShapeDir.Rotate90(true) * currentShapeOffset;
 
 
-    int MaxShapeOffset => Mathf.RoundToInt((attachedShape.UpDirection.Rotate90(true) * size).magnitude -
+    int MaxShapeOffset => Mathf.RoundToInt((attachedShape.UpDirection.Rotate90(true) * Size).magnitude -
                                            (attachedShape.UpDirection.Rotate90(true) * attachedShape.size).magnitude);
+
 
     public int currentShapeOffset;
 
@@ -28,10 +30,12 @@ public class FieldMatrix : MonoBehaviour
     Vector2Int AttachedShapePosition => MatrixAttachLocalPosition + ShapeStartOffset(attachedShape);
 
     Vector2Int ZeroOffsetPos =>
-        (-(currentShapeDir + currentShapeDir.Rotate90(true)) + Vector2Int.one) / 2 * new Vector2Int(size - 1, size - 1) -
+        (-(currentShapeDir + currentShapeDir.Rotate90(true)) + Vector2Int.one) / 2 * new Vector2Int(Size - 1, Size - 1) -
         currentShapeDir;
 
+
     public static Action onActiveFieldSet;
+
     public static FieldMatrix Active
     {
         get => _active;
@@ -39,6 +43,18 @@ public class FieldMatrix : MonoBehaviour
         {
             _active = value;
             onActiveFieldSet?.Invoke();
+        }
+    }
+
+    int _size;
+
+    public int Size
+    {
+        get => _size;
+        set
+        {
+            _size = value;
+            backgroundInputSprite.transform.localScale = new Vector3(_size, _size);
         }
     }
 
@@ -176,7 +192,7 @@ public class FieldMatrix : MonoBehaviour
     
     void OnValidate()
     {
-        if (_cells == null || size != _cells.GetLength(0) || size != _cells.GetLength(1))
+        if (_cells == null || Size != _cells.GetLength(0) || Size != _cells.GetLength(1))
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.delayCall += CreateCells;
@@ -204,7 +220,7 @@ public class FieldMatrix : MonoBehaviour
     {
         shapesContainer?.Destroy();
         shapesContainer = container;
-        size = container.matrixSize;
+        Size = container.matrixSize;
         CreateCells();
         
         var shape = shapesContainer.GetNext();
@@ -232,10 +248,10 @@ public class FieldMatrix : MonoBehaviour
         foreach (var cell in _cellParent.GetComponentsInChildren<FieldCell>())
             cell.Destroy();
     
-        _cells = new FieldCell[size, size];
-        for (var x = 0; x < size; x++)
+        _cells = new FieldCell[Size, Size];
+        for (var x = 0; x < Size; x++)
         {
-            for (var y = 0; y < size; y++)
+            for (var y = 0; y < Size; y++)
             {
                 _cells[x, y] = FieldCell.Create(this, x, y, _cellParent);
             }
@@ -281,6 +297,7 @@ public class FieldMatrix : MonoBehaviour
     public static FieldMatrix Create()
     {
         var field = Instantiate(Prefabs.Instance.fieldMatrix).GetComponent<FieldMatrix>();
+        field.backgroundInputSprite.transform.localScale = new Vector3(field.Size, field.Size);
         return field;
     }
 
@@ -301,5 +318,18 @@ public class FieldMatrix : MonoBehaviour
     public FieldCell this[Vector2Int pos]
     {
         get => this[pos.x, pos.y];
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (Active == this) return;
+        if (FieldPack.active.packId == packId)
+        {
+            SetState(FieldState.Active);
+        }
+        else
+        {
+            FieldPack.active = FieldPacksLeveler.Packs[packId];
+        }
     }
 }

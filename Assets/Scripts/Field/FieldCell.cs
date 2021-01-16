@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class FieldCell : MonoBehaviour, IPointerClickHandler
+public class FieldCell : MonoBehaviour
 {
     const float AlphaDefault = 0.3f, AlphaProjectionShape = 0.6f, AlphaProjectionTrail = 0.40f, AlphaSelectScreen = 0.15f;
     
@@ -63,11 +63,5 @@ public class FieldCell : MonoBehaviour, IPointerClickHandler
         fc.field = matrix;
         fc.SetCoords(x, y);
         return fc;
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (_state == FieldCellState.SelectScreen) 
-            field.SetState(FieldState.Active);
     }
 }

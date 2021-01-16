@@ -8,7 +8,7 @@ public static class FileStorage
     public static string ReadJsonFile(string filePath)
     {
         var path = ToFullPath(filePath);
-        Debug.Log($"{path}");
+        // Debug.Log($"{path}");
         if (!File.Exists(path))
         {
             Debug.Log($"File not found");
@@ -16,7 +16,7 @@ public static class FileStorage
         }
 
         var text = File.ReadAllText(path);
-        Debug.Log($"Load file {filePath}:\n{text}");
+        // Debug.Log($"Load file {filePath}:\n{text}");
         return text;
     }
     

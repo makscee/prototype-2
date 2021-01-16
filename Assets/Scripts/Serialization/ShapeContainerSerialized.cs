@@ -10,7 +10,7 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
 
     public ShapeContainerSerialized(ShapeContainer container)
     {
-        size = container.matrix.size;
+        size = container.matrix.Size;
         shapes = new List<ShapeSerialized>(container.shapes.Count);
 
         var maxInd = container.currentIndex < container.shapes.Count

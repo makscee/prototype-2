@@ -12,29 +12,20 @@ public class FieldPack : MonoBehaviour
     FieldMatrix[,] _fields;
 
     int _fieldsSize = 3;
-    public float height => size * _fieldsSize + (size - 1) * Padding;
-    public Vector2 centerPosition => _fields[(size - 1) / 2, (size - 1) / 2].transform.position;
-
-    void OnEnable()
-    {
-        Clear();
-        LoadFields();
-        PlaceFields();
-        active = this;
-    }
-
+    public float height => (size * _fieldsSize + (size - 1) * Padding) * transform.localScale.x;
     void LoadFields()
     {
         for (var i = 0; i < size; i++)
         {
             for (var j = 0; j < size; j++)
             {
+                if (i == 1 && j == 1 && size == 3) continue;
                 var field = FieldMatrixSerialized.Load(packId, i, j)?.Deserialize();
                 if (field == null) continue;
                 field.transform.SetParent(transform);
                 field.SetState(FieldState.OnSelectScreen);
                 _fields[i, j] = field;
-                _fieldsSize = field.size;
+                _fieldsSize = field.Size;
             }
         }
     }
@@ -57,9 +48,23 @@ public class FieldPack : MonoBehaviour
             {
                 var field = _fields[i, j];
                 if (field == null) continue;
-                field.transform.localPosition = new Vector3(j, size - 1 - i) *
-                                                new Vector2(field.size + Padding, field.size + Padding);
+                field.transform.localPosition = new Vector3(j - (size - 1f) / 2, (size - 1 - i) - (size - 1f) / 2) *
+                                                new Vector2(field.Size + Padding, field.Size + Padding);
             }
         }
+    }
+
+    public static FieldPack Create(int packId)
+    {
+        var go = new GameObject($"FieldPack{packId}");
+        var size = packId == 0 ? 2 : 3;
+        var fp = go.AddComponent<FieldPack>();
+        fp.size = size;
+        fp.packId = packId;
+        
+        fp.Clear();
+        fp.LoadFields();
+        fp.PlaceFields();
+        return fp;
     }
 }

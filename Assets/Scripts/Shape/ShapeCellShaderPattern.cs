@@ -32,7 +32,7 @@ public class ShapeCellShaderPattern : MonoBehaviour
         if (!cellObject || !matrix) return;
         var cell = cellObject.cell;
         
-        shaderSize = Vector2.one / matrix.size;
+        shaderSize = Vector2.one / matrix.Size;
         shaderPosition = cell.originalPos * shaderSize;
     }
 

@@ -35,7 +35,7 @@ public class ShapeCell
             var newPos = FieldPos + dir * i;
             if (!Matrix.CheckIndex(newPos))
             {
-                if (moves > (Matrix.size * dir).magnitude || Matrix.CheckIndex(pos))
+                if (moves > (Matrix.Size * dir).magnitude || Matrix.CheckIndex(pos))
                     return false;
                 continue;
             }
