@@ -1,20 +1,19 @@
+using System;
 using UnityEngine;
 
 public class ShapeContainerObject : MonoBehaviour
 {
     public FieldMatrix matrix;
     public ShapeContainer container;
-    const float xMult = -1.3f, yMult = -0.9f, offsetX = -0.5f, offsetY = -1.4f;
-    const float scaleMult = 2.38f, xAccum = 1.1f, yAccum = 1.17f;
     
     int _lastCount = -1;
 
     Vector2 _targetPosition;
     Quaternion _targetRotation;
 
-    public ShapeContainerObject(ShapeContainer container)
+    void Awake()
     {
-        this.container = container;
+        GlobalConfig.onValidate += OnValidate;
     }
 
     const float LerpMultiplier = 10;
@@ -36,7 +35,7 @@ public class ShapeContainerObject : MonoBehaviour
         //                           (Vector3) (Vector2) (shape.size - Vector2Int.one) / 2f;
         // transform.localRotation = shape.RotationQuaternion;
         _targetPosition = matrix.MatrixAttachLocalPosition + matrix.ZeroPos +
-                                  new Vector2(offsetX, offsetY).Rotate90(true,
+                                  new Vector2(GlobalConfig.Instance.containerOffsetX, GlobalConfig.Instance.containerOffsetY).Rotate90(true,
                                       Utils.DirFromCoords(matrix.currentShapeDir));
         _targetRotation = Quaternion.AngleAxis(-90f * Utils.DirFromCoords(matrix.currentShapeDir), Vector3.forward);
         
@@ -53,13 +52,14 @@ public class ShapeContainerObject : MonoBehaviour
 
     void RefreshShapesPlacement()
     {
+        var curY = 0f;
         for (var i = container.currentIndex; i < container.shapes.Count; i++)
         {
             var shape = container.shapes[i];
-            var t = i - container.currentIndex + 1;
+            curY -= shape.Height * GlobalConfig.Instance.containerSizeScale + GlobalConfig.Instance.containerPaddingY;
             shape.shapeObject.SetTargetPosition(
-                new Vector3(t * xMult / Mathf.Pow(xAccum, t), t * yMult / Mathf.Pow(yAccum, t)));
-            shape.shapeObject.SetTargetScale(Vector3.one / t / scaleMult);
+                new Vector3(0f, curY));
+            shape.shapeObject.SetTargetScale(GlobalConfig.Instance.containerScale);
         }
     }
 }

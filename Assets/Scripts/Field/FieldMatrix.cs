@@ -72,7 +72,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         shape.AttachToMatrix();
         attachedShape = shape;
         shape.SetRotation(currentShapeDir);
-        shape.shapeObject.SetTargetScale(Vector3.one);
+        shape.shapeObject.SetTargetScale(1f);
         MoveAttachedShapeAccordingToDir(currentShapeOffset);
     }
 

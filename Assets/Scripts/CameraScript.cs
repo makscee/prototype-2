@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
+    public static CameraScript instance;
     Vector2 _targetPosition = Vector2.zero;
     Quaternion _targetRotation = Quaternion.identity;
     float _targetSize = 5;
@@ -12,6 +13,7 @@ public class CameraScript : MonoBehaviour
     void Awake()
     {
         _camera = GetComponent<Camera>();
+        instance = this;
     }
 
     void Update()

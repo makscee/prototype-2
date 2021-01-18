@@ -45,8 +45,9 @@ public class ShapeMove
         {
             var pushLength = toPush[shape];
             var allowedDeltaFrom = 1f - pushLength / totalPush;
+            var shake = shape == _mover;
             shape.shapeObject.SetTargetPosition(shape.shapeObject.CurrentPositionTarget +
-                                                pushLength * (Vector3) (Vector2) direction)
+                                                pushLength * (Vector3) (Vector2) direction, shake)
                 .AllowedDelta(allowedDeltaFrom, 1f);
         }
         return this;

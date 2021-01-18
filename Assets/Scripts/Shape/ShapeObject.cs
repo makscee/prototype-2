@@ -17,31 +17,32 @@ public class ShapeObject : MonoBehaviour
         return so;
     }
 
-    const float LerpMultiplier = 10;
-    void Update()
-    {
-        // if (transform.localScale != _targetScale)
-        //     transform.localScale = Vector3.Lerp(transform.localScale, _targetScale, Time.deltaTime * LerpMultiplier);
-        // if (transform.localPosition != _targetPosition)
-        //     transform.localPosition = Vector3.Lerp(transform.localPosition, _targetPosition, Time.deltaTime * LerpMultiplier);
-    }
-
-    public Interpolator<Vector3> SetTargetPosition(Vector3 position)
+    public Interpolator<Vector3> SetTargetPosition(Vector3 position, bool shakeCamera = false)
     {
         var lastTarget = CurrentPositionTarget;
         CurrentPositionTarget = position;
 
         var interpolator = Animator.Interpolate(lastTarget, position, GlobalConfig.Instance.shapeAnimationTime)
-            .PassDelta(v => transform.localPosition += v).Type(InterpolationType.InvSquare).NullCheck(gameObject);
+            .PassDelta(v => transform.localPosition += v).Type(InterpolationType.Linear).NullCheck(gameObject);
         interpolator.SetOwner(this);
+        if (shakeCamera)
+        {
+            interpolator.whenDone += ShapePlaceCameraShake;
+        }
         return interpolator;
     }
-    public Interpolator<Vector3> SetTargetScale(Vector3 scale)
+    
+    void ShapePlaceCameraShake()
+    {
+        CameraScript.instance.transform.position += -(Vector3)(Vector2)shape.UpDirection * GlobalConfig.Instance.cameraShakeAmount;
+    }
+    public Interpolator<Vector3> SetTargetScale(float scale)
     {
         var lastTarget = CurrentScaleTarget;
-        CurrentScaleTarget = scale;
+        var scaleV = new Vector3(scale, scale, scale);
+        CurrentScaleTarget = scaleV;
 
-        var interpolator = Animator.Interpolate(lastTarget, scale, GlobalConfig.Instance.shapeAnimationTime)
+        var interpolator = Animator.Interpolate(lastTarget, scaleV, GlobalConfig.Instance.shapeAnimationTime)
             .PassDelta(v => transform.localScale += v).Type(InterpolationType.InvSquare).NullCheck(gameObject);
         return interpolator;
     }

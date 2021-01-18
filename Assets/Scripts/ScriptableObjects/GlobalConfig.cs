@@ -11,6 +11,10 @@ public class GlobalConfig : ScriptableObject
 
     [SerializeField] public Color palette0, palette1, palette2, palette3;
     
+    [SerializeField] public float containerScale, containerOffsetX, containerOffsetY, containerPaddingY, containerSizeScale;
+
+    [SerializeField] public float cameraShakeAmount;
+    
     public static GlobalConfig Instance => GetInstance();
 
     static GlobalConfig _instanceCache;
@@ -19,5 +23,11 @@ public class GlobalConfig : ScriptableObject
         if (_instanceCache == null)
             _instanceCache = Resources.Load<GlobalConfig>("GlobalConfig");
         return _instanceCache;
+    }
+
+    public static Action onValidate;
+    void OnValidate()
+    {
+        onValidate?.Invoke();
     }
 }

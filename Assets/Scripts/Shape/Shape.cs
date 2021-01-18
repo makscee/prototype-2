@@ -41,7 +41,7 @@ public class Shape
     {
         shapeObject.SetParent(Matrix.transform);
         shapeObject.SetTargetPosition(pos + Matrix.ZeroPos);
-        shapeObject.SetTargetScale(Vector3.one);
+        shapeObject.SetTargetScale(1f);
         shapeObject.transform.localRotation = Quaternion.identity;
     }
 
