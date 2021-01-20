@@ -34,7 +34,9 @@ public class ShapeObject : MonoBehaviour
     
     void ShapePlaceCameraShake()
     {
-        CameraScript.instance.transform.position += -(Vector3)(Vector2)shape.UpDirection * GlobalConfig.Instance.cameraShakeAmount;
+        CameraScript.instance.transform.position += -(Vector3) (Vector2) shape.UpDirection *
+                                                    (GlobalConfig.Instance.cameraShakeAmount *
+                                                     shape.Matrix.transform.lossyScale.x);
     }
     public Interpolator<Vector3> SetTargetScale(float scale)
     {

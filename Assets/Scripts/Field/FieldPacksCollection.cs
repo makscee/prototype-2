@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class FieldPacksLeveler : MonoBehaviour
+public class FieldPacksCollection : MonoBehaviour
 {
     public static readonly FieldPack[] Packs = new FieldPack[5];
 
@@ -21,8 +21,21 @@ public class FieldPacksLeveler : MonoBehaviour
             t.localScale = new Vector3(scale, scale, scale);
             t.localPosition = Vector3.zero;
             Packs[i] = fp;
+            fp.SetFieldsState();
         }
 
         FieldPack.active = Packs[0];
+    }
+
+    public static void PropagateFieldMatrixState(FieldState state, FieldMatrix except = null)
+    {
+        foreach (var fieldPack in Packs)
+        {
+            foreach (var fieldMatrix in fieldPack.fields)
+            {
+                if (fieldMatrix == except) continue;
+                fieldMatrix.SetState(state);
+            }
+        }
     }
 }

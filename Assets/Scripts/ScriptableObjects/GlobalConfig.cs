@@ -5,7 +5,7 @@ using UnityEngine;
 public class GlobalConfig : ScriptableObject
 {
     [SerializeField] public Color levelSelectorEntry1, levelSelectorEntry2;
-    [SerializeField] public float shapeAnimationTime;
+    [SerializeField] public float shapeAnimationTime, fieldCellsAnimationTime;
     [SerializeField, Range(0f, 1f)] public float thickness, thicknessBase, sinScale, sinTimeScale;
     [SerializeField] public Material shaderPatternMaterial;
 

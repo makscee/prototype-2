@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 
 public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 {
-    static FieldMatrix _active;
-
     [SerializeField] GameObject backgroundInputSprite;
     public int packId;
     public ShapeContainer shapesContainer;
@@ -33,16 +31,14 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         (-(currentShapeDir + currentShapeDir.Rotate90(true)) + Vector2Int.one) / 2 * new Vector2Int(Size - 1, Size - 1) -
         currentShapeDir;
 
-
-    public static Action onActiveFieldSet;
-
     public static FieldMatrix Active
     {
         get => _active;
         set
         {
             _active = value;
-            onActiveFieldSet?.Invoke();
+            if (value == null)
+                FieldPacksCollection.PropagateFieldMatrixState(FieldState.OnSelectScreen);
         }
     }
 
@@ -200,20 +196,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    void OnEnable()
-    {
-        onActiveFieldSet += NewActiveFieldHandle;
-    }
-
-    void OnDisable()
-    {
-        if (Active == this) Active = null;
-        onActiveFieldSet -= NewActiveFieldHandle;
-    }
-
     void NewActiveFieldHandle()
     {
-        if (_active != this) SetState(FieldState.OnSelectScreen);
+        if (Active != this) SetState(FieldState.OnSelectScreen);
     }
 
     public void SetContainer(ShapeContainer container)
@@ -259,9 +244,10 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         RefreshProjection();
     }
 
-    public void SetState(FieldState state)
+    public FieldState state;
+    public void SetState(FieldState value)
     {
-        switch (state)
+        switch (value)
         {
             case FieldState.Active:
                 gameObject.SetActive(true);
@@ -269,6 +255,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 attachedShape?.shapeObject.gameObject.SetActive(true);
                 RefreshProjection();
                 Active = this;
+                FieldPacksCollection.PropagateFieldMatrixState(FieldState.Disabled, this);
                 break;
             case FieldState.Disabled:
                 gameObject.SetActive(false);
@@ -280,9 +267,35 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 SetCellsState(FieldCellState.SelectScreen);
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+                throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }
+
+        state = value;
     }
+
+    public Action<FieldCompletion> onCompletionStateChange;
+    public FieldCompletion completion;
+
+    public void SetCompletion(FieldCompletion value)
+    {
+        switch (value)
+        {
+            case FieldCompletion.Locked:
+                break;
+            case FieldCompletion.Unlocked:
+                break;
+            case FieldCompletion.Complete:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(value), value, null);
+        }
+
+        completion = value;
+        onCompletionStateChange?.Invoke(value);
+    }
+    
+    
+    static FieldMatrix _active;
 
     void SetCellsState(FieldCellState state)
     {
@@ -322,14 +335,21 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (Active == this) return;
-        if (FieldPack.active.packId == packId)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            SetState(FieldState.Active);
+            if (Active == this) return;
+            if (FieldPack.active.packId == packId)
+            {
+                SetState(FieldState.Active);
+            }
+            else
+            {
+                FieldPack.active = FieldPacksCollection.Packs[packId];
+            }
         }
         else
         {
-            FieldPack.active = FieldPacksLeveler.Packs[packId];
+            SetCompletion(FieldCompletion.Unlocked);
         }
     }
 }
