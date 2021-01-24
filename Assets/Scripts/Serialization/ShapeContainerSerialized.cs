@@ -6,11 +6,9 @@ using UnityEngine;
 public class ShapeContainerSerialized : JsonUtilitySerializable
 {
     public List<ShapeSerialized> shapes;
-    public int size;
 
     public ShapeContainerSerialized(ShapeContainer container)
     {
-        size = container.matrix.Size;
         shapes = new List<ShapeSerialized>(container.shapes.Count);
 
         var maxInd = container.currentIndex < container.shapes.Count
@@ -31,7 +29,6 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
             shape.Matrix = matrix;
             container.Add(shape);
         }
-        container.matrixSize = size;
         return container;
     }
 }

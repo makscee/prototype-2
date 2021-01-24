@@ -1,4 +1,4 @@
-public enum FieldState
+public enum FieldScreenState
 {
     Active, Disabled, OnSelectScreen
 }

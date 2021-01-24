@@ -9,7 +9,7 @@ public class FieldCell : MonoBehaviour
     public int X, Y;
     Vector2 _posOffset;
     [SerializeField] SpriteRenderer sr;
-    Color _originalColor;
+    [SerializeField] Color originalColor;
 
     public Shape OccupiedBy { get; set; }
 
@@ -21,13 +21,6 @@ public class FieldCell : MonoBehaviour
             _posOffset = value;
             RefreshPosition();
         }
-    }
-
-    void Awake()
-    {
-        sr = GetComponent<SpriteRenderer>();
-        sr.color = GlobalConfig.Instance.palette1;
-        _originalColor = sr.color;
     }
 
     void SetCoords(int x, int y)
@@ -49,16 +42,16 @@ public class FieldCell : MonoBehaviour
         switch (state)
         {
             case FieldCellState.ShapeProjection:
-                sr.color = _originalColor.ChangeAlpha(AlphaProjectionShape);
+                sr.color = originalColor.ChangeAlpha(AlphaProjectionShape);
                 break;
             case FieldCellState.ShapeProjectionTrail:
-                sr.color = _originalColor.ChangeAlpha(AlphaProjectionTrail);
+                sr.color = originalColor.ChangeAlpha(AlphaProjectionTrail);
                 break;
             case FieldCellState.ActiveEmpty:
-                sr.color = _originalColor.ChangeAlpha(AlphaDefault);
+                sr.color = originalColor.ChangeAlpha(AlphaDefault);
                 break;
             case FieldCellState.SelectScreen:
-                sr.color = _originalColor.ChangeAlpha(AlphaSelectScreen);
+                sr.color = originalColor.ChangeAlpha(AlphaSelectScreen);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -67,7 +60,7 @@ public class FieldCell : MonoBehaviour
         _state = state;
     }
 
-    void FieldCompletionStateChangeHandle(FieldCompletion value)
+    public void FieldCompletionStateChangeHandle(FieldCompletion value)
     {
         var t = transform;
         switch (value)
@@ -103,8 +96,10 @@ public class FieldCell : MonoBehaviour
     {
         var go = Instantiate(Prefabs.Instance.fieldCell, parent);
         var fc = go.GetComponent<FieldCell>();
+        fc.sr = fc.GetComponent<SpriteRenderer>();
+        fc.sr.color = GlobalConfig.Instance.palette1;
+        fc.originalColor = fc.sr.color;
         fc.field = field;
-        field.onCompletionStateChange += fc.FieldCompletionStateChangeHandle;
         fc.SetCoords(x, y);
         return fc;
     }

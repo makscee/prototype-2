@@ -11,7 +11,7 @@ public static class FileStorage
         // Debug.Log($"{path}");
         if (!File.Exists(path))
         {
-            Debug.Log($"File not found");
+            // Debug.Log($"File not found");
             return null;
         }
 
@@ -27,24 +27,9 @@ public static class FileStorage
         Debug.Log($"save json to {path}:\n{json}");
     }
 
-    public static string LevelPath(string name, bool full)
-    {
-        return LevelsFolderPath(full) + $"/{name}.json";
-    }
-
-    public static string LevelsFolderPath(bool full)
-    {
-        return (full ? PathBase : "") + "levels";
-    }
-
     public static string ToFullPath(string filename, string extension = "json")
     {
         if (!filename.EndsWith($".{extension}")) filename += $".{extension}";
         return $"{PathBase}{filename}";
-    }
-
-    public static string PathToFolder(string name)
-    {
-        return $"{PathBase}{name}";
     }
 }

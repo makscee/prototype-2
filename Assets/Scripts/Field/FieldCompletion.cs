@@ -1,4 +1,4 @@
 public enum FieldCompletion
 {
-    Locked, Unlocked, Complete
+    Locked = 0, Unlocked = 1, Complete = 2
 }

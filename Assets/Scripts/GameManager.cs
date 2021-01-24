@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,7 +16,6 @@ public class GameManager : MonoBehaviour
     FieldMatrix Matrix => FieldMatrix.Active;
     void DebugInput()
     {
-        if (ScreenBox.activeBox != null) return;
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(0);
@@ -48,19 +46,11 @@ public class GameManager : MonoBehaviour
                 Matrix.AttachShape(container.GetNext());
         }
 
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            var field = FieldMatrix.Create();
-            var container = new ShapeContainer(field) {matrixSize = 5};
-            field.SetContainer(container);
-            FieldMatrix.Active = field;
-        }
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (FieldMatrix.Active != null)
             {
-                FieldMatrix.Active.SetState(FieldState.OnSelectScreen);
+                FieldMatrix.Active.SetState(FieldScreenState.OnSelectScreen);
                 FieldMatrix.Active = null;
             }
         }

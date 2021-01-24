@@ -14,7 +14,6 @@ public class Shape
     public List<ShapeCell> cells = new List<ShapeCell>();
     public Vector2Int size;
     public Vector2Int ShapeRotationSize => new Vector2Int(Width, Height);
-    public Color color;
 
     public int Width => Mathf.RoundToInt((upDirection.Rotate90(true) * size).magnitude);
     public int Height => Mathf.RoundToInt((upDirection * size).magnitude);

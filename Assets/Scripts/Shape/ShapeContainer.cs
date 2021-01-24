@@ -4,7 +4,6 @@ using UnityEngine;
 public class ShapeContainer
 {
     public readonly List<Shape> shapes = new List<Shape>();
-    public int matrixSize;
     public readonly FieldMatrix matrix;
     readonly ShapeContainerObject _containerObject;
 
@@ -13,13 +12,17 @@ public class ShapeContainer
         this.matrix = matrix;
         _containerObject = new GameObject("Shapes Container").AddComponent<ShapeContainerObject>();
         _containerObject.container = this;
-        _containerObject.transform.SetParent(matrix.transform);
+        Transform transform;
+        (transform = _containerObject.transform).SetParent(matrix.transform);
+        transform.position = Vector3.zero;
+        transform.localScale = Vector3.one;
         _containerObject.matrix = matrix;
     }
 
     public void Add(Shape shape, int ind = -1)
     {
         shape.shapeObject.SetParent(_containerObject.transform);
+        shape.shapeObject.transform.localScale = shape.shapeObject.CurrentScaleTarget;
         shape.SetRotation(Vector2Int.up);
         ind = ind == -1 ? shapes.Count : ind;
         shapes.Insert(ind, shape);

@@ -1,14 +1,18 @@
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] GameObject backgroundInputSprite;
-    public int packId;
+    [SerializeField] GameObject backgroundInputSprite, completionSprite;
+    public int packId, fieldId;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
+
+    public FieldScreenState screenState;    
+    public FieldCompletion completion;
     public Vector2 ZeroPos => new Vector2(-(Size - 1) / 2f, -(Size - 1) / 2f);
 
     FieldCell[,] _cells;
@@ -38,11 +42,11 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         {
             _active = value;
             if (value == null)
-                FieldPacksCollection.PropagateFieldMatrixState(FieldState.OnSelectScreen);
+                FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.OnSelectScreen);
         }
     }
 
-    int _size;
+    [SerializeField] int _size;
 
     public int Size
     {
@@ -52,6 +56,11 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             _size = value;
             backgroundInputSprite.transform.localScale = new Vector3(_size, _size);
         }
+    }
+
+    void OnEnable()
+    {
+        CollectCells();
     }
 
     Vector2Int ShapeStartOffset(Shape shape)
@@ -82,7 +91,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     }
 
 
-    MoveTracker _moveTracker = new MoveTracker();
+    readonly MoveTracker _moveTracker = new MoveTracker();
     public void InsertShape()
     {
         if (attachedShape == null) return;
@@ -92,7 +101,25 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             var shape = shapesContainer.GetNext();
             if (shape != null)
                 AttachShape(shape);
-            else attachedShape = null;
+            else
+            {
+                attachedShape = null;
+                var allFilled = true;
+                foreach (var cell in _cells)
+                    if (cell.OccupiedBy == null)
+                    {
+                        allFilled = false;
+                        break;
+                    }
+
+                if (allFilled)
+                {
+                    Progress.SetComplete(packId, fieldId);
+                    SetCompletion(FieldCompletion.Complete);
+                    if (!FieldMatrixSerialized.FileExists(packId, fieldId))
+                        new FieldMatrixSerialized(this).SaveToFile(packId, fieldId);
+                }
+            }
             _moveTracker.AddMove(move);
         }
     }
@@ -185,29 +212,15 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             if (cell.OccupiedBy == shape)
                 cell.OccupiedBy = null;
     }
-    
-    void OnValidate()
-    {
-        if (_cells == null || Size != _cells.GetLength(0) || Size != _cells.GetLength(1))
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.delayCall += CreateCells;
-#endif
-        }
-    }
 
     void NewActiveFieldHandle()
     {
-        if (Active != this) SetState(FieldState.OnSelectScreen);
+        if (Active != this) SetState(FieldScreenState.OnSelectScreen);
     }
 
     public void SetContainer(ShapeContainer container)
     {
-        shapesContainer?.Destroy();
         shapesContainer = container;
-        Size = container.matrixSize;
-        CreateCells();
-        
         var shape = shapesContainer.GetNext();
         if (shape != null)
         {
@@ -216,21 +229,14 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    Transform _cellParent;
-    void CreateCells()
+    [SerializeField] Transform cellParent;
+    public void CreateCells()
     {
         if (this == null ||
             PrefabUtility.GetPrefabInstanceStatus(gameObject) == PrefabInstanceStatus.NotAPrefab &&
             PrefabUtility.GetPrefabAssetType(gameObject) != PrefabAssetType.NotAPrefab) return;
         
-        if (_cellParent == null)
-        {
-            _cellParent = new GameObject("Cells Container").transform;
-            _cellParent.SetParent(transform);
-            _cellParent.localPosition = Vector3.zero; 
-            _cellParent.localRotation = Quaternion.identity;
-        }
-        foreach (var cell in _cellParent.GetComponentsInChildren<FieldCell>())
+        foreach (var cell in cellParent.GetComponentsInChildren<FieldCell>())
             cell.Destroy();
     
         _cells = new FieldCell[Size, Size];
@@ -238,31 +244,39 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         {
             for (var y = 0; y < Size; y++)
             {
-                _cells[x, y] = FieldCell.Create(this, x, y, _cellParent);
+                _cells[x, y] = FieldCell.Create(this, x, y, cellParent);
             }
         }
         RefreshProjection();
     }
 
-    public FieldState state;
-    public void SetState(FieldState value)
+    void CollectCells()
+    {
+        _cells = new FieldCell[Size, Size];
+        foreach (var cell in cellParent.GetComponentsInChildren<FieldCell>())
+            _cells[cell.X, cell.Y] = cell;
+    }
+
+    public void SetState(FieldScreenState value)
     {
         switch (value)
         {
-            case FieldState.Active:
+            case FieldScreenState.Active:
                 gameObject.SetActive(true);
-                shapesContainer.SetEnabled(true);
+                if (shapesContainer == null)
+                    FieldMatrixSerialized.Load(packId, fieldId).LoadShapesContainer(this);
+                shapesContainer?.SetEnabled(true);
                 attachedShape?.shapeObject.gameObject.SetActive(true);
                 RefreshProjection();
                 Active = this;
-                FieldPacksCollection.PropagateFieldMatrixState(FieldState.Disabled, this);
+                FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.Disabled, this);
                 break;
-            case FieldState.Disabled:
+            case FieldScreenState.Disabled:
                 gameObject.SetActive(false);
                 break;
-            case FieldState.OnSelectScreen:
+            case FieldScreenState.OnSelectScreen:
                 gameObject.SetActive(true);
-                shapesContainer.SetEnabled(false);
+                shapesContainer?.SetEnabled(false);
                 attachedShape?.shapeObject.gameObject.SetActive(false);
                 SetCellsState(FieldCellState.SelectScreen);
                 break;
@@ -270,14 +284,12 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }
 
-        state = value;
+        screenState = value;
     }
-
-    public Action<FieldCompletion> onCompletionStateChange;
-    public FieldCompletion completion;
 
     public void SetCompletion(FieldCompletion value)
     {
+        completion = value;
         switch (value)
         {
             case FieldCompletion.Locked:
@@ -285,13 +297,18 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             case FieldCompletion.Unlocked:
                 break;
             case FieldCompletion.Complete:
+                CompleteTransition();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }
+        foreach (var cell in _cells) cell.FieldCompletionStateChangeHandle(value);
+    }
 
-        completion = value;
-        onCompletionStateChange?.Invoke(value);
+    void CompleteTransition()
+    {
+        completionSprite.transform.localScale = new Vector3(_size, _size, _size);
+        completionSprite.SetActive(true);
     }
     
     
@@ -340,7 +357,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             if (Active == this) return;
             if (FieldPack.active.packId == packId)
             {
-                SetState(FieldState.Active);
+                SetState(FieldScreenState.Active);
             }
             else
             {

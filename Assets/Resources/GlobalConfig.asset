@@ -15,7 +15,8 @@ MonoBehaviour:
   levelSelectorEntry1: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
   levelSelectorEntry2: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
   shapeAnimationTime: 0.15
-  thickness: 0.18772073
+  fieldCellsAnimationTime: 0.3
+  thickness: 0.13405327
   thicknessBase: 0.15
   sinScale: 0.1
   sinTimeScale: 0.429

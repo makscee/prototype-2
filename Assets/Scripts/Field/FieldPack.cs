@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class FieldPack : MonoBehaviour
 {
     public static FieldPack active;
@@ -13,14 +12,22 @@ public class FieldPack : MonoBehaviour
     public FieldMatrix[] fields;
 
     public float Height => sideSize * transform.localScale.x;
+
+    void OnEnable()
+    {
+        InitFieldsStates();
+    }
+
     void LoadFields()
     {
         fields = new FieldMatrix[FieldsCount];
         for (var fieldId = 0; fieldId < FieldsCount; fieldId++)
         {
-                var field = FieldMatrixSerialized.Load(packId, fieldId)?.Deserialize();
+                var field = FieldMatrixSerialized.Load(packId, fieldId)?.CreateField();
                 if (field == null) continue;
                 field.transform.SetParent(transform);
+                field.fieldId = fieldId;
+                field.packId = packId;
                 fields[fieldId] = field;
         }
     }
@@ -44,13 +51,15 @@ public class FieldPack : MonoBehaviour
         }
     }
 
-    public void SetFieldsState()
+    public void InitFieldsStates()
     {
         for (var fieldId = 0; fieldId < FieldsCount; fieldId++)
         {
             var field = fields[fieldId];
-            field.SetState(FieldState.OnSelectScreen);
-            field.SetCompletion(fieldId == 0 ? FieldCompletion.Unlocked : FieldCompletion.Locked);
+            field.SetState(FieldScreenState.OnSelectScreen);
+            field.SetCompletion(Progress.IsComplete(field.packId, field.fieldId)
+                ? FieldCompletion.Complete
+                : FieldCompletion.Locked);
         }
     }
 

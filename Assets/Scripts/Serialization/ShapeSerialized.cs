@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [Serializable]
 public class ShapeSerialized : JsonUtilitySerializable
@@ -59,10 +58,8 @@ public class ShapeSerialized : JsonUtilitySerializable
 
     public Shape Deserialize()
     {
-        var color = Random.ColorHSV(0f, 1f, 0.3f, 0.5f, 1f, 1f);
         var shapeCells = new List<ShapeCell>();
         var shape = new Shape(shapeCells) {
-            color = color,
             size = new Vector2Int(sizeX, sizeY), 
             originalPos = new Vector2Int(originalX, originalY),
             originalRotation = originalRotation,

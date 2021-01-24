@@ -40,7 +40,6 @@ public class ShapeBuilder : MonoBehaviour
 
     void Update()
     {
-        if (ScreenBox.activeBox != null) return;
         if (Enabled && Input.GetKeyUp(KeyCode.LeftShift))
         {
             Enabled = false;
