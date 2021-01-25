@@ -20,6 +20,11 @@ public static class Progress
         return Data.Contains($"{packId}_{fieldId}");
     }
 
+    public static bool IsComplete(FieldMatrix field)
+    {
+        return IsComplete(field.packId, field.fieldId);
+    }
+
     public static void SetComplete(int packId, int fieldId)
     {
         Data.Add($"{packId}_{fieldId}");
@@ -34,5 +39,11 @@ public static class Progress
     public static void Save()
     {
         new ProgressSerialized(Data).SaveToFile();
+    }
+
+    public static void ResetAndSave()
+    {
+        _data.Clear();
+        Save();
     }
 }

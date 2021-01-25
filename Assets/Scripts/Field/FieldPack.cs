@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class FieldPack : MonoBehaviour
@@ -13,11 +14,6 @@ public class FieldPack : MonoBehaviour
 
     public float Height => sideSize * transform.localScale.x;
 
-    void OnEnable()
-    {
-        InitFieldsStates();
-    }
-
     void LoadFields()
     {
         fields = new FieldMatrix[FieldsCount];
@@ -31,12 +27,15 @@ public class FieldPack : MonoBehaviour
                 fields[fieldId] = field;
         }
     }
-    
-    void Clear()
+
+    public bool Complete { get; private set; }
+    public void FieldCompleted()
     {
-        fields = new FieldMatrix[FieldsCount];
-        var childFields = GetComponentsInChildren<FieldMatrix>();
-        foreach (var t in childFields) t.Destroy();
+        if (fields.All(field => field.completion == FieldCompletion.Complete))
+        {
+            Complete = true;
+            active = FieldPacksCollection.Packs[packId + 1];
+        }
     }
 
     void PlaceFields()
@@ -48,18 +47,6 @@ public class FieldPack : MonoBehaviour
                 var scale = 1f / field.Size;
                 field.transform.localScale = new Vector3(scale, scale, scale);
                 field.transform.localPosition = FieldIdToUnitPos(fieldId) * PushApartMult;
-        }
-    }
-
-    public void InitFieldsStates()
-    {
-        for (var fieldId = 0; fieldId < FieldsCount; fieldId++)
-        {
-            var field = fields[fieldId];
-            field.SetState(FieldScreenState.OnSelectScreen);
-            field.SetCompletion(Progress.IsComplete(field.packId, field.fieldId)
-                ? FieldCompletion.Complete
-                : FieldCompletion.Locked);
         }
     }
 

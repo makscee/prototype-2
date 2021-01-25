@@ -54,5 +54,11 @@ public class GameManager : MonoBehaviour
                 FieldMatrix.Active = null;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Progress.ResetAndSave();
+            SceneManager.LoadScene(0);
+        }
     }
 }

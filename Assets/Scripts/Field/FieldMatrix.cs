@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +13,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public FieldScreenState screenState;    
     public FieldCompletion completion;
+
+    public FieldMatrix[] dependencies;
     public Vector2 ZeroPos => new Vector2(-(Size - 1) / 2f, -(Size - 1) / 2f);
 
     FieldCell[,] _cells;
@@ -61,6 +63,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     void OnEnable()
     {
         CollectCells();
+        SubscribeCompletionDependency();
+        InitCompletion();
     }
 
     Vector2Int ShapeStartOffset(Shape shape)
@@ -287,6 +291,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         screenState = value;
     }
 
+    public Action<FieldMatrix, FieldCompletion> onCompletionChange;
     public void SetCompletion(FieldCompletion value)
     {
         completion = value;
@@ -298,11 +303,42 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 break;
             case FieldCompletion.Complete:
                 CompleteTransition();
+                FieldPacksCollection.Packs[packId].FieldCompleted();
+                Active = null;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }
         foreach (var cell in _cells) cell.FieldCompletionStateChangeHandle(value);
+        onCompletionChange?.Invoke(this, value);
+    }
+
+    void InitCompletion()
+    {
+        if (Progress.IsComplete(this))
+            SetCompletion(FieldCompletion.Complete);
+        else if (_leftDependencies.Count == 0) 
+            SetCompletion(FieldCompletion.Unlocked);
+        else SetCompletion(FieldCompletion.Locked);
+    }
+
+    HashSet<FieldMatrix> _leftDependencies = new HashSet<FieldMatrix>();
+    void SubscribeCompletionDependency()
+    {
+        foreach (var fieldMatrix in dependencies)
+        {
+            if (Progress.IsComplete(fieldMatrix)) continue;
+            fieldMatrix.onCompletionChange += DependencyCompletionChangeHandle;
+            _leftDependencies.Add(fieldMatrix);
+        }
+    }
+
+    void DependencyCompletionChangeHandle(FieldMatrix field, FieldCompletion value)
+    {
+        if (value != FieldCompletion.Complete) return;
+        _leftDependencies.Remove(field);
+        if (_leftDependencies.Count == 0)
+            SetCompletion(FieldCompletion.Unlocked);
     }
 
     void CompleteTransition()
