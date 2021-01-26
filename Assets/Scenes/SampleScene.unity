@@ -16087,7 +16087,8 @@ MonoBehaviour:
   fieldId: 6
   screenState: 2
   completion: 0
-  dependencies: []
+  dependencies:
+  - {fileID: 1063324176}
   currentShapeOffset: 0
   currentShapeDir: {x: 0, y: 1}
   _size: 5
@@ -19899,6 +19900,7 @@ MonoBehaviour:
   - {fileID: 1803841644}
   - {fileID: 2071421267}
   - {fileID: 1709907165}
+  shapeSidesThickness: 0
 --- !u!1 &296118595
 GameObject:
   m_ObjectHideFlags: 0
@@ -20088,6 +20090,7 @@ MonoBehaviour:
   - {fileID: 1860832845}
   - {fileID: 241041705}
   - {fileID: 1522898773}
+  shapeSidesThickness: 0
 --- !u!1 &299411965
 GameObject:
   m_ObjectHideFlags: 0
@@ -29781,6 +29784,7 @@ MonoBehaviour:
   - {fileID: 2083055422}
   - {fileID: 1814666914}
   - {fileID: 1174139862}
+  shapeSidesThickness: 0
 --- !u!1 &481563058
 GameObject:
   m_ObjectHideFlags: 0
@@ -32119,6 +32123,7 @@ MonoBehaviour:
   - {fileID: 1156263162}
   - {fileID: 316828866}
   - {fileID: 1063324176}
+  shapeSidesThickness: 0
 --- !u!1 &521116364
 GameObject:
   m_ObjectHideFlags: 0
@@ -42831,7 +42836,8 @@ MonoBehaviour:
   fieldId: 3
   screenState: 2
   completion: 0
-  dependencies: []
+  dependencies:
+  - {fileID: 1063324176}
   currentShapeOffset: 0
   currentShapeDir: {x: 0, y: 1}
   _size: 5
@@ -48405,6 +48411,7 @@ MonoBehaviour:
   - {fileID: 1996189980}
   - {fileID: 1810767626}
   - {fileID: 481563060}
+  shapeSidesThickness: 0
 --- !u!1 &810495914
 GameObject:
   m_ObjectHideFlags: 0
@@ -56121,7 +56128,8 @@ MonoBehaviour:
   fieldId: 1
   screenState: 2
   completion: 0
-  dependencies: []
+  dependencies:
+  - {fileID: 1063324176}
   currentShapeOffset: 0
   currentShapeDir: {x: 0, y: 1}
   _size: 5
@@ -128686,7 +128694,8 @@ MonoBehaviour:
   fieldId: 4
   screenState: 2
   completion: 0
-  dependencies: []
+  dependencies:
+  - {fileID: 1063324176}
   currentShapeOffset: 0
   currentShapeDir: {x: 0, y: 1}
   _size: 5

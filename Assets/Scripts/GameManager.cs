@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     {
         Animator.Update();
 
-        var config = GlobalConfig.Instance;
-        config.thickness = config.thicknessBase + Mathf.Sin(Time.time * config.sinTimeScale) * config.sinScale;
+        // var config = GlobalConfig.Instance;
+        // config.thickness = config.thicknessBase + Mathf.Sin(Time.time * config.sinTimeScale) * config.sinScale;
         DebugInput();
     }
 

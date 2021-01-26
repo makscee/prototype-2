@@ -11,6 +11,7 @@ public class FieldPack : MonoBehaviour
     int FieldsCount => sideSize == 3 ? 8 : 4;
     public int packId;
     public FieldMatrix[] fields;
+    public float shapeSidesThickness;
 
     public float Height => sideSize * transform.localScale.x;
 

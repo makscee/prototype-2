@@ -16,6 +16,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public FieldMatrix[] dependencies;
     public Vector2 ZeroPos => new Vector2(-(Size - 1) / 2f, -(Size - 1) / 2f);
+    public FieldPack Pack => FieldPacksCollection.Packs[packId];
 
     FieldCell[,] _cells;
 
@@ -77,7 +78,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public void AttachShape(Shape shape)
     {
-        shape.Matrix = this;
+        shape.Field = this;
         shape.AttachToMatrix();
         attachedShape = shape;
         shape.SetRotation(currentShapeDir);

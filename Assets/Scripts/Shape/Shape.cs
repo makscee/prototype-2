@@ -28,7 +28,7 @@ public class Shape
         this.cells = cells;
     }
 
-    public FieldMatrix Matrix { get; set; }
+    public FieldMatrix Field { get; set; }
 
     public Vector2Int UpDirection
     {
@@ -38,8 +38,8 @@ public class Shape
 
     public void AttachToMatrix()
     {
-        shapeObject.SetParent(Matrix.transform);
-        shapeObject.SetTargetPosition(pos + Matrix.ZeroPos);
+        shapeObject.SetParent(Field.transform);
+        shapeObject.SetTargetPosition(pos + Field.ZeroPos);
         shapeObject.SetTargetScale(1f);
         shapeObject.transform.localRotation = Quaternion.identity;
     }
@@ -72,12 +72,12 @@ public class Shape
     public void Translate(Vector2Int newPos)
     {
         pos = newPos;
-        Matrix.UpdateShapePlacement(this);
+        Field.UpdateShapePlacement(this);
     }
 
     public void PlaceShapeObject()
     {
-        shapeObject.SetTargetPosition(Matrix.ZeroPos + pos);
+        shapeObject.SetTargetPosition(Field.ZeroPos + pos);
     }
 
     public IEnumerable<Shape> Move(Vector2Int dir)
@@ -87,7 +87,7 @@ public class Shape
         {
             if (shapeCell == null)
                 continue;
-            var occupiedBy = Matrix[shapeCell.FieldPos + dir]?.OccupiedBy;
+            var occupiedBy = Field[shapeCell.FieldPos + dir]?.OccupiedBy;
             if (occupiedBy != null && occupiedBy != this)
                 toPush.Add(occupiedBy);
         }
@@ -102,7 +102,7 @@ public class Shape
 
     public bool CanMove(Vector2Int dir, int amount = 1, bool allowPush = true)
     {
-        return Matrix == null || cells.All(cell => cell == null || cell.CanMove(dir, amount, allowPush));
+        return Field == null || cells.All(cell => cell == null || cell.CanMove(dir, amount, allowPush));
     }
 
     public int MaxMoves(Vector2Int dir, bool allowPush = true)

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShapeCell
 {
-    FieldMatrix Matrix => shape.Matrix;
+    FieldMatrix Matrix => shape.Field;
     public Shape shape;
     public ShapeCellObject shapeCellObject;
     public Vector2Int originalPos;

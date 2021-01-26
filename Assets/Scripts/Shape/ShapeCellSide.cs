@@ -2,31 +2,22 @@ using System;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class ShapeCellInside : MonoBehaviour
+public class ShapeCellSide : MonoBehaviour
 {
     [SerializeField] SpriteRenderer sr;
     [SerializeField] int dir;
 
-    void Awake()
+    FieldPack _pack;
+
+    void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
+        _pack = GetComponentInParent<FieldPack>();
         Refresh();
     }
 
-    void OnValidate()
-    {
-        // Refresh();
-    }
-
-    float _thicknessBefore = -1f;
     void Update()
     {
-        // ReSharper disable once CompareOfFloatsByEqualityOperator
-        if (_thicknessBefore != GlobalConfig.Instance.thickness)
-        {
-            _thicknessBefore = GlobalConfig.Instance.thickness;
-            Refresh();
-        }
+        Refresh();
     }
 
     public void Enable(bool value)
@@ -38,10 +29,11 @@ public class ShapeCellInside : MonoBehaviour
     {
         sr.color = c;
     }
+    float Thickness => GlobalConfig.Instance.thicknessBase + _pack.shapeSidesThickness;
 
     void Refresh()
     {
-        var thickness = Mathf.Clamp(GlobalConfig.Instance.thickness, -1f, 1f);
+        var thickness = Mathf.Clamp(Thickness, -1f, 1f);
         var dirVec = Utils.CoordsFromDir(dir);
         float t;
         transform.localPosition = dirVec * new Vector2(t = thickness / 4, t);

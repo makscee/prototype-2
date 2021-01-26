@@ -33,7 +33,7 @@ public class CarcassSpriteContainer : MonoBehaviour
         closedSides[0] = closed3;
     }
 
-    public static CarcassSpriteContainer Create(ShapeCellInsideObject inside)
+    public static CarcassSpriteContainer Create(ShapeCellSidesContainer inside)
     {
         var closedSides = new bool[4];
         for (var i = 0; i < 4; i++)

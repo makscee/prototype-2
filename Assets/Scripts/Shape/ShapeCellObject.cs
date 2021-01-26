@@ -13,10 +13,10 @@ public class ShapeCellObject : MonoBehaviour
         return sco;
     }
 
-    ShapeCellInsideObject _insideObject;
+    ShapeCellSidesContainer _sidesContainer;
     void Start()
     {
-        _insideObject = GetComponentInChildren<ShapeCellInsideObject>();
+        _sidesContainer = GetComponentInChildren<ShapeCellSidesContainer>();
         InitInsides();
     }
 
@@ -31,7 +31,7 @@ public class ShapeCellObject : MonoBehaviour
             }
         }
 
-        _insideObject.surroundingCells = surroundingCells;
-        _insideObject.Refresh();
+        _sidesContainer.surroundingCells = surroundingCells;
+        _sidesContainer.Refresh();
     }
 }

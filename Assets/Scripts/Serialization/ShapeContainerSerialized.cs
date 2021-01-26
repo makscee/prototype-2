@@ -26,7 +26,7 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
         foreach (var shapeSerialized in shapes)
         {
             var shape = shapeSerialized.Deserialize();
-            shape.Matrix = matrix;
+            shape.Field = matrix;
             container.Add(shape);
         }
         return container;

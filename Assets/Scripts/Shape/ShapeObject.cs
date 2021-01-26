@@ -27,16 +27,21 @@ public class ShapeObject : MonoBehaviour
         interpolator.SetOwner(this);
         if (shakeCamera)
         {
-            interpolator.whenDone += ShapePlaceCameraShake;
+            interpolator.whenDone += ShapePlacedEffect;
         }
         return interpolator;
     }
     
-    void ShapePlaceCameraShake()
+    void ShapePlacedEffect()
     {
         CameraScript.instance.transform.position += -(Vector3) (Vector2) shape.UpDirection *
                                                     (GlobalConfig.Instance.cameraShakeAmount *
-                                                     shape.Matrix.transform.lossyScale.x);
+                                                     shape.Field.transform.lossyScale.x);
+        var pack = shape.Field.Pack;
+        pack.shapeSidesThickness += 1.5f;
+        Animator.Interpolate(0f, 1.5f, GlobalConfig.Instance.sidesThicknessRecoverTime)
+            .PassDelta(v => pack.shapeSidesThickness -= v)
+            .Type(InterpolationType.InvSquare);
     }
     public Interpolator<Vector3> SetTargetScale(float scale)
     {

@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class ShapeCellInsideObject : MonoBehaviour
+public class ShapeCellSidesContainer : MonoBehaviour
 {
     [SerializeField] bool refresh;
-    [SerializeField] ShapeCellInside[] sides;
+    [SerializeField] ShapeCellSide[] sides;
 
     void OnValidate()
     {
