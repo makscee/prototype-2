@@ -30,7 +30,7 @@ public class FieldPacksCollection : MonoBehaviour
     {
         foreach (var fieldPack in GetComponentsInChildren<FieldPack>())
             DestroyImmediate(fieldPack.gameObject);
-        Packs = new FieldPack[5];
+        Packs = new FieldPack[2];
         for (var i = 0; i < Packs.Length; i++)
         {
             var fp = FieldPack.Create(i);
@@ -49,7 +49,7 @@ public class FieldPacksCollection : MonoBehaviour
             foreach (var fieldMatrix in fieldPack.fields)
             {
                 if (fieldMatrix == except) continue;
-                fieldMatrix.SetState(screenState);
+                fieldMatrix.SetScreenState(screenState);
             }
         }
     }

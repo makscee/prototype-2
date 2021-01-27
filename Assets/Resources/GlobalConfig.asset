@@ -16,11 +16,14 @@ MonoBehaviour:
   levelSelectorEntry2: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
   shapeAnimationTime: 0.15
   fieldCellsAnimationTime: 0.3
+  sidesThicknessRecoverTime: 0.4
+  balanceSetAnimationTime: 1
+  fieldCompleteTransitionAnimationTime: 0.5
   thickness: 0.13405327
-  thicknessBase: 0.15
+  thicknessBase: 0.314
   sinScale: 0.1
   sinTimeScale: 0.429
-  shaderPatternMaterial: {fileID: 2100000, guid: 7f88abe7d544946d7bc264b5c56321e9, type: 2}
+  shaderPatternMaterial: {fileID: 2100000, guid: 2adf93c9a62b44d45a6968a951484465, type: 2}
   palette0: {r: 0.95686275, g: 0.67058825, b: 0.76862746, a: 1}
   palette1: {r: 0.34901962, g: 0.35686275, b: 0.5137255, a: 1}
   palette2: {r: 0.2, g: 0.20392157, b: 0.3372549, a: 1}

@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] GameObject backgroundInputSprite, completionSprite;
+    [SerializeField] PatternMaterialProvider _patternMaterialProvider;
     public int packId, fieldId;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
@@ -63,9 +64,12 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     void OnEnable()
     {
-        CollectCells();
-        SubscribeCompletionDependency();
-        InitCompletion();
+        if (Application.isPlaying)
+        {
+            CollectCells();
+            SubscribeCompletionDependency();
+            InitCompletion();
+        }
     }
 
     Vector2Int ShapeStartOffset(Shape shape)
@@ -121,6 +125,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 {
                     Progress.SetComplete(packId, fieldId);
                     SetCompletion(FieldCompletion.Complete);
+                    CompleteTransition();
                     if (!FieldMatrixSerialized.FileExists(packId, fieldId))
                         new FieldMatrixSerialized(this).SaveToFile(packId, fieldId);
                 }
@@ -220,7 +225,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     void NewActiveFieldHandle()
     {
-        if (Active != this) SetState(FieldScreenState.OnSelectScreen);
+        if (Active != this) SetScreenState(FieldScreenState.OnSelectScreen);
     }
 
     public void SetContainer(ShapeContainer container)
@@ -235,6 +240,19 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     }
 
     [SerializeField] Transform cellParent;
+    [SerializeField] bool createCells;
+
+    void OnValidate()
+    {
+        if (createCells)
+        {
+#if UNITY_EDITOR
+            EditorApplication.delayCall += CreateCells;
+            createCells = false;
+#endif
+        }
+    }
+
     public void CreateCells()
     {
         if (this == null ||
@@ -262,7 +280,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             _cells[cell.X, cell.Y] = cell;
     }
 
-    public void SetState(FieldScreenState value)
+    public void SetScreenState(FieldScreenState value)
     {
         switch (value)
         {
@@ -283,13 +301,15 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 gameObject.SetActive(true);
                 shapesContainer?.SetEnabled(false);
                 attachedShape?.shapeObject.gameObject.SetActive(false);
-                SetCellsState(FieldCellState.SelectScreen);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }
-
         screenState = value;
+        foreach (var cell in _cells)
+        {
+            cell.FieldScreenStateChangeHandle(value);
+        }
     }
 
     public Action<FieldMatrix, FieldCompletion> onCompletionChange;
@@ -303,14 +323,11 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             case FieldCompletion.Unlocked:
                 break;
             case FieldCompletion.Complete:
-                CompleteTransition();
-                FieldPacksCollection.Packs[packId].FieldCompleted();
-                Active = null;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }
-        foreach (var cell in _cells) cell.FieldCompletionStateChangeHandle(value);
+        foreach (var cell in _cells) cell.FieldCompletionChangeHandle(value);
         onCompletionChange?.Invoke(this, value);
     }
 
@@ -344,12 +361,23 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     void CompleteTransition()
     {
-        completionSprite.transform.localScale = new Vector3(_size, _size, _size);
-        completionSprite.SetActive(true);
+        // completionSprite.transform.localScale = new Vector3(_size, _size, _size);
+        // completionSprite.SetActive(true);
+        _patternMaterialProvider.SetBalanceAnimated(1f).Delay((GlobalConfig.Instance.sidesThicknessRecoverTime + GlobalConfig.Instance.fieldCompleteTransitionAnimationTime) * 2)
+            .WhenDone(() =>
+            {
+                FieldPacksCollection.Packs[packId].FieldCompleted();
+                Active = null;
+            });
+        Animator.Interpolate(shapeSidesThickness, 1f, GlobalConfig.Instance.fieldCompleteTransitionAnimationTime)
+            .PassDelta(v => shapeSidesThickness += v)
+            .Delay(GlobalConfig.Instance.sidesThicknessRecoverTime * 2)
+            .Type(InterpolationType.InvSquare);
     }
     
     
     static FieldMatrix _active;
+    public float shapeSidesThickness;
 
     void SetCellsState(FieldCellState state)
     {
@@ -394,7 +422,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             if (Active == this) return;
             if (FieldPack.active.packId == packId)
             {
-                SetState(FieldScreenState.Active);
+                SetScreenState(FieldScreenState.Active);
             }
             else
             {

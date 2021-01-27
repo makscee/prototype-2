@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 8912627421783522403}
   - component: {fileID: 8912627421783522402}
   - component: {fileID: 8912627421783522401}
+  - component: {fileID: -8513132669391830134}
   m_Layer: 0
   m_Name: FieldMatrix
   m_TagString: Untagged
@@ -240,13 +241,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundInputSprite: {fileID: 8354499636810340281}
   completionSprite: {fileID: 4353744490884049717}
+  _patternMaterialProvider: {fileID: -8513132669391830134}
   packId: 0
   fieldId: 0
   screenState: 0
   completion: 0
+  dependencies: []
   currentShapeOffset: 0
   currentShapeDir: {x: 0, y: 1}
+  _size: 0
   cellParent: {fileID: 6979695257556868552}
+  createCells: 0
+  shapeSidesThickness: 0
+--- !u!114 &-8513132669391830134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8912627421783522400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b816c934544aafa44370bf56a9c2c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 0}
 --- !u!1 &8912627421834962984
 GameObject:
   m_ObjectHideFlags: 0

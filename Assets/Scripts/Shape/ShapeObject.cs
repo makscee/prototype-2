@@ -37,10 +37,10 @@ public class ShapeObject : MonoBehaviour
         CameraScript.instance.transform.position += -(Vector3) (Vector2) shape.UpDirection *
                                                     (GlobalConfig.Instance.cameraShakeAmount *
                                                      shape.Field.transform.lossyScale.x);
-        var pack = shape.Field.Pack;
-        pack.shapeSidesThickness += 1.5f;
+        var field = shape.Field;
+        field.shapeSidesThickness += 1.5f;
         Animator.Interpolate(0f, 1.5f, GlobalConfig.Instance.sidesThicknessRecoverTime)
-            .PassDelta(v => pack.shapeSidesThickness -= v)
+            .PassDelta(v => field.shapeSidesThickness -= v)
             .Type(InterpolationType.InvSquare);
     }
     public Interpolator<Vector3> SetTargetScale(float scale)

@@ -7,11 +7,11 @@ public class ShapeCellSide : MonoBehaviour
     [SerializeField] SpriteRenderer sr;
     [SerializeField] int dir;
 
-    FieldPack _pack;
+    FieldMatrix _field;
 
     void Start()
     {
-        _pack = GetComponentInParent<FieldPack>();
+        _field = GetComponentInParent<FieldMatrix>();
         Refresh();
     }
 
@@ -29,7 +29,7 @@ public class ShapeCellSide : MonoBehaviour
     {
         sr.color = c;
     }
-    float Thickness => GlobalConfig.Instance.thicknessBase + _pack.shapeSidesThickness;
+    float Thickness => GlobalConfig.Instance.thicknessBase + _field.shapeSidesThickness;
 
     void Refresh()
     {

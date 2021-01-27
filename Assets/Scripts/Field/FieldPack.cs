@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class FieldPack : MonoBehaviour
 {
     public static FieldPack active;
@@ -11,21 +12,31 @@ public class FieldPack : MonoBehaviour
     int FieldsCount => sideSize == 3 ? 8 : 4;
     public int packId;
     public FieldMatrix[] fields;
-    public float shapeSidesThickness;
+
+    [SerializeField] bool initFields;
+
+    void OnValidate()
+    {
+        if (initFields)
+        {
+            initFields = false;
+            LoadFields();
+            PlaceFields();
+        }
+    }
 
     public float Height => sideSize * transform.localScale.x;
 
     void LoadFields()
     {
-        fields = new FieldMatrix[FieldsCount];
-        for (var fieldId = 0; fieldId < FieldsCount; fieldId++)
+        fields = GetComponentsInChildren<FieldMatrix>();
+        for (var fieldId = 0; fieldId < fields.Length; fieldId++)
         {
-                var field = FieldMatrixSerialized.Load(packId, fieldId)?.CreateField();
-                if (field == null) continue;
-                field.transform.SetParent(transform);
-                field.fieldId = fieldId;
-                field.packId = packId;
-                fields[fieldId] = field;
+            var field = fields[fieldId];
+            field.transform.SetParent(transform);
+            field.fieldId = fieldId;
+            field.packId = packId;
+            field.gameObject.name = $"fm {packId}_{fieldId}";
         }
     }
 

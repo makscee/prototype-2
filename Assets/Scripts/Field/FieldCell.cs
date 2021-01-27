@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FieldCell : MonoBehaviour
 {
-    const float AlphaDefault = 0.3f, AlphaProjectionShape = 0.6f, AlphaProjectionTrail = 0.40f, AlphaSelectScreen = 0.15f;
+    const float ActiveScale = 0.95f, AlphaDefault = 0.3f, AlphaProjectionShape = 0.6f, AlphaProjectionTrail = 0.40f, AlphaSelectScreen = 0.3f;
 
     public FieldMatrix field;
     public int X, Y;
@@ -60,7 +60,34 @@ public class FieldCell : MonoBehaviour
         _state = state;
     }
 
-    public void FieldCompletionStateChangeHandle(FieldCompletion value)
+    public void FieldScreenStateChangeHandle(FieldScreenState value)
+    {
+        var t = transform;
+        switch (value)
+        {
+            case FieldScreenState.Active:
+                Animator.Interpolate(t.localScale, new Vector3(ActiveScale, ActiveScale, ActiveScale), GlobalConfig.Instance.fieldCellsAnimationTime)
+                    .PassValue(v =>
+                    {
+                        t.localScale = v;
+                    });
+                break;
+            case FieldScreenState.Disabled:
+                break;
+            case FieldScreenState.OnSelectScreen:
+                Animator.Interpolate(t.localScale, Vector3.one, GlobalConfig.Instance.fieldCellsAnimationTime)
+                    .PassValue(v =>
+                    {
+                        t.localScale = v;
+                    });
+                sr.color = originalColor.ChangeAlpha(AlphaSelectScreen);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(value), value, null);
+        }
+    }
+
+    public void FieldCompletionChangeHandle(FieldCompletion value)
     {
         var t = transform;
         switch (value)

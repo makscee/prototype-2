@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
         {
             if (FieldMatrix.Active != null)
             {
-                FieldMatrix.Active.SetState(FieldScreenState.OnSelectScreen);
                 FieldMatrix.Active = null;
             }
         }
@@ -59,6 +58,11 @@ public class GameManager : MonoBehaviour
         {
             Progress.ResetAndSave();
             SceneManager.LoadScene(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            GlobalConfig.Instance.shaderPatternMaterial.SetFloat("_Balance", 1f);
         }
     }
 }
