@@ -62,13 +62,15 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    void OnEnable()
+    void Awake()
     {
         if (Application.isPlaying)
         {
             CollectCells();
             SubscribeCompletionDependency();
             InitCompletion();
+            completionSprite.GetComponent<SpriteRenderer>().color = GlobalConfig.Instance.palette3;
+            Pack.PlaceField(this);
         }
     }
 
@@ -124,7 +126,6 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 if (allFilled)
                 {
                     Progress.SetComplete(packId, fieldId);
-                    SetCompletion(FieldCompletion.Complete);
                     CompleteTransition();
                     if (!FieldMatrixSerialized.FileExists(packId, fieldId))
                         new FieldMatrixSerialized(this).SaveToFile(packId, fieldId);
@@ -323,6 +324,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             case FieldCompletion.Unlocked:
                 break;
             case FieldCompletion.Complete:
+                completionSprite.transform.localScale = new Vector3(_size, _size, _size);
+                completionSprite.SetActive(true);
+                shapesContainer?.SetEnabled(false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
@@ -356,7 +360,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         if (value != FieldCompletion.Complete) return;
         _leftDependencies.Remove(field);
         if (_leftDependencies.Count == 0)
-            SetCompletion(FieldCompletion.Unlocked);
+            Animator.Invoke(() => SetCompletion(FieldCompletion.Unlocked)).In(1f);
     }
 
     void CompleteTransition()
@@ -366,6 +370,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         _patternMaterialProvider.SetBalanceAnimated(1f).Delay((GlobalConfig.Instance.sidesThicknessRecoverTime + GlobalConfig.Instance.fieldCompleteTransitionAnimationTime) * 2)
             .WhenDone(() =>
             {
+                SetCompletion(FieldCompletion.Complete);
                 FieldPacksCollection.Packs[packId].FieldCompleted();
                 Active = null;
             });
@@ -419,7 +424,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (Active == this) return;
+            if (Active == this || completion != FieldCompletion.Unlocked) return;
             if (FieldPack.active.packId == packId)
             {
                 SetScreenState(FieldScreenState.Active);

@@ -46,7 +46,7 @@ public class ShapeContainerObject : MonoBehaviour
 
     void OnValidate()
     {
-        if (container != null)
+        if (container != null && Application.isPlaying)
             RefreshShapesPlacement();
     }
 

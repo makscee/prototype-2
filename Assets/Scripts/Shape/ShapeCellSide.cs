@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[ExecuteInEditMode]
+// [ExecuteInEditMode]
 public class ShapeCellSide : MonoBehaviour
 {
     [SerializeField] SpriteRenderer sr;

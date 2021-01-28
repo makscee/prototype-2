@@ -7,7 +7,7 @@ public class FieldPack : MonoBehaviour
 {
     public static FieldPack active;
     
-    const float PushApartMult = 1.1f;
+    const float PushApartMult = 1.5f;
     [SerializeField] int sideSize = 3;
     int FieldsCount => sideSize == 3 ? 8 : 4;
     public int packId;
@@ -43,6 +43,7 @@ public class FieldPack : MonoBehaviour
     public bool Complete { get; private set; }
     public void FieldCompleted()
     {
+        PlaceFields();
         if (fields.All(field => field.completion == FieldCompletion.Complete))
         {
             Complete = true;
@@ -54,12 +55,16 @@ public class FieldPack : MonoBehaviour
     {
         for (var fieldId = 0; fieldId < FieldsCount; fieldId++)
         {
-                var field = fields[fieldId];
-                if (field == null) continue;
-                var scale = 1f / field.Size;
-                field.transform.localScale = new Vector3(scale, scale, scale);
-                field.transform.localPosition = FieldIdToUnitPos(fieldId) * PushApartMult;
+            var field = fields[fieldId];
+            PlaceField(field);
         }
+    }
+
+    public void PlaceField(FieldMatrix field)
+    {
+        var scale = 1f / field.Size;
+        field.transform.localScale = new Vector3(scale, scale, scale);
+        field.transform.localPosition = FieldIdToUnitPos(field.fieldId) * (field.completion == FieldCompletion.Complete ? 1f : PushApartMult);
     }
 
     Vector2 FieldIdToUnitPos(int fieldId)
