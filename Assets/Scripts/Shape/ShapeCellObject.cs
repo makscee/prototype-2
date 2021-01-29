@@ -4,19 +4,20 @@ using UnityEngine;
 public class ShapeCellObject : MonoBehaviour
 {
     public ShapeCell cell;
+    public ShapeCellSidesContainer sidesContainer;
+    public Shape shape;
     public static ShapeCellObject Create(Vector2Int pos, Shape shape, ShapeCell cell)
     {
         var sco = Instantiate(Prefabs.Instance.shapeCellObject, shape.shapeObject.transform)
             .GetComponent<ShapeCellObject>();
+        sco.shape = shape;
         sco.transform.localPosition = (Vector2)pos;
         sco.cell = cell;
         return sco;
     }
 
-    ShapeCellSidesContainer _sidesContainer;
     void Start()
     {
-        _sidesContainer = GetComponentInChildren<ShapeCellSidesContainer>();
         InitInsides();
     }
 
@@ -31,7 +32,7 @@ public class ShapeCellObject : MonoBehaviour
             }
         }
 
-        _sidesContainer.surroundingCells = surroundingCells;
-        _sidesContainer.Refresh();
+        sidesContainer.surroundingCells = surroundingCells;
+        sidesContainer.Refresh();
     }
 }

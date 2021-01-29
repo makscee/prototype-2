@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6952522465971174545}
   - component: {fileID: 2735136612931146570}
+  - component: {fileID: 1669159776911738641}
   m_Layer: 0
   m_Name: Completion Sprite
   m_TagString: Untagged
@@ -50,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,6 +83,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1669159776911738641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4353744490884049717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f7b9764f9f403d84f5c597c236d826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balance: 0.5
+  frequency: 1
+  speed: 1
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  material: {fileID: 0}
+  sr: {fileID: 2735136612931146570}
 --- !u!1 &8354499636810340281
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +169,7 @@ GameObject:
   - component: {fileID: 8912627421783522403}
   - component: {fileID: 8912627421783522402}
   - component: {fileID: 8912627421783522401}
-  - component: {fileID: -8513132669391830134}
+  - component: {fileID: 7913060807744885928}
   m_Layer: 0
   m_Name: FieldMatrix
   m_TagString: Untagged
@@ -240,20 +259,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundInputSprite: {fileID: 8354499636810340281}
-  completionSprite: {fileID: 4353744490884049717}
-  _patternMaterialProvider: {fileID: -8513132669391830134}
+  completionSprite: {fileID: 1669159776911738641}
+  _patternMaterialProvider: {fileID: 7913060807744885928}
   packId: 0
   fieldId: 0
   screenState: 0
   completion: 0
-  dependencies: []
+  dependencies1: []
+  dependencies2: []
   currentShapeOffset: 0
   currentShapeDir: {x: 0, y: 1}
   _size: 0
   cellParent: {fileID: 6979695257556868552}
   createCells: 0
   shapeSidesThickness: 0
---- !u!114 &-8513132669391830134
+--- !u!114 &7913060807744885928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -262,10 +282,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8912627421783522400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b816c934544aafa44370bf56a9c2c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 92f7b9764f9f403d84f5c597c236d826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  balance: 0.5
+  frequency: 1
+  speed: 1
+  tint: {r: 1, g: 1, b: 1, a: 1}
   material: {fileID: 0}
+  sr: {fileID: 2735136612931146570}
 --- !u!1 &8912627421834962984
 GameObject:
   m_ObjectHideFlags: 0

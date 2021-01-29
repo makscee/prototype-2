@@ -29,13 +29,12 @@ public class CameraScript : MonoBehaviour
         }
         ApplyTarget();
     }
-
-    const float LerpMultiplier = 10;
     void ApplyTarget()
     {
+        var config = GlobalConfig.Instance;
         Transform t;
         var targetPosition = new Vector3(_targetPosition.x, _targetPosition.y, transform.position.z);
-        var lerpDelta = Time.deltaTime * LerpMultiplier;
+        var lerpDelta = Time.deltaTime * config.cameraFollowSpeed;
         (t = transform).position = Vector3.Lerp(t.position, targetPosition, lerpDelta);
         t.rotation = Quaternion.Lerp(t.rotation, _targetRotation, lerpDelta);
         _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _targetSize, lerpDelta);

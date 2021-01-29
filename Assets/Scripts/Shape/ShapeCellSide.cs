@@ -7,19 +7,6 @@ public class ShapeCellSide : MonoBehaviour
     [SerializeField] SpriteRenderer sr;
     [SerializeField] int dir;
 
-    FieldMatrix _field;
-
-    void Start()
-    {
-        _field = GetComponentInParent<FieldMatrix>();
-        Refresh();
-    }
-
-    void Update()
-    {
-        Refresh();
-    }
-
     public void Enable(bool value)
     {
         gameObject.SetActive(value);
@@ -29,11 +16,10 @@ public class ShapeCellSide : MonoBehaviour
     {
         sr.color = c;
     }
-    float Thickness => GlobalConfig.Instance.thicknessBase + _field.shapeSidesThickness;
 
-    void Refresh()
+    public void Refresh(float thickness)
     {
-        var thickness = Mathf.Clamp(Thickness, -1f, 1f);
+        thickness = Mathf.Clamp(thickness, -1f, 1f);
         var dirVec = Utils.CoordsFromDir(dir);
         float t;
         transform.localPosition = dirVec * new Vector2(t = thickness / 4, t);

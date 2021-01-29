@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] GameObject backgroundInputSprite, completionSprite;
+    [SerializeField] GameObject backgroundInputSprite;
+    [SerializeField] PatternMaterialProvider completionSprite;
     [SerializeField] PatternMaterialProvider _patternMaterialProvider;
     public int packId, fieldId;
     public ShapeContainer shapesContainer;
@@ -15,7 +16,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     public FieldScreenState screenState;    
     public FieldCompletion completion;
 
-    public FieldMatrix[] dependencies;
+    public FieldMatrix[] dependencies1, dependencies2;
     public Vector2 ZeroPos => new Vector2(-(Size - 1) / 2f, -(Size - 1) / 2f);
     public FieldPack Pack => FieldPacksCollection.Packs[packId];
 
@@ -69,7 +70,6 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             CollectCells();
             SubscribeCompletionDependency();
             InitCompletion();
-            completionSprite.GetComponent<SpriteRenderer>().color = GlobalConfig.Instance.palette3;
             Pack.PlaceField(this);
         }
     }
@@ -325,7 +325,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 break;
             case FieldCompletion.Complete:
                 completionSprite.transform.localScale = new Vector3(_size, _size, _size);
-                completionSprite.SetActive(true);
+                completionSprite.gameObject.SetActive(true);
                 shapesContainer?.SetEnabled(false);
                 break;
             default:
@@ -339,44 +339,66 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     {
         if (Progress.IsComplete(this))
             SetCompletion(FieldCompletion.Complete);
-        else if (_leftDependencies.Count == 0) 
+        else if (_leftDependencies1.Count == 0 ||
+                 dependencies2 != null && dependencies2.Length != 0 && _leftDependencies2.Count == 0)
             SetCompletion(FieldCompletion.Unlocked);
         else SetCompletion(FieldCompletion.Locked);
     }
 
-    HashSet<FieldMatrix> _leftDependencies = new HashSet<FieldMatrix>();
+    readonly HashSet<FieldMatrix> _leftDependencies1 = new HashSet<FieldMatrix>();
+    readonly HashSet<FieldMatrix> _leftDependencies2 = new HashSet<FieldMatrix>();
+
     void SubscribeCompletionDependency()
     {
-        foreach (var fieldMatrix in dependencies)
+        foreach (var fieldMatrix in dependencies1)
         {
             if (Progress.IsComplete(fieldMatrix)) continue;
             fieldMatrix.onCompletionChange += DependencyCompletionChangeHandle;
-            _leftDependencies.Add(fieldMatrix);
+            _leftDependencies1.Add(fieldMatrix);
+        }
+        foreach (var fieldMatrix in dependencies2)
+        {
+            if (Progress.IsComplete(fieldMatrix)) continue;
+            fieldMatrix.onCompletionChange += DependencyCompletionChangeHandle;
+            _leftDependencies2.Add(fieldMatrix);
         }
     }
 
     void DependencyCompletionChangeHandle(FieldMatrix field, FieldCompletion value)
     {
         if (value != FieldCompletion.Complete) return;
-        _leftDependencies.Remove(field);
-        if (_leftDependencies.Count == 0)
+        _leftDependencies1.Remove(field);
+        _leftDependencies2.Remove(field);
+        if (dependencies1 != null && dependencies1.Length != 0 && _leftDependencies1.Count == 0 ||
+            dependencies2 != null && dependencies2.Length != 0 && _leftDependencies2.Count == 0)
             Animator.Invoke(() => SetCompletion(FieldCompletion.Unlocked)).In(1f);
     }
 
     void CompleteTransition()
     {
-        // completionSprite.transform.localScale = new Vector3(_size, _size, _size);
-        // completionSprite.SetActive(true);
-        _patternMaterialProvider.SetBalanceAnimated(1f).Delay((GlobalConfig.Instance.sidesThicknessRecoverTime + GlobalConfig.Instance.fieldCompleteTransitionAnimationTime) * 2)
+        var config = GlobalConfig.Instance;
+        Animator.Interpolate(_patternMaterialProvider.balance, 1f, config.balanceSetAnimationTime)
+            .PassDelta(v =>
+            {
+                _patternMaterialProvider.balance += v;
+                _patternMaterialProvider.SetShaderProperties();
+            })
+            .Delay((config.sidesThicknessRecoverTime + config.fieldCompleteTransitionAnimationTime) * 2)
             .WhenDone(() =>
             {
+                Animator.Interpolate(1f, 0.5f, config.balanceSetAnimationTime)
+                    .PassValue(v =>
+                    {
+                        completionSprite.balance = v;
+                        completionSprite.SetShaderProperties();
+                    }).Type(InterpolationType.InvSquare);
                 SetCompletion(FieldCompletion.Complete);
                 FieldPacksCollection.Packs[packId].FieldCompleted();
                 Active = null;
             });
-        Animator.Interpolate(shapeSidesThickness, 1f, GlobalConfig.Instance.fieldCompleteTransitionAnimationTime)
+        Animator.Interpolate(shapeSidesThickness, 1.5f, config.fieldCompleteTransitionAnimationTime)
             .PassDelta(v => shapeSidesThickness += v)
-            .Delay(GlobalConfig.Instance.sidesThicknessRecoverTime * 2)
+            .Delay(config.sidesThicknessRecoverTime * 2)
             .Type(InterpolationType.InvSquare);
     }
     

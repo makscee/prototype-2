@@ -8,10 +8,7 @@ public class Prefabs : ScriptableObject
     public GameObject fieldCell;
     public GameObject shapeObject;
     public GameObject shapeCellObject;
-    public GameObject levelEntry;
 
-    public CarcassSpriteContainer[] carcassSpriteContainers;
-    
     public static Prefabs Instance => GetInstance();
 
     static Prefabs _instanceCache;

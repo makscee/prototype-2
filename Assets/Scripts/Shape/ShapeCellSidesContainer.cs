@@ -6,6 +6,9 @@ public class ShapeCellSidesContainer : MonoBehaviour
 {
     [SerializeField] bool refresh;
     [SerializeField] ShapeCellSide[] sides;
+    [SerializeField] ShapeCellObject shapeCellObject;
+    
+    float Thickness => GlobalConfig.Instance.thicknessBase + shapeCellObject.shape.Field.shapeSidesThickness;
 
     void OnValidate()
     {
@@ -18,6 +21,19 @@ public class ShapeCellSidesContainer : MonoBehaviour
     public bool GetSurroundingCell(Vector2Int pos)
     {
         return surroundingCells[1 + pos.x, 1 + pos.y];
+    }
+
+    void Update()
+    {
+        RefreshSides();
+    }
+
+    public void RefreshSides()
+    {
+        foreach (var side in sides)
+        {
+            side.Refresh(Thickness);
+        }
     }
 
     public void Refresh()

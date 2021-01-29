@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 5603462181182378144}
   - component: {fileID: 3322316915052168152}
   m_Layer: 0
-  m_Name: Carcass
+  m_Name: SidesContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -442,6 +442,7 @@ MonoBehaviour:
   - {fileID: 5697747575780815130}
   - {fileID: 5809739035022083981}
   - {fileID: 4575237559822199521}
+  shapeCellObject: {fileID: 2185444879697758450}
 --- !u!1 &6343468132939157368
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,3 +583,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42a72daacef64b89b65c5ff55d6f83b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sidesContainer: {fileID: 3322316915052168152}

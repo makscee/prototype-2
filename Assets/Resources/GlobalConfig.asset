@@ -34,3 +34,4 @@ MonoBehaviour:
   containerPaddingY: 0.12
   containerSizeScale: 0.25
   cameraShakeAmount: 0.4
+  cameraFollowSpeed: 5

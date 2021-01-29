@@ -59,5 +59,7 @@ public class ShapeContainer
     public void SetEnabled(bool value)
     {
         _containerObject.gameObject.SetActive(value);
+        foreach (var shape in shapes) 
+            shape.shapeObject.gameObject.SetActive(value);
     }
 }
