@@ -36,6 +36,8 @@ public class Shape
         private set => upDirection = value;
     }
 
+    public int Rotation => Utils.DirFromCoords(upDirection);
+
     public void AttachToMatrix()
     {
         shapeObject.SetParent(Field.transform);
@@ -80,29 +82,35 @@ public class Shape
         shapeObject.SetTargetPosition(Field.ZeroPos + pos);
     }
 
-    public IEnumerable<Shape> Move(Vector2Int dir)
+    public IEnumerable<Shape> Move(Vector2Int dir, HashSet<Shape> moveCandidates = null)
     {
         var toPush = new HashSet<Shape>();
+        if (moveCandidates == null) moveCandidates = new HashSet<Shape>();
         foreach (var shapeCell in cells)
         {
             if (shapeCell == null)
                 continue;
             var occupiedBy = Field[shapeCell.FieldPos + dir]?.OccupiedBy;
-            if (occupiedBy != null && occupiedBy != this)
+            if (occupiedBy != null && occupiedBy != this && !moveCandidates.Contains(occupiedBy))
                 toPush.Add(occupiedBy);
         }
         var pushedByPush = new HashSet<Shape>();
+        var pushCandidates = new HashSet<Shape>(toPush);
+        pushCandidates.Add(this);
         if (toPush.Count > 0)
-            foreach (var moved in toPush.SelectMany(shape => shape.Move(dir)))
+            foreach (var moved in toPush.SelectMany(shape => shape.Move(dir, pushCandidates)))
+            {
                 pushedByPush.Add(moved);
-        foreach (var shape in pushedByPush) toPush.Add(shape);
+                pushCandidates.Add(moved);
+            }
+        toPush.UnionWith(pushedByPush);
         Translate(pos + dir);
         return toPush;
     }
 
-    public bool CanMove(Vector2Int dir, int amount = 1, bool allowPush = true)
+    public bool CanMove(Vector2Int dir, int amount = 1, bool allowPush = true, HashSet<Shape> pushCandidates = null)
     {
-        return Field == null || cells.All(cell => cell == null || cell.CanMove(dir, amount, allowPush));
+        return Field == null || cells.All(cell => cell == null || cell.CanMove(dir, amount, allowPush, pushCandidates));
     }
 
     public int MaxMoves(Vector2Int dir, bool allowPush = true)
@@ -143,6 +151,11 @@ public class Shape
         size = maxPos - minPos + Vector2Int.one;
         var delta = -minPos;
         foreach (var cell in cells) cell.LocalPos += delta;
+        foreach (var cell in cells)
+        {
+            cell.shapeCellObject.InitInsides();
+            cell.UpdateRotation();
+        }
         return delta;
     }
 

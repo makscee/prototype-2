@@ -47,7 +47,7 @@ public class FieldPack : MonoBehaviour
         if (fields.All(field => field.completion == FieldCompletion.Complete))
         {
             Complete = true;
-            active = FieldPacksCollection.Packs[packId + 1];
+            // active = FieldPacksCollection.Packs[packId + 1];
         }
     }
 

@@ -21,14 +21,18 @@ public class ShapeCellObject : MonoBehaviour
         InitInsides();
     }
 
-    void InitInsides()
+    public void InitInsides()
     {
         var surroundingCells = new bool[3, 3];
         for (var x = -1; x <= 1; x++)
         {
             for (var y = -1; y <= 1; y++)
             {
-                surroundingCells[x + 1, y + 1] = cell.shape[cell.LocalPos + new Vector2Int(x, y)] != null;
+                // surroundingCells[x + 1, y + 1] = cell.shape[cell.LocalPos + new Vector2Int(x, y)] != null;
+                
+                surroundingCells[x + 1, y + 1] = shape[
+                cell.LocalPos + new Vector2Int(x, y).Rotate90(true,
+                shape.Rotation - shape.originalRotation)] != null;
             }
         }
 

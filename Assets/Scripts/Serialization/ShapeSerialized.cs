@@ -66,6 +66,10 @@ public class ShapeSerialized : JsonUtilitySerializable
         };
         shape.shapeObject = ShapeObject.Create(shape);
         shapeCells.AddRange(cells.Select(cellSerialized => cellSerialized.Deserialize(shape)));
+        foreach (var cell in shape.cells)
+        {
+            cell.shapeCellObject.InitInsides();
+        }
         return shape;
     }
 

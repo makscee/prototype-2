@@ -13,37 +13,42 @@ public class GameManager : MonoBehaviour
         DebugInput();
     }
 
-    FieldMatrix Matrix => FieldMatrix.Active;
+    static FieldMatrix Field => FieldMatrix.Active;
     void DebugInput()
     {
+        if (Input.GetKeyDown(KeyCode.C) && Field != null)
+        {
+            Progress.SetComplete(Field.packId, Field.fieldId);
+            Field.CompleteTransition();
+        }
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(0);
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Matrix.MoveAttachedShape(false);
+            Field.MoveAttachedShape(false);
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Matrix.MoveAttachedShape(true);
+            Field.MoveAttachedShape(true);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Matrix.InsertShape();
+            Field.InsertShape();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Matrix.Undo();
+            Field.Undo();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            var container = Matrix.shapesContainer; 
+            var container = Field.shapesContainer; 
             container
                 .InsertAtCurrent(ShapeSerialized.CreateFromString(new[] {"*"})
                 .Deserialize());
-            if (Matrix.attachedShape == null)
-                Matrix.AttachShape(container.GetNext());
+            if (Field.attachedShape == null)
+                Field.AttachShape(container.GetNext());
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -56,13 +61,18 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Progress.ResetAndSave();
-            SceneManager.LoadScene(0);
+            ClearProgress();
         }
 
         if (Input.GetKeyDown(KeyCode.B))
         {
             GlobalConfig.Instance.shaderPatternMaterial.SetFloat("_Balance", 1f);
         }
+    }
+
+    public void ClearProgress()
+    {
+        Progress.ResetAndSave();
+        SceneManager.LoadScene(0);
     }
 }

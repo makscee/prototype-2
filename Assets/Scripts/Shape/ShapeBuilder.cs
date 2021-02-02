@@ -9,6 +9,7 @@ public class ShapeBuilder : MonoBehaviour
     Vector2Int _curPos;
     static Shape Shape => Matrix.attachedShape;
     static FieldMatrix Matrix => FieldMatrix.Active;
+    public static FieldMatrix lastEditedField;
 
     public bool Enabled
     {
@@ -34,7 +35,7 @@ public class ShapeBuilder : MonoBehaviour
 
     void RefreshGameObjectPosition()
     {
-        _curPos.Clamp(Vector2Int.zero, Matrix.attachedShape.ShapeRotationSize - Vector2Int.one);
+        _curPos.Clamp(Vector2Int.zero, Shape.ShapeRotationSize - Vector2Int.one);
         transform.localPosition = _curPos.FromLocalShapeRotation(Shape).ToField() + Matrix.ZeroPos;
     }
 
@@ -46,9 +47,13 @@ public class ShapeBuilder : MonoBehaviour
             return;
         }
 
-        if (!Enabled && Input.GetKeyDown(KeyCode.LeftShift) && Matrix.attachedShape != null)
+        if (!Enabled && Input.GetKeyDown(KeyCode.LeftShift) && Shape != null)
         {
             Enabled = true;
+            Shape.originalRotation = Utils.DirFromCoords(Shape.UpDirection);
+            Shape.SetRotation(Shape.UpDirection);
+            foreach (var shapeCell in Shape.cells)
+                shapeCell.shapeCellObject.InitInsides();
             return;
         }
         if (!Enabled) return;
@@ -67,10 +72,9 @@ public class ShapeBuilder : MonoBehaviour
         if (dir == Vector2Int.zero) return;
         var newPos = CurPos + dir;
         
-        var curShape = Matrix.attachedShape;
-        if (curShape == null) return;
+        if (Shape == null) return;
         _curPos = newPos;
-        _curPos += curShape.AddCell(newPos.FromLocalShapeRotation(curShape).ToLocalFieldRotation());
+        _curPos += Shape.AddCell(newPos.FromLocalShapeRotation(Shape).ToLocalFieldRotation());
         Matrix.MoveAttachedShapeAccordingToDir(Matrix.currentShapeOffset);
         RefreshGameObjectPosition();
     }
@@ -88,5 +92,6 @@ public class ShapeBuilder : MonoBehaviour
         _curPos += delta;
         Matrix.MoveAttachedShapeAccordingToDir(Matrix.currentShapeOffset);
         RefreshGameObjectPosition();
+        lastEditedField = Matrix;
     }
 }

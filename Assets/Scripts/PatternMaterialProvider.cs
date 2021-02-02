@@ -20,9 +20,12 @@ public class PatternMaterialProvider : MonoBehaviour
     void OnEnable()
     {
         if (material == null)
+        {
             material = new Material(GlobalConfig.Instance.shaderPatternMaterial);
-        if (sr != null)
-            sr.material = material;
+            if (sr != null)
+                sr.material = material;
+        }
+
         SetShaderProperties();
     }
 

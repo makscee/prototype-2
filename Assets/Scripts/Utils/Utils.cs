@@ -43,6 +43,7 @@ public static class Utils
 
     public static Vector2Int Rotate90(this Vector2Int v, bool clockwise, int count = 1)
     {
+        count = (count + 4) % 4;
         for (var i = 0; i < count; i++)
             v = clockwise ? new Vector2Int(v.y, -v.x) : new Vector2Int(-v.y, v.x);
         return v;

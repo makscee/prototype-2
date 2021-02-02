@@ -71,6 +71,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             SubscribeCompletionDependency();
             InitCompletion();
             Pack.PlaceField(this);
+            SetScreenState(FieldScreenState.OnSelectScreen);
         }
     }
 
@@ -127,8 +128,11 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 {
                     Progress.SetComplete(packId, fieldId);
                     CompleteTransition();
-                    if (!FieldMatrixSerialized.FileExists(packId, fieldId))
+                    if (ShapeBuilder.lastEditedField == this)
+                    {
                         new FieldMatrixSerialized(this).SaveToFile(packId, fieldId);
+                        ShapeBuilder.lastEditedField = null;
+                    }
                 }
             }
             _moveTracker.AddMove(move);
@@ -374,7 +378,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             Animator.Invoke(() => SetCompletion(FieldCompletion.Unlocked)).In(1f);
     }
 
-    void CompleteTransition()
+    public void CompleteTransition()
     {
         var config = GlobalConfig.Instance;
         Animator.Interpolate(_patternMaterialProvider.balance, 1f, config.balanceSetAnimationTime)

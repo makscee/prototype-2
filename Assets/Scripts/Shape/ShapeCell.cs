@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShapeCell
@@ -26,9 +27,10 @@ public class ShapeCell
         shapeCellObject = ShapeCellObject.Create(localPos, shape, this);
     }
     
-    public bool CanMove(Vector2Int dir, int moves = 1, bool allowPush = true)
+    public bool CanMove(Vector2Int dir, int moves = 1, bool allowPush = true, HashSet<Shape> pushCandidates = null)
     {
         if (Matrix == null) return true;
+        if (pushCandidates == null) pushCandidates = new HashSet<Shape>();
         var pos = FieldPos;
         for (var i = 1; i <= moves; i++)
         {
@@ -41,8 +43,12 @@ public class ShapeCell
             }
 
             var fieldCell = Matrix[newPos];
-            if (fieldCell.OccupiedBy != null && fieldCell.OccupiedBy != shape)
-                return allowPush && fieldCell.OccupiedBy.CanMove(dir, moves - i + 1);
+            if (fieldCell.OccupiedBy != null && fieldCell.OccupiedBy != shape &&
+                !pushCandidates.Contains(fieldCell.OccupiedBy))
+            {
+                pushCandidates.Add(shape);
+                return allowPush && fieldCell.OccupiedBy.CanMove(dir, moves - i + 1, true, pushCandidates);
+            }
         }
 
         return true;
