@@ -4,10 +4,11 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class PatternMaterialProvider : MonoBehaviour
 {
-    public float balance = 0.5f, frequency = 0.1f, speed = 0.01f;
+    public float balance = 0f, frequency = 0.1f, speed = 0.01f;
+    public float balanceTarget;
     public Color tint = Color.white;
-    
-    public Material material;
+
+    Material _material;
     public SpriteRenderer sr;
     
     static readonly int Color0Property = Shader.PropertyToID("_Color0");
@@ -17,31 +18,36 @@ public class PatternMaterialProvider : MonoBehaviour
     static readonly int TintProperty = Shader.PropertyToID("_Tint");
     static readonly int SpeedProperty = Shader.PropertyToID("_Speed");
 
-    void OnEnable()
+    public Material Material
     {
-        if (material == null)
+        get
         {
-            material = new Material(GlobalConfig.Instance.shaderPatternMaterial);
-            if (sr != null)
-                sr.material = material;
-        }
+            if (_material == null)
+            {
+                _material = new Material(GlobalConfig.Instance.shaderPatternMaterial);
+                if (sr != null)
+                    sr.material = _material;
+                SetShaderProperties();
+            }
 
-        SetShaderProperties();
+            return _material;
+        }
+        private set => _material = value;
     }
 
     void OnValidate()
     {
-        if (material != null)
+        if (_material != null)
             SetShaderProperties();
     }
 
     public void SetShaderProperties()
     {
-        material.SetColor(Color0Property, GlobalConfig.Instance.palette1);
-        material.SetColor(Color1Property, GlobalConfig.Instance.palette3);
-        material.SetFloat(BalanceProperty, balance);
-        material.SetFloat(FrequencyProperty, frequency);
-        material.SetColor(TintProperty, tint);
-        material.SetFloat(SpeedProperty, speed);
+        Material.SetColor(Color0Property, GlobalConfig.Instance.palette1);
+        Material.SetColor(Color1Property, GlobalConfig.Instance.palette3);
+        Material.SetFloat(BalanceProperty, balance);
+        Material.SetFloat(FrequencyProperty, frequency);
+        Material.SetColor(TintProperty, tint);
+        Material.SetFloat(SpeedProperty, speed);
     }
 }

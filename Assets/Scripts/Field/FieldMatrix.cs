@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,8 +8,8 @@ using UnityEngine.EventSystems;
 public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] GameObject backgroundInputSprite;
-    [SerializeField] PatternMaterialProvider completionSprite;
-    [SerializeField] PatternMaterialProvider _patternMaterialProvider;
+    public PatternMaterialProvider completionSprite;
+    public PatternMaterialProvider cellsMaterialProvider;
     public int packId, fieldId;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
@@ -60,6 +61,19 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         {
             _size = value;
             backgroundInputSprite.transform.localScale = new Vector3(_size, _size);
+        }
+    }
+
+    
+    FloatTarget _shapeSidesThickness;
+    public FloatTarget ShapeSidesThickness
+    {
+        get => _shapeSidesThickness;
+        set
+        {
+            _shapeSidesThickness = value;
+            foreach (var shapeCell in shapesContainer.shapes.SelectMany(shape => shape.cells))
+                shapeCell.shapeCellObject.sidesContainer.RefreshSides();
         }
     }
 
@@ -380,12 +394,30 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public void CompleteTransition()
     {
+        completionSprite.balance = 1f;
+        completionSprite.balanceTarget = 1f;
+        completionSprite.SetShaderProperties();
         var config = GlobalConfig.Instance;
-        Animator.Interpolate(_patternMaterialProvider.balance, 1f, config.balanceSetAnimationTime)
+        SequenceFramework.New
+            .Delay((config.sidesThicknessRecoverTime + config.fieldCompleteTransitionAnimationTime) * 2)
+            .FieldSet(this).CellsPatternBalanceChange(1f)
+            .Chain().Field.CompletionSpriteBalanceChange(0.5f)
+            .With().Lambda(() =>
+            {
+                SetCompletion(FieldCompletion.Complete);
+                FieldPacksCollection.Packs[packId].FieldCompleted();
+                Active = null;
+            });
+        SequenceFramework.New.Delay(config.sidesThicknessRecoverTime * 2).FieldSet(this)
+            .ShapeSidesThicknessChange(1.5f);
+        
+        return;
+        
+        Animator.Interpolate(cellsMaterialProvider.balance, 1f, config.balanceSetAnimationTime)
             .PassDelta(v =>
             {
-                _patternMaterialProvider.balance += v;
-                _patternMaterialProvider.SetShaderProperties();
+                cellsMaterialProvider.balance += v;
+                cellsMaterialProvider.SetShaderProperties();
             })
             .Delay((config.sidesThicknessRecoverTime + config.fieldCompleteTransitionAnimationTime) * 2)
             .WhenDone(() =>
@@ -400,15 +432,19 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 FieldPacksCollection.Packs[packId].FieldCompleted();
                 Active = null;
             });
-        Animator.Interpolate(shapeSidesThickness, 1.5f, config.fieldCompleteTransitionAnimationTime)
-            .PassDelta(v => shapeSidesThickness += v)
+        Animator.Interpolate(ShapeSidesThickness.target, 1.5f, config.fieldCompleteTransitionAnimationTime)
+            .PassDelta(v =>
+            {
+                var t = ShapeSidesThickness;
+                t.value += v;
+                ShapeSidesThickness = t;
+            })
             .Delay(config.sidesThicknessRecoverTime * 2)
             .Type(InterpolationType.InvSquare);
     }
     
     
     static FieldMatrix _active;
-    public float shapeSidesThickness;
 
     void SetCellsState(FieldCellState state)
     {

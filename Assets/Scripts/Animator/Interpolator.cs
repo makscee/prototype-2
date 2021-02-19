@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
-using Object = System.Object;
 
 public enum InterpolationType
 {
@@ -14,6 +13,7 @@ public class Interpolator<T> : OwnedUpdatable
 {
     float _over, _t, _delay;
     T _from, _to, _curValue, _curValueDelta;
+    bool _active;
     Func<T, T, float, T> _interpolateFunc;
     Func<T, T, T> _subtractFunc;
     public Interpolator(T from, T to, float over, Func<T, T, float, T> interpolateFunc, Func<T, T, T> subtractFunc)
@@ -25,7 +25,18 @@ public class Interpolator<T> : OwnedUpdatable
         _interpolateFunc = interpolateFunc;
         _subtractFunc = subtractFunc;
     }
-    
+
+    public Interpolator<T> Play()
+    {
+        _isUpdating = true;
+        return this;
+    }
+
+    public Interpolator<T> Stop()
+    {
+        _isUpdating = false;
+        return this;
+    }
     
     Action<T> _passDelta;
     public Interpolator<T> PassDelta(Action<T> action)
@@ -42,10 +53,16 @@ public class Interpolator<T> : OwnedUpdatable
     }
 
     public Action whenDone;
-
     public Interpolator<T> WhenDone(Action action)
     {
         whenDone = action;
+        return this;
+    }
+
+    public Action whenStart;
+    public Interpolator<T> WhenStart(Action action)
+    {
+        whenStart = action;
         return this;
     }
 
@@ -100,20 +117,28 @@ public class Interpolator<T> : OwnedUpdatable
         if (!lastInter._isDone)
         {
             Stop();
-            lastInter.whenDone += Resume;
+            lastInter.whenDone += () => Play();
         }
         _stackInterpolators[stack] = this;
         return this;
     }
 
-    void Resume()
+    public Interpolator<T> ObjectStackStart(object stack)
     {
-        _isUpdating = true;
-    }
+        if (!_stackInterpolators.ContainsKey(stack))
+        {
+            _stackInterpolators.Add(stack, this);
+            return this;
+        }
 
-    void Stop()
-    {
-        _isUpdating = false;
+        Interpolator<T> lastInter = _stackInterpolators[stack];
+        if (!lastInter._isUpdating && !lastInter._isDone)
+        {
+            Stop();
+            lastInter.whenStart += () => Play();
+        }
+        _stackInterpolators[stack] = this;
+        return this;
     }
 
     bool _isDone, _isUpdating = true;
@@ -170,7 +195,10 @@ public class Interpolator<T> : OwnedUpdatable
         
         _lastDeltaF = deltaF;
         _lastF = fx;
-        
+
+        if (_t == 0f)
+            whenStart?.Invoke();
+
         if (_t == _over)
         {
             _isDone = true;

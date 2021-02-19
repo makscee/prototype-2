@@ -98,8 +98,8 @@ MonoBehaviour:
   balance: 0.5
   frequency: 1
   speed: 1
+  balanceTarget: 0
   tint: {r: 1, g: 1, b: 1, a: 1}
-  material: {fileID: 0}
   sr: {fileID: 2735136612931146570}
 --- !u!1 &8354499636810340281
 GameObject:
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundInputSprite: {fileID: 8354499636810340281}
   completionSprite: {fileID: 1669159776911738641}
-  _patternMaterialProvider: {fileID: 7913060807744885928}
+  cellsMaterialProvider: {fileID: 7913060807744885928}
   packId: 0
   fieldId: 0
   screenState: 0
@@ -272,7 +272,6 @@ MonoBehaviour:
   _size: 0
   cellParent: {fileID: 6979695257556868552}
   createCells: 0
-  shapeSidesThickness: 0
 --- !u!114 &7913060807744885928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,8 +287,8 @@ MonoBehaviour:
   balance: 0.5
   frequency: 1
   speed: 1
+  balanceTarget: 0
   tint: {r: 1, g: 1, b: 1, a: 1}
-  material: {fileID: 0}
   sr: {fileID: 2735136612931146570}
 --- !u!1 &8912627421834962984
 GameObject:

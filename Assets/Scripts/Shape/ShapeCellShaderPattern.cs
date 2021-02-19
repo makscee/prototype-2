@@ -6,7 +6,7 @@ public class ShapeCellShaderPattern : MonoBehaviour
 
     void Start()
     {
-        SetMaterial(GetComponentInParent<PatternMaterialProvider>().material);
+        SetMaterial(GetComponentInParent<PatternMaterialProvider>().Material);
     }
 
     void SetMaterial(Material material)
