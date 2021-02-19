@@ -22,6 +22,7 @@ public class ProgressSerialized : JsonUtilitySerializable
     public static ProgressSerialized Load()
     {
         var json = FileStorage.ReadJsonFile(Path);
+        if (json == null) json = "{}";
         return JsonUtility.FromJson<ProgressSerialized>(json);
     }
 }

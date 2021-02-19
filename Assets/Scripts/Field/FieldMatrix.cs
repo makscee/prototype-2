@@ -260,9 +260,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public void CreateCells()
     {
-        if (this == null ||
-            PrefabUtility.GetPrefabInstanceStatus(gameObject) == PrefabInstanceStatus.NotAPrefab &&
-            PrefabUtility.GetPrefabAssetType(gameObject) != PrefabAssetType.NotAPrefab) return;
+        // if (this == null ||
+        //     PrefabUtility.GetPrefabInstanceStatus(gameObject) == PrefabInstanceStatus.NotAPrefab &&
+        //     PrefabUtility.GetPrefabAssetType(gameObject) != PrefabAssetType.NotAPrefab) return;
         
         foreach (var cell in cellParent.GetComponentsInChildren<FieldCell>())
             cell.Destroy();

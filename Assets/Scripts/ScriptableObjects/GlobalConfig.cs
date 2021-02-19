@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GlobalConfig", menuName = "ScriptableObjects/GlobalConfig")]
 public class GlobalConfig : ScriptableObject
 {
+    [SerializeField] public bool debug;
     [SerializeField] public Color levelSelectorEntry1, levelSelectorEntry2;
 
     [SerializeField] public float shapeAnimationTime,

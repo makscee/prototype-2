@@ -71,6 +71,8 @@ public class CameraScript : MonoBehaviour
     void SetSizeTarget(float sizeToFit)
     {
         var aspectRatio = (float) Screen.height / Screen.width;
-        _targetSize = sizeToFit * aspectRatio / 1.5f;
+        if (Screen.width > Screen.height) 
+            aspectRatio = (float) Screen.width / Screen.height;
+        _targetSize = sizeToFit * aspectRatio;
     }
 }

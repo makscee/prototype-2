@@ -19,6 +19,13 @@ public static class FileStorage
         // Debug.Log($"Load file {filePath}:\n{text}");
         return text;
     }
+
+    public static string ReadJsonFileFromResources(string filePath)
+    {
+        var asset = Resources.Load<TextAsset>(filePath);
+        if (asset == null) return null;
+        return asset.text;
+    }
     
     public static void SaveJsonToFile(string json, string filename)
     {

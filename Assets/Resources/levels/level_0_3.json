@@ -1,0 +1,220 @@
+{
+    "size": 5,
+    "container": {
+        "shapes": [
+            {
+                "sizeX": 2,
+                "sizeY": 2,
+                "originalX": 0,
+                "originalY": 1,
+                "originalRotation": 0,
+                "cells": [
+                    {
+                        "x": 0,
+                        "y": 1,
+                        "originalX": 0,
+                        "originalY": 2
+                    },
+                    {
+                        "x": 1,
+                        "y": 1,
+                        "originalX": 1,
+                        "originalY": 2
+                    },
+                    {
+                        "x": 1,
+                        "y": 0,
+                        "originalX": 1,
+                        "originalY": 1
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "originalX": 0,
+                        "originalY": 1
+                    }
+                ]
+            },
+            {
+                "sizeX": 2,
+                "sizeY": 2,
+                "originalX": 3,
+                "originalY": 1,
+                "originalRotation": 0,
+                "cells": [
+                    {
+                        "x": 1,
+                        "y": 1,
+                        "originalX": 4,
+                        "originalY": 2
+                    },
+                    {
+                        "x": 1,
+                        "y": 0,
+                        "originalX": 4,
+                        "originalY": 1
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "originalX": 3,
+                        "originalY": 1
+                    },
+                    {
+                        "x": 0,
+                        "y": 1,
+                        "originalX": 3,
+                        "originalY": 2
+                    }
+                ]
+            },
+            {
+                "sizeX": 3,
+                "sizeY": 2,
+                "originalX": 1,
+                "originalY": 2,
+                "originalRotation": 2,
+                "cells": [
+                    {
+                        "x": 1,
+                        "y": 1,
+                        "originalX": 2,
+                        "originalY": 2
+                    },
+                    {
+                        "x": 1,
+                        "y": 0,
+                        "originalX": 2,
+                        "originalY": 3
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "originalX": 3,
+                        "originalY": 3
+                    },
+                    {
+                        "x": 2,
+                        "y": 0,
+                        "originalX": 1,
+                        "originalY": 3
+                    }
+                ]
+            },
+            {
+                "sizeX": 2,
+                "sizeY": 2,
+                "originalX": 3,
+                "originalY": 3,
+                "originalRotation": 2,
+                "cells": [
+                    {
+                        "x": 0,
+                        "y": 1,
+                        "originalX": 4,
+                        "originalY": 3
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "originalX": 4,
+                        "originalY": 4
+                    },
+                    {
+                        "x": 1,
+                        "y": 0,
+                        "originalX": 3,
+                        "originalY": 4
+                    }
+                ]
+            },
+            {
+                "sizeX": 2,
+                "sizeY": 2,
+                "originalX": 0,
+                "originalY": 3,
+                "originalRotation": 2,
+                "cells": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "originalX": 1,
+                        "originalY": 4
+                    },
+                    {
+                        "x": 1,
+                        "y": 0,
+                        "originalX": 0,
+                        "originalY": 4
+                    },
+                    {
+                        "x": 1,
+                        "y": 1,
+                        "originalX": 0,
+                        "originalY": 3
+                    }
+                ]
+            },
+            {
+                "sizeX": 1,
+                "sizeY": 1,
+                "originalX": 2,
+                "originalY": 4,
+                "originalRotation": 2,
+                "cells": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "originalX": 2,
+                        "originalY": 4
+                    }
+                ]
+            },
+            {
+                "sizeX": 5,
+                "sizeY": 2,
+                "originalX": 0,
+                "originalY": 0,
+                "originalRotation": 0,
+                "cells": [
+                    {
+                        "x": 2,
+                        "y": 1,
+                        "originalX": 2,
+                        "originalY": 1
+                    },
+                    {
+                        "x": 2,
+                        "y": 0,
+                        "originalX": 2,
+                        "originalY": 0
+                    },
+                    {
+                        "x": 1,
+                        "y": 0,
+                        "originalX": 1,
+                        "originalY": 0
+                    },
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "originalX": 0,
+                        "originalY": 0
+                    },
+                    {
+                        "x": 3,
+                        "y": 0,
+                        "originalX": 3,
+                        "originalY": 0
+                    },
+                    {
+                        "x": 4,
+                        "y": 0,
+                        "originalX": 4,
+                        "originalY": 0
+                    }
+                ]
+            }
+        ]
+    }
+}

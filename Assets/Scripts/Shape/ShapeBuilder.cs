@@ -41,6 +41,7 @@ public class ShapeBuilder : MonoBehaviour
 
     void Update()
     {
+        if (!GlobalConfig.Instance.debug) return;
         if (Enabled && Input.GetKeyUp(KeyCode.LeftShift))
         {
             Enabled = false;

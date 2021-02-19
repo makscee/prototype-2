@@ -57,9 +57,9 @@ public class FieldMatrixSerialized : JsonUtilitySerializable
     public static FieldMatrixSerialized Load(int packId, int fieldId)
     {
         var fileName = GetFileName(packId, fieldId);
-        var json = FileStorage.ReadJsonFile($"{LevelsFolder}/{fileName}");
+        var json = FileStorage.ReadJsonFileFromResources($"{LevelsFolder}/{fileName}");
         if (json == null)
-            json = FileStorage.ReadJsonFile($"{LevelsFolder}/level_placeholder");
+            json = FileStorage.ReadJsonFileFromResources($"{LevelsFolder}/level_placeholder");
         if (json == null) return null;
         var fieldSerialized = new FieldMatrixSerialized(json);
         return fieldSerialized;

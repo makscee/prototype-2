@@ -16,15 +16,6 @@ public class GameManager : MonoBehaviour
     static FieldMatrix Field => FieldMatrix.Active;
     void DebugInput()
     {
-        if (Input.GetKeyDown(KeyCode.C) && Field != null)
-        {
-            Progress.SetComplete(Field.packId, Field.fieldId);
-            Field.CompleteTransition();
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(0);
-        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             Field.MoveAttachedShape(false);
@@ -41,6 +32,29 @@ public class GameManager : MonoBehaviour
         {
             Field.Undo();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (FieldMatrix.Active != null)
+            {
+                FieldMatrix.Active = null;
+            }
+            else
+            {
+                Application.Quit();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+        }
+        
+#if UNITY_EDITOR
+        
+        if (Input.GetKeyDown(KeyCode.C) && Field != null)
+        {
+            Progress.SetComplete(Field.packId, Field.fieldId);
+            Field.CompleteTransition();
+        }
         if (Input.GetKeyDown(KeyCode.F))
         {
             var container = Field.shapesContainer; 
@@ -51,23 +65,11 @@ public class GameManager : MonoBehaviour
                 Field.AttachShape(container.GetNext());
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (FieldMatrix.Active != null)
-            {
-                FieldMatrix.Active = null;
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.T))
         {
             ClearProgress();
         }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            GlobalConfig.Instance.shaderPatternMaterial.SetFloat("_Balance", 1f);
-        }
+#endif
     }
 
     public void ClearProgress()
