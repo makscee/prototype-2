@@ -4,130 +4,110 @@ using Random = UnityEngine.Random;
 
 public class FieldCell : MonoBehaviour
 {
-    const float ActiveScale = 0.95f, AlphaDefault = 0.5f, AlphaProjectionShape = 1f, AlphaProjectionTrail = 0.75f;
+    const float ActiveScale = 0.95f, AlphaDefault = 0.5f, AlphaProjectionShape = 0.8f, AlphaProjectionTrail = 0.70f;
 
     public FieldMatrix field;
     public int X, Y;
-    Vector2 _posOffset;
     [SerializeField] SpriteRenderer sr;
     [SerializeField] Color originalColor;
-    float _sinOffset;
+    [SerializeField] float sinOffset;
+
+    Vector3Target _posOffset = new Vector3Target(Vector3.zero);
+    FloatTarget _scale = new FloatTarget(1f);
+    [SerializeField] Vector3 lockedOffset;
+    [SerializeField] float targetProgressSpeed = 1f;
 
     public Shape OccupiedBy { get; set; }
 
-    public Vector2 PosOffset
-    {
-        get => _posOffset;
-        set
-        {
-            _posOffset = value;
-            RefreshPosition();
-        }
-    }
-
     void Start()
     {
-        _sinOffset = Random.Range(0f, Mathf.PI * 2);
+        field.onShapePlaced += OnShapePlaced;
+    }
+
+    void OnShapePlaced()
+    {
+        _scale.value = .3f;
+    }
+
+    public void RefreshTargets()
+    {
+        if (field.screenState == FieldScreenState.OnSelectScreen)
+        {
+            switch (field.completion)
+            {
+                case FieldCompletion.Locked:
+                    _posOffset.target = lockedOffset;
+                    _scale.target = 0.5f;
+                    SetAlpha(0.3f);
+                    break;
+                case FieldCompletion.Unlocked:
+                    _posOffset.target = Vector3.zero;
+                    _scale.target = 1f;
+                    break;
+                case FieldCompletion.Complete:
+                    _posOffset.target = Vector3.zero;
+                    _scale.target = 1f;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        } else if (field.screenState == FieldScreenState.Active)
+        {
+            _scale.target = ActiveScale;
+        }
     }
 
     void SetCoords(int x, int y)
     {
         X = x;
         Y = y;
-        RefreshPosition();
+        sinOffset = X + Y;
+        targetProgressSpeed = Mathf.Lerp(8f, 3f, (X + Y) / (field.Size - 1f) / 2f);
+        lockedOffset = Random.onUnitSphere * 9f;
+        RefreshTransform();
     }
 
-    void RefreshPosition()
+    void RefreshTransform()
     {
         transform.localPosition =
-            (Vector3) (field.ZeroPos + new Vector2(X, Y) + _posOffset) + new Vector3(0f, 0f, 0.1f);
+            (Vector3) (field.ZeroPos + new Vector2(X, Y)) + _posOffset.value;// + new Vector3(0f, 0f, 0.1f);
+        transform.localScale = new Vector3(_scale.value, _scale.value, _scale.value);
     }
 
     void Update()
     {
         if (field.screenState == FieldScreenState.OnSelectScreen && field.completion == FieldCompletion.Unlocked)
         {
-            sr.color = originalColor.ChangeAlpha(AlphaDefault + Mathf.Sin(Time.time + _sinOffset) / 10f);
+            sr.color = originalColor.ChangeAlpha(AlphaDefault + Mathf.Sin(Time.time + sinOffset) / 10f);
         }
-    }
 
-    FieldCellState _state;
-    public void SetState(FieldCellState state)
+        var delta = Time.deltaTime * targetProgressSpeed;
+        _scale.ProgressToTarget(delta);
+        _posOffset.ProgressToTarget(delta);
+        RefreshTransform();
+    }
+    public void SetProjectionState(FieldProjectionState state)
     {
         switch (state)
         {
-            case FieldCellState.ShapeProjection:
-                sr.color = originalColor.ChangeAlpha(AlphaProjectionShape);
+            case FieldProjectionState.ShapeProjection:
+                SetAlpha(AlphaProjectionShape);
                 break;
-            case FieldCellState.ShapeProjectionTrail:
-                sr.color = originalColor.ChangeAlpha(AlphaProjectionTrail);
+            case FieldProjectionState.ShapeProjectionTrail:
+                SetAlpha(AlphaProjectionTrail);
                 break;
-            case FieldCellState.ActiveEmpty:
-                sr.color = originalColor.ChangeAlpha(AlphaDefault);
-                break;
-            case FieldCellState.SelectScreen:
-                sr.color = originalColor.ChangeAlpha(AlphaDefault);
+            case FieldProjectionState.Empty:
+                SetAlpha(AlphaDefault);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
-        _state = state;
     }
 
-    public void FieldScreenStateChangeHandle(FieldScreenState value)
+    void SetAlpha(float value)
     {
-        var t = transform;
-        switch (value)
-        {
-            case FieldScreenState.Active:
-                Animator.Interpolate(t.localScale, new Vector3(ActiveScale, ActiveScale, ActiveScale), GlobalConfig.Instance.fieldCellsAnimationTime)
-                    .PassValue(v =>
-                    {
-                        t.localScale = v;
-                    });
-                break;
-            case FieldScreenState.Disabled:
-                break;
-            case FieldScreenState.OnSelectScreen:
-                var target = field.completion == FieldCompletion.Unlocked ? 1f : 0.7f;
-                Animator.Interpolate(t.localScale, new Vector3(target, target, target), GlobalConfig.Instance.fieldCellsAnimationTime)
-                    .PassValue(v =>
-                    {
-                        t.localScale = v;
-                    });
-                sr.color = originalColor.ChangeAlpha(AlphaDefault - (field.completion == FieldCompletion.Locked ? 0.3f : 0f));
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(value), value, null);
-        }
+        sr.color = originalColor.ChangeAlpha(value);
     }
-
-    public void FieldCompletionChangeHandle(FieldCompletion value)
-    {
-        var t = transform;
-        switch (value)
-        {
-            case FieldCompletion.Locked:
-                PosOffset = transform.position.normalized * 3f;
-                t.localScale = new Vector3(0.7f, 0.7f);
-                break;
-            case FieldCompletion.Unlocked:
-                var startPosOffset = PosOffset;
-                var startScale = t.localScale;
-                Animator.Interpolate(0f, 1f, GlobalConfig.Instance.fieldCellsAnimationTime)
-                    .PassValue(v =>
-                    {
-                        PosOffset = Vector3.Lerp(startPosOffset, Vector3.zero, v);
-                        t.localScale = Vector3.Lerp(startScale, Vector3.one, v);
-                    });
-                break;
-            case FieldCompletion.Complete:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(value), value, null);
-        }
-    }
-    
 
     public void Destroy()
     {

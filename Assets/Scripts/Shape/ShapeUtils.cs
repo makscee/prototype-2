@@ -76,6 +76,11 @@ public static class ShapeUtils
             throw new Exception("Couldn't translate coords");
         }
 
+        public Vector2Int ToRotation(Vector2Int rotation)
+        {
+            return ToRotation(Utils.DirFromCoords(rotation));
+        }
+
         Vector2Int FromShapeToFieldRotation(Vector2Int pos)
         {
             return PositionToRotation(Vector2Int.up, _shape.size, pos, _shape.UpDirection);

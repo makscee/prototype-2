@@ -10,6 +10,11 @@ public class ShapeCellSidesContainer : MonoBehaviour
     
     float Thickness => GlobalConfig.Instance.thicknessBase + shapeCellObject.shape.Field.ShapeSidesThickness.value;
 
+    void Start()
+    {
+        RefreshSides();
+    }
+
     void OnValidate()
     {
         refresh = false;

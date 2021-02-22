@@ -20,6 +20,7 @@ public class GlobalConfig : ScriptableObject
     [SerializeField] public float containerScale, containerOffsetX, containerOffsetY, containerPaddingY, containerSizeScale;
 
     [SerializeField] public float cameraShakeAmount, cameraFollowSpeed;
+    [SerializeField] public float cameraFieldSizeMult, cameraFPSizeMult;
     
     public static GlobalConfig Instance => GetInstance();
 

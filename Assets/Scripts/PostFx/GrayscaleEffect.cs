@@ -51,7 +51,6 @@ public class GrayscaleEffectRenderer : CustomPostProcessRenderer
     // The actual rendering execution is done here
     public override void Render(CommandBuffer cmd, RenderTargetIdentifier source, RenderTargetIdentifier destination, ref RenderingData renderingData, CustomPostProcessInjectionPoint injectionPoint)
     {
-        Debug.Log($"grayscale render");
         // set material properties
         if(m_Material != null){
             m_Material.SetFloat(ShaderIDs.Blend, m_VolumeComponent.blend.value);

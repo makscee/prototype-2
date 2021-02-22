@@ -58,12 +58,12 @@ public class CameraScript : MonoBehaviour
         var t = matrix.transform;
         _targetPosition = t.position;
         _targetRotation = t.rotation;
-        SetSizeTarget(matrix.Size * t.lossyScale.x);
+        SetSizeTarget(matrix.Size * t.lossyScale.x * GlobalConfig.Instance.cameraFieldSizeMult);
     }
 
     void FollowFieldPack()
     {
-        SetSizeTarget(FieldPack.active.Height * 1.5f);
+        SetSizeTarget(FieldPack.active.Height * GlobalConfig.Instance.cameraFPSizeMult);
         _targetPosition = Vector2.zero;
         _targetRotation = Quaternion.identity;
     }

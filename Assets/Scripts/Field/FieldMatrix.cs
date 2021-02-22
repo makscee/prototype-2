@@ -76,6 +76,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 shapeCell.shapeCellObject.sidesContainer.RefreshSides();
         }
     }
+    
+    public Action onShapePlaced;
 
     void Awake()
     {
@@ -197,7 +199,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     {
         if (attachedShape == null)
         {
-            SetCellsState(FieldCellState.ActiveEmpty);
+            SetCellsState(FieldProjectionState.Empty);
             return;
         }
         var maxMoves = attachedShape.MaxMoves(currentShapeDir, false);
@@ -212,10 +214,10 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
         foreach (var cell in _cells)
         {
-            var val = FieldCellState.ActiveEmpty;
+            var val = FieldProjectionState.Empty;
             if (cell.X >= xMin && cell.X <= xMax && cell.Y >= yMin && cell.Y <= yMax)
-                val = FieldCellState.ShapeProjectionTrail;
-            cell.SetState(val);
+                val = FieldProjectionState.ShapeProjectionTrail;
+            cell.SetProjectionState(val);
         }
 
         var maxMoveVec = maxMoves * currentShapeDir;
@@ -223,7 +225,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         {
             var pos = shapeCell.LocalPos + attachedShape.pos + maxMoveVec;
             if (CheckIndex(pos))
-                this[pos].SetState(FieldCellState.ShapeProjection);
+                this[pos].SetProjectionState(FieldProjectionState.ShapeProjection);
         }
     }
 
@@ -290,6 +292,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             }
         }
         RefreshProjection();
+        
+        backgroundInputSprite.transform.localScale = new Vector3(Size, Size);
     }
 
     void CollectCells()
@@ -327,7 +331,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         screenState = value;
         foreach (var cell in _cells)
         {
-            cell.FieldScreenStateChangeHandle(value);
+            cell.RefreshTargets();
         }
     }
 
@@ -349,7 +353,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }
-        foreach (var cell in _cells) cell.FieldCompletionChangeHandle(value);
+        foreach (var cell in _cells) cell.RefreshTargets();
         onCompletionChange?.Invoke(this, value);
     }
 
@@ -446,9 +450,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     
     static FieldMatrix _active;
 
-    void SetCellsState(FieldCellState state)
+    void SetCellsState(FieldProjectionState state)
     {
-        foreach (var cell in _cells) cell.SetState(state);
+        foreach (var cell in _cells) cell.SetProjectionState(state);
     }
 
     public void Destroy()

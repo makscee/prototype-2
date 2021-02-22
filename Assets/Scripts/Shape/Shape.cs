@@ -10,13 +10,12 @@ public class Shape
     
     public Vector2Int pos;
     public ShapeObject shapeObject;
-    Vector2Int upDirection = Vector2Int.up;
     public List<ShapeCell> cells = new List<ShapeCell>();
     public Vector2Int size;
     public Vector2Int ShapeRotationSize => new Vector2Int(Width, Height);
 
-    public int Width => Mathf.RoundToInt((upDirection.Rotate90(true) * size).magnitude);
-    public int Height => Mathf.RoundToInt((upDirection * size).magnitude);
+    public int Width => Mathf.RoundToInt((UpDirection.Rotate90(true) * size).magnitude);
+    public int Height => Mathf.RoundToInt((UpDirection * size).magnitude);
     
     public Quaternion RotationQuaternion =>
         Quaternion.AngleAxis(RotationAngle, Vector3.forward);
@@ -30,13 +29,9 @@ public class Shape
 
     public FieldMatrix Field { get; set; }
 
-    public Vector2Int UpDirection
-    {
-        get => upDirection;
-        private set => upDirection = value;
-    }
+    public Vector2Int UpDirection { get; private set; } = Vector2Int.up;
 
-    public int Rotation => Utils.DirFromCoords(upDirection);
+    public int Rotation => Utils.DirFromCoords(UpDirection);
 
     public void AttachToMatrix()
     {
@@ -48,7 +43,7 @@ public class Shape
 
     public void SetRotation(Vector2Int dir)
     {
-        while (upDirection != dir)
+        while (UpDirection != dir)
             RotateClockwise();
         foreach (var shapeCell in cells)
         {
@@ -59,7 +54,7 @@ public class Shape
     void RotateClockwise()
     {
         UpDirection = UpDirection.Rotate90(true);
-        var deltaPos = -upDirection * (size.x - 1); 
+        var deltaPos = -UpDirection * (size.x - 1); // todo fix delta slip on rotate and undo
         pos += deltaPos;
         shapeObject.DirectPositionOffset((Vector2)deltaPos);
         foreach (var cell in cells)

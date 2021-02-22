@@ -24,15 +24,25 @@ public class PatternMaterialProvider : MonoBehaviour
         {
             if (_material == null)
             {
-                _material = new Material(GlobalConfig.Instance.shaderPatternMaterial);
-                if (sr != null)
-                    sr.material = _material;
-                SetShaderProperties();
+                InitMaterial();
             }
 
             return _material;
         }
         private set => _material = value;
+    }
+
+    void InitMaterial()
+    {
+        _material = new Material(GlobalConfig.Instance.shaderPatternMaterial);
+        if (sr != null)
+            sr.material = _material;
+        SetShaderProperties();
+    }
+
+    void Start()
+    {
+        InitMaterial();
     }
 
     void OnValidate()
