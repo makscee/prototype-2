@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,6 +23,13 @@ public class FieldCell : MonoBehaviour
     void Start()
     {
         field.onShapePlaced += OnShapePlaced;
+        FieldPackPalettes.Instance.SubscribeToColors(SetColors);
+    }
+
+    void SetColors(IReadOnlyList<Color> colors)
+    {
+        sr.color = colors[0].ChangeAlpha(sr.color.a);
+        originalColor = colors[0];
     }
 
     void OnShapePlaced()
@@ -119,8 +127,6 @@ public class FieldCell : MonoBehaviour
         var go = Instantiate(Prefabs.Instance.fieldCell, parent);
         var fc = go.GetComponent<FieldCell>();
         fc.sr = fc.GetComponent<SpriteRenderer>();
-        fc.sr.color = GlobalConfig.Instance.palette1;
-        fc.originalColor = fc.sr.color;
         fc.field = field;
         fc.SetCoords(x, y);
         return fc;

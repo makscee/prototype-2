@@ -15,7 +15,7 @@ MonoBehaviour:
   debug: 0
   levelSelectorEntry1: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
   levelSelectorEntry2: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
-  shapeAnimationTime: 3.15
+  shapeAnimationTime: 0.15
   fieldCellsAnimationTime: 0.6
   sidesThicknessRecoverTime: 0.4
   balanceSetAnimationTime: 1
@@ -38,3 +38,4 @@ MonoBehaviour:
   cameraFollowSpeed: 5
   cameraFieldSizeMult: 1
   cameraFPSizeMult: 2.01
+  paletteChangeTime: 1

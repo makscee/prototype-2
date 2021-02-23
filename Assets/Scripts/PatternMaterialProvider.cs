@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -38,6 +39,7 @@ public class PatternMaterialProvider : MonoBehaviour
         if (sr != null)
             sr.material = _material;
         SetShaderProperties();
+        FieldPackPalettes.Instance.SubscribeToColors(SetColors);
     }
 
     void Start()
@@ -51,10 +53,14 @@ public class PatternMaterialProvider : MonoBehaviour
             SetShaderProperties();
     }
 
+    void SetColors(IReadOnlyList<Color> colors)
+    {
+        Material.SetColor(Color0Property, colors[0]);
+        Material.SetColor(Color1Property, colors[1]);
+    }
+
     public void SetShaderProperties()
     {
-        Material.SetColor(Color0Property, GlobalConfig.Instance.palette1);
-        Material.SetColor(Color1Property, GlobalConfig.Instance.palette3);
         Material.SetFloat(BalanceProperty, balance);
         Material.SetFloat(FrequencyProperty, frequency);
         Material.SetColor(TintProperty, tint);

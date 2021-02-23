@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -13,6 +14,7 @@ public class ShapeCellSidesContainer : MonoBehaviour
     void Start()
     {
         RefreshSides();
+        FieldPackPalettes.Instance.SubscribeToColors(RefreshColors);
     }
 
     void OnValidate()
@@ -36,6 +38,19 @@ public class ShapeCellSidesContainer : MonoBehaviour
         }
     }
 
+    void RefreshColors(IReadOnlyList<Color> colors)
+    {
+        for (var i = 0; i < 4; i++)
+        {
+            sides[i].SetColor(colors[0]);
+        }
+    }
+
+    void OnDestroy()
+    {
+        FieldPackPalettes.Instance.UnsubscribeFromColors(RefreshColors);
+    }
+
     public void Refresh()
     {
         if (surroundingCells == null) return;
@@ -44,7 +59,6 @@ public class ShapeCellSidesContainer : MonoBehaviour
         {
             var dir1 = Utils.CoordsFromDirInt(i);
             sides[i].Enable(GetSurroundingCell(dir1));
-            sides[i].SetColor(GlobalConfig.Instance.palette1);
         }
     }
 }
