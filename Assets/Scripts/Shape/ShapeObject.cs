@@ -62,6 +62,14 @@ public class ShapeObject : MonoBehaviour
         return interpolator;
     }
 
+    public void OffsetRotation(float angle)
+    {
+        transform.rotation = Quaternion.Euler(0, 0, angle + transform.rotation.eulerAngles.z);
+        var interpolator = Animator.Interpolate(angle, 0f, GlobalConfig.Instance.shapeAnimationTime)
+            .PassDelta(v => transform.rotation = Quaternion.Euler(0, 0, v + transform.rotation.eulerAngles.z))
+            .Type(InterpolationType.InvSquare).NullCheck(gameObject);
+    }
+
     public void SetParent(Transform parent)
     {
         Animator.ClearByOwner(this);

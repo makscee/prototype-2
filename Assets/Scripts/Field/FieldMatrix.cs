@@ -177,7 +177,24 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 MoveAttachedShapeAccordingToDir(curOffset + 1);
             else
             {
+                var upDir = Utils.DirFromCoords(attachedShape.UpDirection);
+                switch (upDir)
+                {
+                    case 0:
+                        attachedShape.shapeObject.DirectPositionOffset(new Vector3(0, attachedShape.Height - 1));
+                        break;
+                    case 1:
+                        attachedShape.shapeObject.DirectPositionOffset(new Vector3(0, attachedShape.Width - 1));
+                        break;
+                    case 2:
+                        attachedShape.shapeObject.DirectPositionOffset(new Vector3(0, attachedShape.Height - 1));
+                        break;
+                    case 3:
+                        attachedShape.shapeObject.DirectPositionOffset(new Vector3(0, attachedShape.Width - 1));
+                        break;
+                }
                 attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(false));
+                attachedShape.shapeObject.OffsetRotation(-90f);
                 MoveAttachedShapeAccordingToDir(0);
             }
         }
@@ -187,7 +204,24 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 MoveAttachedShapeAccordingToDir(curOffset - 1);
             else
             {
+                var upDir = Utils.DirFromCoords(attachedShape.UpDirection);
+                switch (upDir)
+                {
+                    case 0:
+                        attachedShape.shapeObject.DirectPositionOffset(new Vector3(attachedShape.Width - 1, 0));
+                        break;
+                    case 1:
+                        attachedShape.shapeObject.DirectPositionOffset(new Vector3(attachedShape.Height - 1, 0));
+                        break;
+                    case 2:
+                        attachedShape.shapeObject.DirectPositionOffset(new Vector3(attachedShape.Width - 1, 0));
+                        break;
+                    case 3:
+                        attachedShape.shapeObject.DirectPositionOffset(new Vector3(attachedShape.Height - 1, 0));
+                        break;
+                }
                 attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(true));
+                attachedShape.shapeObject.OffsetRotation(90f);
                 MoveAttachedShapeAccordingToDir(MaxShapeOffset);
             }
         }

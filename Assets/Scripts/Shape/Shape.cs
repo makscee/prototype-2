@@ -54,9 +54,9 @@ public class Shape
     void RotateClockwise()
     {
         UpDirection = UpDirection.Rotate90(true);
-        var deltaPos = -UpDirection * (size.x - 1); // todo fix delta slip on rotate and undo
-        pos += deltaPos;
-        shapeObject.DirectPositionOffset((Vector2)deltaPos);
+        // var deltaPos = -UpDirection * (size.x - 1);
+        // pos += deltaPos;
+        // shapeObject.DirectPositionOffset((Vector2)deltaPos);
         foreach (var cell in cells)
         {
             var newX = cell.LocalPos.y;

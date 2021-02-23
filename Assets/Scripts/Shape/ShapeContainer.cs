@@ -44,8 +44,23 @@ public class ShapeContainer
     {
         if (currentIndex == 0) return;
         currentIndex--;
-        var shape = shapes[currentIndex]; 
+        var shape = shapes[currentIndex];
         shape.shapeObject.SetParent(_containerObject.transform);
+        var upDir = Utils.DirFromCoords(shape.UpDirection);
+        switch (upDir)
+        {
+            case 0:
+                break;
+            case 1:
+                shape.shapeObject.DirectPositionOffset(new Vector3(-shape.Width + 1, 0, 0));
+                break;
+            case 2:
+                shape.shapeObject.DirectPositionOffset(new Vector3(-shape.Width + 1, -shape.Height + 1, 0));
+                break;
+            case 3:
+                shape.shapeObject.DirectPositionOffset(new Vector3(0, -shape.Height + 1, 0));
+                break;
+        }
         shape.SetRotation(Vector2Int.up);
         shape.shapeObject.transform.localRotation = Quaternion.identity;
     }
