@@ -8,6 +8,7 @@ public class Prefabs : ScriptableObject
     public GameObject fieldCell;
     public GameObject shapeObject;
     public GameObject shapeCellObject;
+    public GameObject shapeCellParticles;
 
     public static Prefabs Instance => GetInstance();
 

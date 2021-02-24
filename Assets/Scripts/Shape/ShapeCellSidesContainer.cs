@@ -32,6 +32,7 @@ public class ShapeCellSidesContainer : MonoBehaviour
 
     public void RefreshSides()
     {
+        if (shapeCellObject.shape == null) return;
         foreach (var side in sides)
         {
             side.Refresh(Thickness);

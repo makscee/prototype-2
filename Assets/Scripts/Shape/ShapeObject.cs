@@ -83,4 +83,13 @@ public class ShapeObject : MonoBehaviour
         CurrentPositionTarget += offset;
         transform.localPosition += offset;
     }
+
+    public void SetEnabled(bool value)
+    {
+        gameObject.SetActive(value);
+        foreach (var shapeCell in shape.cells)
+        {
+            shapeCell.shapeCellObject.SetEnabled(value);
+        }
+    }
 }

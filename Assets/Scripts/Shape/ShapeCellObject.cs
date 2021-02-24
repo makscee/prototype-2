@@ -5,6 +5,7 @@ public class ShapeCellObject : MonoBehaviour
 {
     public ShapeCell cell;
     public ShapeCellSidesContainer sidesContainer;
+    public ShapeCellParticleSystem particles;
     public Shape shape;
     public static ShapeCellObject Create(Vector2Int pos, Shape shape, ShapeCell cell)
     {
@@ -19,6 +20,25 @@ public class ShapeCellObject : MonoBehaviour
     void Start()
     {
         InitInsides();
+        InitParticles();
+    }
+
+    void InitParticles()
+    {
+        particles = ShapeCellParticleSystem.Create(this);
+    }
+
+    public void SetEnabled(bool value)
+    {
+        gameObject.SetActive(value);
+        if (particles != null)
+            particles.gameObject.SetActive(value);
+    }
+
+    void OnDestroy()
+    {
+        if (particles != null)
+            Destroy(particles.gameObject);
     }
 
     public void InitInsides()

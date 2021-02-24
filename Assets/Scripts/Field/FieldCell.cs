@@ -26,6 +26,11 @@ public class FieldCell : MonoBehaviour
         FieldPackPalettes.Instance.SubscribeToColors(SetColors);
     }
 
+    void OnDestroy()
+    {
+        FieldPackPalettes.Instance.UnsubscribeFromColors(SetColors);
+    }
+
     void SetColors(IReadOnlyList<Color> colors)
     {
         sr.color = colors[0].ChangeAlpha(sr.color.a);
@@ -47,10 +52,12 @@ public class FieldCell : MonoBehaviour
                     _posOffset.target = lockedOffset;
                     _scale.target = 0.5f;
                     SetAlpha(0.3f);
+                    sr.sortingOrder = 0;
                     break;
                 case FieldCompletion.Unlocked:
                     _posOffset.target = Vector3.zero;
                     _scale.target = 1f;
+                    sr.sortingOrder = 2;
                     break;
                 case FieldCompletion.Complete:
                     _posOffset.target = Vector3.zero;
@@ -127,6 +134,7 @@ public class FieldCell : MonoBehaviour
         var go = Instantiate(Prefabs.Instance.fieldCell, parent);
         var fc = go.GetComponent<FieldCell>();
         fc.sr = fc.GetComponent<SpriteRenderer>();
+        fc.originalColor = FieldPackPalettes.Instance.Colors[0];
         fc.field = field;
         fc.SetCoords(x, y);
         return fc;

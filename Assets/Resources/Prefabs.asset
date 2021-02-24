@@ -16,8 +16,4 @@ MonoBehaviour:
   fieldCell: {fileID: 4341347847950007792, guid: c143870cf4330455abcbe5224255926f, type: 3}
   shapeObject: {fileID: 5598629549521729983, guid: 02a6989db6fe04d59ad2e9c90d31ada2, type: 3}
   shapeCellObject: {fileID: 7962846756057869799, guid: 0c00052e761e54d3eb8ba3836151b108, type: 3}
-  levelEntry: {fileID: 3079544153736067523, guid: a1ca24dbcf60148c196de31161b176f5, type: 3}
-  carcassSpriteContainers:
-  - {fileID: 6827760455451751845, guid: 65efd28659e0a4a16b0dae74b3c16917, type: 3}
-  - {fileID: 9220957641639519613, guid: 45c14708d451e449fbc456036c010101, type: 3}
-  - {fileID: 2431058414336909890, guid: 4598ddd30a22940f4853f287e608adac, type: 3}
+  shapeCellParticles: {fileID: 2203104090816468950, guid: 82f6b41127e030e439ac378c3468e2ed, type: 3}

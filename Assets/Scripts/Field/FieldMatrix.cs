@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] GameObject backgroundInputSprite;
+    [SerializeField] GameObject backgroundInputSprite, unlockedSprite;
     public PatternMaterialProvider completionSprite;
     public PatternMaterialProvider cellsMaterialProvider;
     public int packId, fieldId;
@@ -342,6 +342,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         switch (value)
         {
             case FieldScreenState.Active:
+                unlockedSprite.SetActive(false);
                 gameObject.SetActive(true);
                 if (shapesContainer == null)
                     FieldMatrixSerialized.Load(packId, fieldId).LoadShapesContainer(this);
@@ -355,6 +356,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 gameObject.SetActive(false);
                 break;
             case FieldScreenState.OnSelectScreen:
+                if (completion == FieldCompletion.Unlocked)
+                    unlockedSprite.SetActive(true);
                 gameObject.SetActive(true);
                 shapesContainer?.SetEnabled(false);
                 attachedShape?.shapeObject.gameObject.SetActive(false);
@@ -376,10 +379,13 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         switch (value)
         {
             case FieldCompletion.Locked:
+                unlockedSprite.SetActive(false);
                 break;
             case FieldCompletion.Unlocked:
+                unlockedSprite.SetActive(true);
                 break;
             case FieldCompletion.Complete:
+                unlockedSprite.SetActive(false);
                 completionSprite.transform.localScale = new Vector3(_size, _size, _size);
                 completionSprite.gameObject.SetActive(true);
                 shapesContainer?.SetEnabled(false);

@@ -11,6 +11,7 @@ public class PatternMaterialProvider : MonoBehaviour
 
     Material _material;
     public SpriteRenderer sr;
+    public ParticleSystem ps;
     
     static readonly int Color0Property = Shader.PropertyToID("_Color0");
     static readonly int Color1Property = Shader.PropertyToID("_Color1");
@@ -38,6 +39,8 @@ public class PatternMaterialProvider : MonoBehaviour
         _material = new Material(GlobalConfig.Instance.shaderPatternMaterial);
         if (sr != null)
             sr.material = _material;
+        if (ps != null)
+            ps.GetComponent<Renderer>().material = _material;
         SetShaderProperties();
         FieldPackPalettes.Instance.SubscribeToColors(SetColors);
     }
