@@ -86,7 +86,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             CollectCells();
             SubscribeCompletionDependency();
             InitCompletion();
-            Pack.PlaceField(this);
+            // Pack.PlaceField(this);
             SetScreenState(FieldScreenState.OnSelectScreen);
         }
     }
@@ -126,6 +126,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         var move = new ShapeMove(this, attachedShape).Do(); 
         if (move != null)
         {
+            SoundsPlayer.instance.PlayInsertStartSound();
             var shape = shapesContainer.GetNext();
             if (shape != null)
                 AttachShape(shape);
@@ -165,6 +166,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         currentShapeDir = direction;
         var shape = _moveTracker.Undo();
         AttachShape(shape);
+        SoundsPlayer.instance.PlayUndoSound();
     }
 
     public void MoveAttachedShape(bool right)
@@ -174,7 +176,10 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         if (right)
         {
             if (curOffset < MaxShapeOffset)
+            {
                 MoveAttachedShapeAccordingToDir(curOffset + 1);
+                SoundsPlayer.instance.PlayMoveAttachedSound();
+            }
             else
             {
                 var upDir = Utils.DirFromCoords(attachedShape.UpDirection);
@@ -196,12 +201,16 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(false));
                 attachedShape.shapeObject.OffsetRotation(-90f);
                 MoveAttachedShapeAccordingToDir(0);
+                SoundsPlayer.instance.PlayMoveAttachedRotateSound();
             }
         }
         else
         {
             if (curOffset > 0)
+            {
                 MoveAttachedShapeAccordingToDir(curOffset - 1);
+                SoundsPlayer.instance.PlayMoveAttachedSound();
+            }
             else
             {
                 var upDir = Utils.DirFromCoords(attachedShape.UpDirection);
@@ -223,6 +232,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(true));
                 attachedShape.shapeObject.OffsetRotation(90f);
                 MoveAttachedShapeAccordingToDir(MaxShapeOffset);
+                SoundsPlayer.instance.PlayMoveAttachedRotateSound();
             }
         }
 
@@ -387,6 +397,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             case FieldCompletion.Complete:
                 unlockedSprite.SetActive(false);
                 completionSprite.transform.localScale = new Vector3(_size, _size, _size);
+                completionSprite.transform.GetChild(0).localScale =
+                    GetComponentInParent<FieldPack>().transform.localScale;
                 completionSprite.gameObject.SetActive(true);
                 shapesContainer?.SetEnabled(false);
                 break;
@@ -400,7 +412,10 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     void InitCompletion()
     {
         if (Progress.IsComplete(this))
+        {
             SetCompletion(FieldCompletion.Complete);
+            Pack.FieldCompleted();
+        }
         else if (_leftDependencies1.Count == 0 ||
                  dependencies2 != null && dependencies2.Length != 0 && _leftDependencies2.Count == 0)
             SetCompletion(FieldCompletion.Unlocked);
@@ -428,7 +443,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     void DependencyCompletionChangeHandle(FieldMatrix field, FieldCompletion value)
     {
-        if (value != FieldCompletion.Complete) return;
+        if (value != FieldCompletion.Complete || completion != FieldCompletion.Locked) return;
         _leftDependencies1.Remove(field);
         _leftDependencies2.Remove(field);
         if (dependencies1 != null && dependencies1.Length != 0 && _leftDependencies1.Count == 0 ||
@@ -530,14 +545,15 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (Active == this || completion != FieldCompletion.Unlocked) return;
-            if (FieldPack.active.packId == packId)
+            if (Active == this || completion == FieldCompletion.Locked) return;
+            if (FieldPack.active.packId == packId && completion == FieldCompletion.Unlocked)
             {
                 SetScreenState(FieldScreenState.Active);
+                return;
             }
-            else
+            if (completion != FieldCompletion.Locked && FieldPack.active.packId != packId)
             {
-                FieldPack.active = FieldPacksCollection.Packs[packId];
+                FieldPacksCollection.Packs[packId].Activate();
             }
         }
         else

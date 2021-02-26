@@ -35,6 +35,7 @@ public class ShapeObject : MonoBehaviour
     void ShapePlacedEffect()
     {
         shape.Field.onShapePlaced?.Invoke();
+        SoundsPlayer.instance.PlayInsertSound();
         CameraScript.instance.transform.position += -(Vector3) (Vector2) shape.UpDirection *
                                                     (GlobalConfig.Instance.cameraShakeAmount *
                                                      shape.Field.transform.lossyScale.x);

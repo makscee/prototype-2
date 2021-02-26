@@ -9,10 +9,10 @@ public class FieldPacksCollection : MonoBehaviour
     public static FieldPack[] Packs;
     [SerializeField] bool initPacks;
 
-    void OnEnable()
+    void Awake()
     {
         Packs = GetComponentsInChildren<FieldPack>();
-        FieldPack.active = Packs[0];
+        Packs[0].Activate();
     }
 
     void OnValidate()

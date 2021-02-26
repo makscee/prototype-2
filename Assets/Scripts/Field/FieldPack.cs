@@ -12,6 +12,7 @@ public class FieldPack : MonoBehaviour
     int FieldsCount => sideSize == 3 ? 8 : 4;
     public int packId;
     public FieldMatrix[] fields;
+    public float cameraSizeMultiplier = 1f;
 
     [SerializeField] bool initFields;
 
@@ -40,6 +41,12 @@ public class FieldPack : MonoBehaviour
         }
     }
 
+    public void Activate()
+    {
+        active = this;
+        FieldPackPalettes.Instance.LoadPackPalette(packId);
+    }
+
     public bool Complete { get; private set; }
     public void FieldCompleted()
     {
@@ -47,7 +54,7 @@ public class FieldPack : MonoBehaviour
         if (fields.All(field => field.completion == FieldCompletion.Complete))
         {
             Complete = true;
-            // active = FieldPacksCollection.Packs[packId + 1];
+            FieldPacksCollection.Packs[packId + 1].Activate();
         }
     }
 

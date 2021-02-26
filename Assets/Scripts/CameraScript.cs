@@ -63,7 +63,7 @@ public class CameraScript : MonoBehaviour
 
     void FollowFieldPack()
     {
-        SetSizeTarget(FieldPack.active.Height * GlobalConfig.Instance.cameraFPSizeMult);
+        SetSizeTarget(FieldPack.active.Height * GlobalConfig.Instance.cameraFPSizeMult * FieldPack.active.cameraSizeMultiplier);
         _targetPosition = Vector2.zero;
         _targetRotation = Quaternion.identity;
     }

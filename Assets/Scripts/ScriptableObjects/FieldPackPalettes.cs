@@ -25,6 +25,7 @@ public class FieldPackPalettes : ScriptableObject
     public void LoadPackPalette(int packId)
     {
         currentPackId = packId;
+        Apply();
     }
 
     public void SubscribeToColors(Action<Color[]> action)
