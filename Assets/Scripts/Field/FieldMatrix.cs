@@ -48,7 +48,10 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         {
             _active = value;
             if (value == null)
+            {
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.OnSelectScreen);
+                SoundsPlayer.instance.EnablePlayTheme(false);
+            }
         }
     }
 
@@ -361,6 +364,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 RefreshProjection();
                 Active = this;
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.Disabled, this);
+                SoundsPlayer.instance.EnablePlayTheme(true);
                 break;
             case FieldScreenState.Disabled:
                 gameObject.SetActive(false);

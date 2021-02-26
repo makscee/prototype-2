@@ -2,7 +2,7 @@
 
 public class SoundsPlayer : MonoBehaviour
 {
-    [SerializeField] AudioSource insertMain, insertStart, undo, moveAttached, moveAttachedRotate;
+    [SerializeField] AudioSource insertMain, insertStart, undo, moveAttached, moveAttachedRotate, playTheme0;
     
     public static SoundsPlayer instance;
     public void Awake()
@@ -34,5 +34,12 @@ public class SoundsPlayer : MonoBehaviour
     public void PlayMoveAttachedRotateSound()
     {
         moveAttachedRotate.Play();
+    }
+
+    public void EnablePlayTheme(bool value)
+    {
+        if (value)
+            playTheme0.Play();
+        else playTheme0.Stop();
     }
 }
