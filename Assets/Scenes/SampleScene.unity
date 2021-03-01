@@ -584,8 +584,11 @@ GameObject:
   - component: {fileID: 21150843}
   - component: {fileID: 21150845}
   - component: {fileID: 21150846}
-  - component: {fileID: 21150847}
-  - component: {fileID: 21150848}
+  - component: {fileID: 21150852}
+  - component: {fileID: 21150851}
+  - component: {fileID: 21150850}
+  - component: {fileID: 21150849}
+  - component: {fileID: 21150853}
   m_Layer: 0
   m_Name: Audio Source
   m_TagString: Untagged
@@ -608,8 +611,11 @@ MonoBehaviour:
   insertMain: {fileID: 21150843}
   insertStart: {fileID: 21150845}
   undo: {fileID: 21150846}
-  moveAttached: {fileID: 21150847}
-  moveAttachedRotate: {fileID: 21150848}
+  moveAttachedLeft: {fileID: 21150852}
+  moveAttachedRight: {fileID: 21150851}
+  moveAttachedRotateLeft: {fileID: 21150850}
+  moveAttachedRotateRight: {fileID: 21150849}
+  playTheme0: {fileID: 21150853}
 --- !u!82 &21150843
 AudioSource:
   m_ObjectHideFlags: 0
@@ -732,7 +738,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1a73d8e2a0107b84daf8bce492cfcf3e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -912,7 +918,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &21150847
+--- !u!82 &21150849
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -922,9 +928,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 251ad74891f3db348a15a56f508511bd, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 38e313f15f0855940aa763905bdb258f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1008,7 +1014,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!82 &21150848
+--- !u!82 &21150850
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1018,9 +1024,297 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a5881beac1b09d542bbcb739dabbf1d0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d800d114e10ddcc4a90d3e0310a5e66e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &21150851
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21150841}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0de6b9831cb0bf74394d5c316398750a, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &21150852
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21150841}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 90aba76f3c073884ba94ee9605d9284b, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &21150853
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21150841}
+  m_Enabled: 0
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c55dcfb165cb4434b9836610c0273f3b, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2685,6 +2979,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &108752013
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &114941580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,7 +3221,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &139566497
+--- !u!21 &143764123
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -3133,42 +3463,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &156793038
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &164572606
 GameObject:
   m_ObjectHideFlags: 0
@@ -3478,6 +3772,114 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &188722961
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
+--- !u!21 &194550204
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+--- !u!21 &195320146
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &199964895
 GameObject:
   m_ObjectHideFlags: 0
@@ -3581,6 +3983,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &204441685
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 5
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &204859689
 GameObject:
   m_ObjectHideFlags: 0
@@ -3890,18 +4328,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &236849866 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8912627421783522401, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
-  m_PrefabInstance: {fileID: 1132517122}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de7dd1b3d41b14646946fd6d3b447659, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!21 &241995631
+--- !u!21 &231309637
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -3926,7 +4353,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Balance: 0.5
-    - _Frequency: 1
+    - _Frequency: 5
     - _Invert: 0
     - _Rotation: 45
     - _Speed: 1
@@ -3937,6 +4364,17 @@ Material:
     - _Size: {r: 1, g: 1, b: 0, a: 0}
     - _Tint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &236849866 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8912627421783522401, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
+  m_PrefabInstance: {fileID: 1132517122}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7dd1b3d41b14646946fd6d3b447659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &254155389 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6979695257556868552, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
@@ -4045,42 +4483,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &264624676
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &276309326
 GameObject:
   m_ObjectHideFlags: 0
@@ -4287,6 +4689,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &294830025
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &296651133
 GameObject:
   m_ObjectHideFlags: 0
@@ -4539,7 +4977,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 826529711}
+      objectReference: {fileID: 960510611}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -4567,7 +5005,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 493710833}
+      objectReference: {fileID: 467799431}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 0_2
@@ -4967,42 +5405,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &341962537
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &344093298
 GameObject:
   m_ObjectHideFlags: 0
@@ -5106,6 +5508,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &344400346
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &348408277
 GameObject:
   m_ObjectHideFlags: 0
@@ -5600,6 +6038,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &428443259
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &429467197
 GameObject:
   m_ObjectHideFlags: 0
@@ -5816,7 +6290,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2050645385}
+      objectReference: {fileID: 1958519744}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -5836,7 +6310,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1610469057}
+      objectReference: {fileID: 188722961}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 1_4
@@ -6145,6 +6619,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &467799431
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &476935281
 GameObject:
   m_ObjectHideFlags: 0
@@ -6454,42 +6964,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &493710833
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &499012435
 GameObject:
   m_ObjectHideFlags: 0
@@ -7562,42 +8036,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &535474369
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &549978380
 GameObject:
   m_ObjectHideFlags: 0
@@ -7804,42 +8242,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &564798468
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &568971437
 GameObject:
   m_ObjectHideFlags: 0
@@ -8168,6 +8570,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &581380705
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &586597716
 GameObject:
   m_ObjectHideFlags: 0
@@ -11421,42 +11859,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &732305139
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &732432328
 GameObject:
   m_ObjectHideFlags: 0
@@ -11766,6 +12168,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &749107069
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
+--- !u!21 &759071294
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 5
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &759089188
 GameObject:
   m_ObjectHideFlags: 0
@@ -12085,7 +12559,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 805553795}
+      objectReference: {fileID: 294830025}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -12105,7 +12579,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1963388151}
+      objectReference: {fileID: 428443259}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 1_0
@@ -12756,42 +13230,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &805553795
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!21 &809430009
 Material:
   serializedVersion: 6
@@ -13446,7 +13884,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &826529711
+--- !u!21 &831915130
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -13470,8 +13908,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
+    - _Balance: 0.86
+    - _Frequency: 0.54
     - _Invert: 0
     - _Rotation: 45
     - _Speed: 1
@@ -13480,7 +13918,7 @@ Material:
     - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
     - _Position: {r: 0, g: 0, b: 0, a: 0}
     - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
   m_BuildTextureStacks: []
 --- !u!1 &835306337
 GameObject:
@@ -14409,42 +14847,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &901973250
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &902208417
 GameObject:
   m_ObjectHideFlags: 0
@@ -14857,7 +15259,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &928576037
+--- !u!21 &922189111
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+--- !u!21 &926267808
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -15006,7 +15444,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 241995631}
+      objectReference: {fileID: 1441081445}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -15026,7 +15464,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 139566497}
+      objectReference: {fileID: 1557010230}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 1_3
@@ -15141,6 +15579,42 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6979695257556868552, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
   m_PrefabInstance: {fileID: 942214801}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &948632355
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 5
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &950977015
 GameObject:
   m_ObjectHideFlags: 0
@@ -15244,6 +15718,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &960510611
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &966475697
 GameObject:
   m_ObjectHideFlags: 0
@@ -16686,42 +17196,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &1026632910
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!21 &1029103303
 Material:
   serializedVersion: 6
@@ -16861,42 +17335,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &1031232391
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1033892738
 GameObject:
   m_ObjectHideFlags: 0
@@ -17418,7 +17856,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 264624676}
+      objectReference: {fileID: 194550204}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -17438,7 +17876,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1757675548}
+      objectReference: {fileID: 195320146}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 1_7
@@ -17767,42 +18205,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &1080853461
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1095448692
 GameObject:
   m_ObjectHideFlags: 0
@@ -18328,7 +18730,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 928576037}
+      objectReference: {fileID: 922189111}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -18356,7 +18758,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 156793038}
+      objectReference: {fileID: 581380705}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 0_1
@@ -18874,7 +19276,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1456175172}
+      objectReference: {fileID: 926267808}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -18894,7 +19296,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 901973250}
+      objectReference: {fileID: 1666834393}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 1_2
@@ -19631,6 +20033,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1188775096
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1191219677
 GameObject:
   m_ObjectHideFlags: 0
@@ -19744,7 +20182,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 564798468}
+      objectReference: {fileID: 108752013}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -19764,7 +20202,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2063417963}
+      objectReference: {fileID: 143764123}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 1_5
@@ -20846,6 +21284,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1246893123
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 5
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1247120311
 GameObject:
   m_ObjectHideFlags: 0
@@ -21567,6 +22041,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1305630689
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1307975974
 GameObject:
   m_ObjectHideFlags: 0
@@ -21773,6 +22283,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1319639068
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 5
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1335171983
 GameObject:
   m_ObjectHideFlags: 0
@@ -23217,6 +23763,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1441081445
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1001 &1453212641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23227,7 +23809,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 535474369}
+      objectReference: {fileID: 1671570020}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -23255,7 +23837,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 341962537}
+      objectReference: {fileID: 2130189125}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 0_3
@@ -23364,7 +23946,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1031232391}
+      objectReference: {fileID: 1305630689}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -23384,7 +23966,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 732305139}
+      objectReference: {fileID: 1188775096}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 1_6
@@ -23503,42 +24085,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6979695257556868552, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
   m_PrefabInstance: {fileID: 1455718993}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1456175172
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1466289743
 GameObject:
   m_ObjectHideFlags: 0
@@ -24167,7 +24713,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1519971277}
+      objectReference: {fileID: 344400346}
     - target: {fileID: 5041831745380885417, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_LocalScale.x
       value: 5
@@ -24187,7 +24733,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1080853461}
+      objectReference: {fileID: 749107069}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 1_1
@@ -24522,7 +25068,7 @@ PrefabInstance:
     - target: {fileID: 2735136612931146570, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1026632910}
+      objectReference: {fileID: 1675408194}
     - target: {fileID: 4353744490884049717, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -24554,7 +25100,7 @@ PrefabInstance:
     - target: {fileID: 8121916693661641029, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1968574794}
+      objectReference: {fileID: 831915130}
     - target: {fileID: 8912627421783522400, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
       propertyPath: m_Name
       value: fm 0_0
@@ -24625,42 +25171,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59a199376ded9497b8870e49ae304eb9, type: 3}
---- !u!21 &1519971277
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1521397015
 GameObject:
   m_ObjectHideFlags: 0
@@ -25382,6 +25892,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1557010230
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1568268950
 GameObject:
   m_ObjectHideFlags: 0
@@ -26618,42 +27164,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &1610469057
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1626933243
 GameObject:
   m_ObjectHideFlags: 0
@@ -27169,6 +27679,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1666834393
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1670141037
 GameObject:
   m_ObjectHideFlags: 0
@@ -27272,6 +27818,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1671570020
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+--- !u!21 &1675408194
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1678639541
 GameObject:
   m_ObjectHideFlags: 0
@@ -28210,42 +28828,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &1757675548
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1761651328
 GameObject:
   m_ObjectHideFlags: 0
@@ -29585,6 +30167,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1825037031
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 5
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1831274207
 GameObject:
   m_ObjectHideFlags: 0
@@ -30928,6 +31546,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &1928929369
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.5
+    - _Frequency: 0.1
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 0.01
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1929864148
 GameObject:
   m_ObjectHideFlags: 0
@@ -31855,7 +32509,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &1963388151
+--- !u!21 &1958519744
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -31879,8 +32533,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
+    - _Balance: 0.5
+    - _Frequency: 1
     - _Invert: 0
     - _Rotation: 45
     - _Speed: 1
@@ -31889,43 +32543,7 @@ Material:
     - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
     - _Position: {r: 0, g: 0, b: 0, a: 0}
     - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
---- !u!21 &1968574794
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!1 &1970289738
 GameObject:
@@ -33062,42 +33680,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &2037473417
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 0.1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 0.01
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &2038405386
 GameObject:
   m_ObjectHideFlags: 0
@@ -33407,42 +33989,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &2050645385
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.5
-    - _Frequency: 1
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &2054229718
 GameObject:
   m_ObjectHideFlags: 0
@@ -33480,7 +34026,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2037473417}
+  - {fileID: 1928929369}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -33854,42 +34400,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!21 &2063417963
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: stripes_custom_material
-  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Balance: 0.86
-    - _Frequency: 0.54
-    - _Invert: 0
-    - _Rotation: 45
-    - _Speed: 1
-    m_Colors:
-    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-    - _Position: {r: 0, g: 0, b: 0, a: 0}
-    - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &2063799601
 GameObject:
   m_ObjectHideFlags: 0
@@ -35368,6 +35878,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!21 &2130189125
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: stripes_custom_material
+  m_Shader: {fileID: -6465566751694194690, guid: 5436fb80864ac4e9b927f6d21d184590, type: 3}
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Balance: 0.86
+    - _Frequency: 0.54
+    - _Invert: 0
+    - _Rotation: 45
+    - _Speed: 1
+    m_Colors:
+    - _Color0: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
+    - _Color1: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
+    - _Position: {r: 0, g: 0, b: 0, a: 0}
+    - _Size: {r: 1, g: 1, b: 0, a: 0}
+    - _Tint: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &2134451395
 GameObject:
   m_ObjectHideFlags: 0

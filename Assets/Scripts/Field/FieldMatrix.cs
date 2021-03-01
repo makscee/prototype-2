@@ -181,7 +181,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             if (curOffset < MaxShapeOffset)
             {
                 MoveAttachedShapeAccordingToDir(curOffset + 1);
-                SoundsPlayer.instance.PlayMoveAttachedSound();
+                SoundsPlayer.instance.PlayMoveAttachedSound(false);
             }
             else
             {
@@ -204,7 +204,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(false));
                 attachedShape.shapeObject.OffsetRotation(-90f);
                 MoveAttachedShapeAccordingToDir(0);
-                SoundsPlayer.instance.PlayMoveAttachedRotateSound();
+                SoundsPlayer.instance.PlayMoveAttachedRotateSound(false);
             }
         }
         else
@@ -212,7 +212,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             if (curOffset > 0)
             {
                 MoveAttachedShapeAccordingToDir(curOffset - 1);
-                SoundsPlayer.instance.PlayMoveAttachedSound();
+                SoundsPlayer.instance.PlayMoveAttachedSound(true);
             }
             else
             {
@@ -235,7 +235,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 attachedShape.SetRotation(attachedShape.UpDirection.Rotate90(true));
                 attachedShape.shapeObject.OffsetRotation(90f);
                 MoveAttachedShapeAccordingToDir(MaxShapeOffset);
-                SoundsPlayer.instance.PlayMoveAttachedRotateSound();
+                SoundsPlayer.instance.PlayMoveAttachedRotateSound(true);
             }
         }
 
