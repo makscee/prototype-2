@@ -46,12 +46,14 @@ public class SoundsPlayer : MonoBehaviour
         {
             Animator.ClearByOwner(playTheme0);
             playTheme0.Play();
-            Animator.Interpolate(0f, 1f, 3f).PassValue(v => playTheme0.volume = v).SetOwner(playTheme0);
+            Animator.Interpolate(0f, 1f, 3f).PassValue(v => playTheme0.volume = v)
+                .NullCheck(gameObject).SetOwner(playTheme0);
         }
         else
         {
             Animator.ClearByOwner(playTheme0);
-            Animator.Interpolate(1f, 0f, 3f).PassValue(v => playTheme0.volume = v).WhenDone(playTheme0.Stop).SetOwner(playTheme0);
+            Animator.Interpolate(1f, 0f, 3f).PassValue(v => playTheme0.volume = v)
+                .WhenDone(playTheme0.Stop).NullCheck(gameObject).SetOwner(playTheme0);
         }
     }
 }

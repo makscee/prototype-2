@@ -47,11 +47,14 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         set
         {
             _active = value;
-            if (value == null)
+            var isNull = value == null;
+            if (isNull)
             {
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.OnSelectScreen);
                 SoundsPlayer.instance.EnablePlayTheme(false);
             }
+            TouchInputObject.SetEnabled(!isNull);
+            GameManager.instance.clearProgressButton.SetActive(isNull);
         }
     }
 

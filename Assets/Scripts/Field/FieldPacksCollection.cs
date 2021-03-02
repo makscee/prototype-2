@@ -26,6 +26,14 @@ public class FieldPacksCollection : MonoBehaviour
         }
     }
 
+    public static FieldPack GetFirstIncompletePack()
+    {
+        for (var i = 0; i < Packs.Length; i++)
+            if (!Packs[i].Complete)
+                return Packs[i];
+        return Packs.Last();
+    }
+
     void Init()
     {
         foreach (var fieldPack in GetComponentsInChildren<FieldPack>())

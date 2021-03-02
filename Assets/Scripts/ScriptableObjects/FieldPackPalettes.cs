@@ -20,6 +20,8 @@ public class FieldPackPalettes : ScriptableObject
     [SerializeField] int currentPackId;
     int _prevPackId = -1;
     public Color[] Colors => new[] {colors0[currentPackId], colors1[currentPackId]};
+    public Vector4 lift;
+    public Vector4 gamma;
     Color[] PrevColors => new[] {colors0[_prevPackId], colors1[_prevPackId]};
 
     public void LoadPackPalette(int packId)
@@ -39,13 +41,15 @@ public class FieldPackPalettes : ScriptableObject
         _onColorChange -= action;
     }
 
-    void Apply()
+    void Apply(bool refresh = false)
     {
-        if (_prevPackId == currentPackId) return;
-        if (_prevPackId == -1 || !Application.isPlaying)
+        if (_prevPackId == currentPackId && !refresh) return;
+        if (_prevPackId == -1 || !Application.isPlaying || refresh)
         {
+            Animator.ClearByOwner(this);
             _onColorChange?.Invoke(Colors);
-            PostFxController.Instance.SetLiftGamma(lifts[currentPackId], gammas[currentPackId]);
+            lift = lifts[currentPackId];
+            gamma = gammas[currentPackId];
         }
         else
         {
@@ -57,9 +61,8 @@ public class FieldPackPalettes : ScriptableObject
             Animator.Interpolate(0f, 1f, GlobalConfig.Instance.paletteChangeTime)
                 .PassValue(v =>
                 {
-                    var lift = Vector4.Lerp(lifts[prev], lifts[cur], v);
-                    var gamma = Vector4.Lerp(gammas[prev], gammas[cur], v);
-                    PostFxController.Instance.SetLiftGamma(lift, gamma);
+                    lift = Vector4.Lerp(lifts[prev], lifts[cur], v);
+                    gamma = Vector4.Lerp(gammas[prev], gammas[cur], v);
                     var colors = new[]
                         {Color.Lerp(prevC[0], curC[0], v), Color.Lerp(prevC[1], curC[1], v)};
                     _onColorChange?.Invoke(colors);
@@ -71,11 +74,11 @@ public class FieldPackPalettes : ScriptableObject
 
     void OnEnable()
     {
-        Apply();
+        Apply(true);
     }
 
     void OnValidate()
     {
-        Apply();
+        Apply(true);
     }
 }

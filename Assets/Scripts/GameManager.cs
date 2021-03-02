@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public GameObject clearProgressButton;
+
     void Awake()
     {
         instance = this;
