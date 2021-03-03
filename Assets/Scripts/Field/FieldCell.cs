@@ -5,13 +5,13 @@ using Random = UnityEngine.Random;
 
 public class FieldCell : MonoBehaviour
 {
-    const float ActiveScale = 0.95f, AlphaDefault = 0.5f, AlphaProjectionShape = 0.8f, AlphaProjectionTrail = 0.70f;
+    const float ActiveScale = 0.95f, LerpDefault = 0.2f, LerpProjectionTrail = 0.5f, LerpProjectionShape = 1f;
 
     public FieldMatrix field;
     public int X, Y;
     [SerializeField] SpriteRenderer sr;
-    [SerializeField] Color originalColor;
     [SerializeField] float sinOffset;
+    [SerializeField] float colorLerp, colorAlpha;
 
     Vector3Target _posOffset = new Vector3Target(Vector3.zero);
     FloatTarget _scale = new FloatTarget(1f);
@@ -23,18 +23,20 @@ public class FieldCell : MonoBehaviour
     void Start()
     {
         field.onShapePlaced += OnShapePlaced;
-        FieldPackPalettes.Instance.SubscribeToColors(SetColors);
+        PostFxController.Instance.SubscribeToColors(SetColors);
     }
 
     void OnDestroy()
     {
-        FieldPackPalettes.Instance.UnsubscribeFromColors(SetColors);
+        if (PostFxController.Instance != null)
+            PostFxController.Instance.UnsubscribeFromColors(SetColors);
     }
 
+    IReadOnlyList<Color> _colors;
     void SetColors(IReadOnlyList<Color> colors)
     {
-        sr.color = colors[0].ChangeAlpha(sr.color.a);
-        originalColor = colors[0];
+        _colors = colors;
+        SetColorLerp(colorLerp);
     }
 
     void OnShapePlaced()
@@ -51,12 +53,13 @@ public class FieldCell : MonoBehaviour
                 case FieldCompletion.Locked:
                     _posOffset.target = lockedOffset;
                     _scale.target = 0.5f;
-                    SetAlpha(0.3f);
+                    SetAlpha(0.5f);
                     sr.sortingOrder = 0;
                     break;
                 case FieldCompletion.Unlocked:
                     _posOffset.target = Vector3.zero;
                     _scale.target = 1f;
+                    SetAlpha(0.8f);
                     sr.sortingOrder = 2;
                     break;
                 case FieldCompletion.Complete:
@@ -93,7 +96,7 @@ public class FieldCell : MonoBehaviour
     {
         if (field.screenState == FieldScreenState.OnSelectScreen && field.completion == FieldCompletion.Unlocked)
         {
-            sr.color = originalColor.ChangeAlpha(AlphaDefault + Mathf.Sin(Time.time + sinOffset) / 10f);
+            SetColorLerp(LerpDefault + Mathf.Sin(Time.time + sinOffset) / 10f);
         }
 
         var delta = Time.deltaTime * targetProgressSpeed;
@@ -103,25 +106,34 @@ public class FieldCell : MonoBehaviour
     }
     public void SetProjectionState(FieldProjectionState state)
     {
+        SetAlpha(0.8f);
         switch (state)
         {
             case FieldProjectionState.ShapeProjection:
-                SetAlpha(AlphaProjectionShape);
+                SetColorLerp(LerpProjectionShape);
                 break;
             case FieldProjectionState.ShapeProjectionTrail:
-                SetAlpha(AlphaProjectionTrail);
+                SetColorLerp(LerpProjectionTrail);
                 break;
             case FieldProjectionState.Empty:
-                SetAlpha(AlphaDefault);
+                SetColorLerp(LerpDefault);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
     }
 
+    void SetColorLerp(float value)
+    {
+        sr.color = Color.Lerp(_colors[0], _colors[1], value)
+            .ChangeAlpha(colorAlpha);
+        colorLerp = value;
+    }
+
     void SetAlpha(float value)
     {
-        sr.color = originalColor.ChangeAlpha(value);
+        sr.color = sr.color.ChangeAlpha(value);
+        colorAlpha = value;
     }
 
     public void Destroy()
@@ -134,7 +146,6 @@ public class FieldCell : MonoBehaviour
         var go = Instantiate(Prefabs.Instance.fieldCell, parent);
         var fc = go.GetComponent<FieldCell>();
         fc.sr = fc.GetComponent<SpriteRenderer>();
-        fc.originalColor = FieldPackPalettes.Instance.Colors[0];
         fc.field = field;
         fc.SetCoords(x, y);
         return fc;

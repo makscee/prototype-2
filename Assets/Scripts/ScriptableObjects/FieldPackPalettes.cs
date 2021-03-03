@@ -4,9 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "FieldPackPalettes", menuName = "ScriptableObjects/FieldPackPalettes")]
 public class FieldPackPalettes : ScriptableObject
 {
-    public Color[] colors0, colors1;
-    public Vector4[] lifts, gammas;
-    
+    public PackPalette[] palettes = new PackPalette[5]; 
     public static FieldPackPalettes Instance => GetInstance();
     static FieldPackPalettes _instanceCache;
     static FieldPackPalettes GetInstance()
@@ -14,71 +12,5 @@ public class FieldPackPalettes : ScriptableObject
         if (_instanceCache == null)
             _instanceCache = Resources.Load<FieldPackPalettes>("FieldPackPalettes");
         return _instanceCache;
-    }
-
-    Action<Color[]> _onColorChange;
-    [SerializeField] int currentPackId;
-    int _prevPackId = -1;
-    public Color[] Colors => new[] {colors0[currentPackId], colors1[currentPackId]};
-    public Vector4 lift;
-    public Vector4 gamma;
-    Color[] PrevColors => new[] {colors0[_prevPackId], colors1[_prevPackId]};
-
-    public void LoadPackPalette(int packId)
-    {
-        currentPackId = packId;
-        Apply();
-    }
-
-    public void SubscribeToColors(Action<Color[]> action)
-    {
-        action.Invoke(Colors);
-        _onColorChange += action;
-    }
-
-    public void UnsubscribeFromColors(Action<Color[]> action)
-    {
-        _onColorChange -= action;
-    }
-
-    void Apply(bool refresh = false)
-    {
-        if (_prevPackId == currentPackId && !refresh) return;
-        if (_prevPackId == -1 || !Application.isPlaying || refresh)
-        {
-            Animator.ClearByOwner(this);
-            _onColorChange?.Invoke(Colors);
-            lift = lifts[currentPackId];
-            gamma = gammas[currentPackId];
-        }
-        else
-        {
-            var prev = _prevPackId;
-            var cur = currentPackId;
-            var prevC = PrevColors;
-            var curC = Colors;
-            Animator.ClearByOwner(this);
-            Animator.Interpolate(0f, 1f, GlobalConfig.Instance.paletteChangeTime)
-                .PassValue(v =>
-                {
-                    lift = Vector4.Lerp(lifts[prev], lifts[cur], v);
-                    gamma = Vector4.Lerp(gammas[prev], gammas[cur], v);
-                    var colors = new[]
-                        {Color.Lerp(prevC[0], curC[0], v), Color.Lerp(prevC[1], curC[1], v)};
-                    _onColorChange?.Invoke(colors);
-                }).SetOwner(this);
-        }
-
-        _prevPackId = currentPackId;
-    }
-
-    void OnEnable()
-    {
-        Apply(true);
-    }
-
-    void OnValidate()
-    {
-        Apply(true);
     }
 }

@@ -42,7 +42,7 @@ public class PatternMaterialProvider : MonoBehaviour
         if (ps != null)
             ps.GetComponent<Renderer>().material = _material;
         SetShaderProperties();
-        FieldPackPalettes.Instance.SubscribeToColors(SetColors);
+        PostFxController.Instance.SubscribeToColors(SetColors);
     }
 
     void Start()

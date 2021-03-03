@@ -12,30 +12,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee81268239eb49c2a5e0346ae70de531, type: 3}
   m_Name: FieldPackPalettes
   m_EditorClassIdentifier: 
-  colors0:
-  - {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-  - {r: 0.9690997, g: 0.6084906, b: 1, a: 1}
-  - {r: 0.9811321, g: 0.9044364, b: 0.36561054, a: 1}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  colors1:
-  - {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
-  - {r: 0.8301887, g: 0.3250267, b: 0.5129235, a: 1}
-  - {r: 0, g: 0, b: 0, a: 1}
-  - {r: 0, g: 0, b: 0, a: 0}
-  - {r: 0, g: 0, b: 0, a: 0}
-  lifts:
-  - {x: 0.41055715, y: 0.8205427, z: 1, w: -0.07955933}
-  - {x: 0.82834846, y: 0.8050838, z: 1, w: -0.04821137}
-  - {x: 0.52420926, y: 1, z: 0.19647127, w: 0.000000014519459}
-  - {x: 0, y: 0, z: 0, w: 0}
-  - {x: 0, y: 0, z: 0, w: 0}
-  gammas:
-  - {x: 0.5747348, y: 0.60951155, z: 1, w: 0.12224941}
-  - {x: 1, y: 0.5190144, z: 0.5918318, w: -0.03134784}
-  - {x: 0.96178263, y: 0.06297308, z: 1, w: -0.22004893}
-  - {x: 0, y: 0, z: 0, w: 0}
-  - {x: 0, y: 0, z: 0, w: 0}
-  currentPackId: 0
-  lift: {x: 0.41055715, y: 0.8205427, z: 1, w: -0.07955933}
-  gamma: {x: 0.5747348, y: 0.60951155, z: 1, w: 0.12224941}
+  palettes:
+  - lift: {x: 0.52834356, y: 0.93826497, z: 1, w: -0.07672638}
+    gamma: {x: 0, y: 0.87221813, z: 1, w: 0.051150862}
+    gain: {x: 0.49856412, y: 0.9058765, z: 1, w: -0.0025576996}
+    color0: {r: 0, g: 0.31872275, b: 0.33962262, a: 1}
+    color1: {r: 1, g: 1, b: 1, a: 1}
+    bloomTint: {r: 0.24056602, g: 0.57357705, b: 1, a: 0}
+    vignetteIntensity: 0.17
+    vignetteSmoothness: 1
+    bloomThreshold: 1.1
+    bloomIntensity: 36.18
+    bloomScatter: 0.55
+  - lift: {x: 0, y: 0, z: 0, w: 0}
+    gamma: {x: 0, y: 0, z: 0, w: 0}
+    gain: {x: 0, y: 0, z: 0, w: 0}
+    color0: {r: 0, g: 0, b: 0, a: 0}
+    color1: {r: 0, g: 0, b: 0, a: 0}
+    bloomTint: {r: 0, g: 0, b: 0, a: 0}
+    vignetteIntensity: 0
+    vignetteSmoothness: 0
+    bloomThreshold: 0
+    bloomIntensity: 0
+    bloomScatter: 0
+  - lift: {x: 0, y: 0, z: 0, w: 0}
+    gamma: {x: 0, y: 0, z: 0, w: 0}
+    gain: {x: 0, y: 0, z: 0, w: 0}
+    color0: {r: 0, g: 0, b: 0, a: 0}
+    color1: {r: 0, g: 0, b: 0, a: 0}
+    bloomTint: {r: 0, g: 0, b: 0, a: 0}
+    vignetteIntensity: 0
+    vignetteSmoothness: 0
+    bloomThreshold: 0
+    bloomIntensity: 0
+    bloomScatter: 0
+  - lift: {x: 0, y: 0, z: 0, w: 0}
+    gamma: {x: 0, y: 0, z: 0, w: 0}
+    gain: {x: 0, y: 0, z: 0, w: 0}
+    color0: {r: 0, g: 0, b: 0, a: 0}
+    color1: {r: 0, g: 0, b: 0, a: 0}
+    bloomTint: {r: 0, g: 0, b: 0, a: 0}
+    vignetteIntensity: 0
+    vignetteSmoothness: 0
+    bloomThreshold: 0
+    bloomIntensity: 0
+    bloomScatter: 0
+  - lift: {x: 0, y: 0, z: 0, w: 0}
+    gamma: {x: 0, y: 0, z: 0, w: 0}
+    gain: {x: 0, y: 0, z: 0, w: 0}
+    color0: {r: 0, g: 0, b: 0, a: 0}
+    color1: {r: 0, g: 0, b: 0, a: 0}
+    bloomTint: {r: 0, g: 0, b: 0, a: 0}
+    vignetteIntensity: 0
+    vignetteSmoothness: 0
+    bloomThreshold: 0
+    bloomIntensity: 0
+    bloomScatter: 0

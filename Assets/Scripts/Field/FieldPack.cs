@@ -44,7 +44,7 @@ public class FieldPack : MonoBehaviour
     public void Activate()
     {
         active = this;
-        FieldPackPalettes.Instance.LoadPackPalette(packId);
+        PostFxController.Instance.LoadPackPalette(packId);
     }
 
     public bool Complete { get; private set; }

@@ -14,7 +14,7 @@ public class ShapeCellSidesContainer : MonoBehaviour
     void Start()
     {
         RefreshSides();
-        FieldPackPalettes.Instance.SubscribeToColors(RefreshColors);
+        PostFxController.Instance.SubscribeToColors(RefreshColors);
     }
 
     void OnValidate()
@@ -49,7 +49,8 @@ public class ShapeCellSidesContainer : MonoBehaviour
 
     void OnDestroy()
     {
-        FieldPackPalettes.Instance.UnsubscribeFromColors(RefreshColors);
+        if (PostFxController.Instance != null)
+            PostFxController.Instance.UnsubscribeFromColors(RefreshColors);
     }
 
     public void Refresh()
