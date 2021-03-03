@@ -41,7 +41,7 @@ public class ShapeBuilder : MonoBehaviour
 
     void Update()
     {
-        if (!GlobalConfig.Instance.debug) return;
+#if UNITY_EDITOR
         if (Enabled && Input.GetKeyUp(KeyCode.LeftShift))
         {
             Enabled = false;
@@ -66,6 +66,7 @@ public class ShapeBuilder : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.LeftArrow)) dir = Vector2Int.left;
         ReadInput(dir);
         if (Input.GetKeyDown(KeyCode.Space)) InvertCell();
+#endif
     }
 
     void ReadInput(Vector2Int dir)

@@ -34,7 +34,7 @@ public class TouchInputObject : MonoBehaviour, IDragHandler, IBeginDragHandler
             if (_curPos.x > _startPos.x)
                 FieldMatrix.Active.MoveAttachedShape(true);
             else FieldMatrix.Active.MoveAttachedShape(false);
-            Vibration.Vibrate(50);
+            Vibration.Vibrate(25);
             _startPos = _curPos;
         }
         if (Mathf.Abs(_curPos.y - _startPos.y) > 0.2f)

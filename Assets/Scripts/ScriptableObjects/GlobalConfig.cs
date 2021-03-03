@@ -14,8 +14,6 @@ public class GlobalConfig : ScriptableObject
         fieldCompleteTransitionAnimationTime;
     [SerializeField, Range(0f, 1f)] public float thickness, thicknessBase, sinScale, sinTimeScale;
     [SerializeField] public Material shaderPatternMaterial;
-
-    [SerializeField] public Color palette0, palette1, palette2, palette3;
     
     [SerializeField] public float containerScale, containerOffsetX, containerOffsetY, containerPaddingY, containerSizeScale;
 

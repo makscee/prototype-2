@@ -25,7 +25,6 @@ public class FieldMatrixSerialized : JsonUtilitySerializable
     {
         var field = FieldMatrix.Create();
         field.Size = size;
-        // field.SetContainer(container.Deserialize(field));
         field.CreateCells();
         return field;
     }
@@ -36,38 +35,16 @@ public class FieldMatrixSerialized : JsonUtilitySerializable
         field.SetContainer(container.Deserialize(field));
     }
 
-    const string LevelsNameTemplate = "level_{0}_{1}"; // {pack_id}_{field_id}
-    const string LevelsFolder = "levels";
-
     public void SaveToFile(int packId, int fieldId)
     {
-        SaveToFile(GetFileName(packId, fieldId));
-    }
-
-    public void SaveToFile(string name)
-    {
-        FileStorage.SaveJsonToFile(ToJson(), $"{LevelsFolder}/{name}");
-    }
-
-    static string GetFileName(int packId, int fieldId)
-    {
-        return string.Format(LevelsNameTemplate, packId, fieldId);
+        LevelsStorage.Instance.SaveLevel(packId, fieldId, ToJson());
     }
     
     public static FieldMatrixSerialized Load(int packId, int fieldId)
     {
-        var fileName = GetFileName(packId, fieldId);
-        var json = FileStorage.ReadJsonFileFromResources($"{LevelsFolder}/{fileName}");
-        if (json == null)
-            json = FileStorage.ReadJsonFileFromResources($"{LevelsFolder}/level_placeholder");
+        var json = LevelsStorage.Instance.GetLevel(packId, fieldId);
         if (json == null) return null;
         var fieldSerialized = new FieldMatrixSerialized(json);
         return fieldSerialized;
-    }
-
-    public static bool FileExists(int packId, int fieldId)
-    {
-        var fileName = GetFileName(packId, fieldId);
-        return File.Exists(FileStorage.ToFullPath($"{LevelsFolder}/{fileName}"));
     }
 }
