@@ -12,4 +12,326 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82ae6b841fe4efe9e58bb96c2028480, type: 3}
   m_Name: LevelsStorage
   m_EditorClassIdentifier: 
-  levels: []
+  levels:
+  - key: 0_0
+    data: '{     "size": 5,     "container": {         "shapes": [             {                
+      "sizeX": 3,                 "sizeY": 2,                 "originalX": 0,                
+      "originalY": 3,                 "originalRotation": 0,                 "cells":
+      [                     {                         "x": 0,                        
+      "y": 1,                         "originalX": 0,                         "originalY":
+      4                     },                     {                         "x":
+      1,                         "y": 1,                         "originalX": 1,                        
+      "originalY": 4                     },                     {                        
+      "x": 2,                         "y": 1,                         "originalX":
+      2,                         "originalY": 4                     },                    
+      {                         "x": 1,                         "y": 0,                        
+      "originalX": 1,                         "originalY": 3                    
+      }                 ]             },             {                 "sizeX": 3,                
+      "sizeY": 2,                 "originalX": 2,                 "originalY": 3,                
+      "originalRotation": 0,                 "cells": [                     {                        
+      "x": 2,                         "y": 1,                         "originalX":
+      4,                         "originalY": 4                     },                    
+      {                         "x": 1,                         "y": 1,                        
+      "originalX": 3,                         "originalY": 4                    
+      },                     {                         "x": 1,                        
+      "y": 0,                         "originalX": 3,                         "originalY":
+      3                     },                     {                         "x":
+      0,                         "y": 0,                         "originalX": 2,                        
+      "originalY": 3                     }                 ]             },            
+      {                 "sizeX": 2,                 "sizeY": 3,                 "originalX":
+      3,                 "originalY": 1,                 "originalRotation": 0,                
+      "cells": [                     {                         "x": 1,                        
+      "y": 2,                         "originalX": 4,                         "originalY":
+      3                     },                     {                         "x":
+      1,                         "y": 1,                         "originalX": 4,                        
+      "originalY": 2                     },                     {                        
+      "x": 1,                         "y": 0,                         "originalX":
+      4,                         "originalY": 1                     },                    
+      {                         "x": 0,                         "y": 1,                        
+      "originalX": 3,                         "originalY": 2                    
+      }                 ]             },             {                 "sizeX": 2,                
+      "sizeY": 3,                 "originalX": 0,                 "originalY": 1,                
+      "originalRotation": 0,                 "cells": [                     {                        
+      "x": 0,                         "y": 2,                         "originalX":
+      0,                         "originalY": 3                     },                    
+      {                         "x": 0,                         "y": 1,                        
+      "originalX": 0,                         "originalY": 2                    
+      },                     {                         "x": 0,                        
+      "y": 0,                         "originalX": 0,                         "originalY":
+      1                     },                     {                         "x":
+      1,                         "y": 1,                         "originalX": 1,                        
+      "originalY": 2                     }                 ]             },            
+      {                 "sizeX": 3,                 "sizeY": 2,                 "originalX":
+      1,                 "originalY": 1,                 "originalRotation": 0,                
+      "cells": [                     {                         "x": 0,                        
+      "y": 0,                         "originalX": 1,                         "originalY":
+      1                     },                     {                         "x":
+      1,                         "y": 0,                         "originalX": 2,                        
+      "originalY": 1                     },                     {                        
+      "x": 2,                         "y": 0,                         "originalX":
+      3,                         "originalY": 1                     },                    
+      {                         "x": 1,                         "y": 1,                        
+      "originalX": 2,                         "originalY": 2                    
+      }                 ]             },             {                 "sizeX": 4,                
+      "sizeY": 1,                 "originalX": 0,                 "originalY": 0,                
+      "originalRotation": 0,                 "cells": [                     {                        
+      "x": 0,                         "y": 0,                         "originalX":
+      0,                         "originalY": 0                     },                    
+      {                         "x": 1,                         "y": 0,                        
+      "originalX": 1,                         "originalY": 0                    
+      },                     {                         "x": 2,                        
+      "y": 0,                         "originalX": 2,                         "originalY":
+      0                     },                     {                         "x":
+      3,                         "y": 0,                         "originalX": 3,                        
+      "originalY": 0                     }                 ]             },            
+      {                 "sizeX": 1,                 "sizeY": 1,                 "originalX":
+      4,                 "originalY": 0,                 "originalRotation": 0,                
+      "cells": [                     {                         "x": 0,                        
+      "y": 0,                         "originalX": 4,                         "originalY":
+      0                     }                 ]             }         ]     } }'
+  - key: 0_1
+    data: "{\n    \"size\": 5,\n    \"container\": {\n        \"shapes\": [\n           
+      {\n                \"sizeX\": 2,\n                \"sizeY\": 3,\n               
+      \"originalX\": 2,\n                \"originalY\": 0,\n                \"originalRotation\":
+      1,\n                \"cells\": [\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 2,\n                        \"originalX\":
+      4,\n                        \"originalY\": 1\n                    },\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 1,\n                       
+      \"originalX\": 3,\n                        \"originalY\": 1\n                   
+      },\n                    {\n                        \"x\": 0,\n                       
+      \"y\": 0,\n                        \"originalX\": 2,\n                       
+      \"originalY\": 1\n                    },\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 2,\n                        \"originalX\":
+      4,\n                        \"originalY\": 0\n                    }\n               
+      ]\n            },\n            {\n                \"sizeX\": 3,\n               
+      \"sizeY\": 2,\n                \"originalX\": 2,\n                \"originalY\":
+      2,\n                \"originalRotation\": 2,\n                \"cells\": [\n                   
+      {\n                        \"x\": 2,\n                        \"y\": 1,\n                       
+      \"originalX\": 2,\n                        \"originalY\": 2\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 1,\n                        \"originalX\": 3,\n                       
+      \"originalY\": 2\n                    },\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 0,\n                        \"originalX\":
+      4,\n                        \"originalY\": 3\n                    },\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 1,\n                       
+      \"originalX\": 4,\n                        \"originalY\": 2\n                   
+      }\n                ]\n            },\n            {\n                \"sizeX\":
+      2,\n                \"sizeY\": 3,\n                \"originalX\": 1,\n               
+      \"originalY\": 0,\n                \"originalRotation\": 1,\n               
+      \"cells\": [\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 2,\n                        \"originalX\": 3,\n                       
+      \"originalY\": 0\n                    },\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 1,\n                        \"originalX\":
+      2,\n                        \"originalY\": 0\n                    },\n                   
+      {\n                        \"x\": 1,\n                        \"y\": 0,\n                       
+      \"originalX\": 1,\n                        \"originalY\": 0\n                   
+      },\n                    {\n                        \"x\": 0,\n                       
+      \"y\": 0,\n                        \"originalX\": 1,\n                       
+      \"originalY\": 1\n                    }\n                ]\n            },\n           
+      {\n                \"sizeX\": 2,\n                \"sizeY\": 3,\n               
+      \"originalX\": 2,\n                \"originalY\": 3,\n                \"originalRotation\":
+      1,\n                \"cells\": [\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 2,\n                        \"originalX\":
+      4,\n                        \"originalY\": 4\n                    },\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 1,\n                       
+      \"originalX\": 3,\n                        \"originalY\": 4\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 1,\n                        \"originalX\": 3,\n                       
+      \"originalY\": 3\n                    },\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 0,\n                        \"originalX\":
+      2,\n                        \"originalY\": 3\n                    }\n               
+      ]\n            },\n            {\n                \"sizeX\": 2,\n               
+      \"sizeY\": 3,\n                \"originalX\": 0,\n                \"originalY\":
+      0,\n                \"originalRotation\": 2,\n                \"cells\": [\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 0,\n                       
+      \"originalX\": 1,\n                        \"originalY\": 2\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 0,\n                        \"originalX\": 0,\n                       
+      \"originalY\": 2\n                    },\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 1,\n                        \"originalX\":
+      0,\n                        \"originalY\": 1\n                    },\n                   
+      {\n                        \"x\": 1,\n                        \"y\": 2,\n                       
+      \"originalX\": 0,\n                        \"originalY\": 0\n                   
+      }\n                ]\n            },\n            {\n                \"sizeX\":
+      3,\n                \"sizeY\": 2,\n                \"originalX\": 0,\n               
+      \"originalY\": 3,\n                \"originalRotation\": 2,\n               
+      \"cells\": [\n                    {\n                        \"x\": 0,\n                       
+      \"y\": 0,\n                        \"originalX\": 2,\n                       
+      \"originalY\": 4\n                    },\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 0,\n                        \"originalX\":
+      1,\n                        \"originalY\": 4\n                    },\n                   
+      {\n                        \"x\": 2,\n                        \"y\": 0,\n                       
+      \"originalX\": 0,\n                        \"originalY\": 4\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 1,\n                        \"originalX\": 1,\n                       
+      \"originalY\": 3\n                    }\n                ]\n            },\n           
+      {\n                \"sizeX\": 1,\n                \"sizeY\": 1,\n               
+      \"originalX\": 0,\n                \"originalY\": 3,\n                \"originalRotation\":
+      1,\n                \"cells\": [\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 0,\n                        \"originalX\":
+      0,\n                        \"originalY\": 3\n                    }\n               
+      ]\n            }\n        ]\n    }\n}"
+  - key: 0_2
+    data: "{\n    \"size\": 5,\n    \"container\": {\n        \"shapes\": [\n           
+      {\n                \"sizeX\": 3,\n                \"sizeY\": 2,\n               
+      \"originalX\": 2,\n                \"originalY\": 1,\n                \"originalRotation\":
+      0,\n                \"cells\": [\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 1,\n                        \"originalX\":
+      3,\n                        \"originalY\": 2\n                    },\n                   
+      {\n                        \"x\": 2,\n                        \"y\": 1,\n                       
+      \"originalX\": 4,\n                        \"originalY\": 2\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 0,\n                        \"originalX\": 3,\n                       
+      \"originalY\": 1\n                    },\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 0,\n                        \"originalX\":
+      2,\n                        \"originalY\": 1\n                    }\n               
+      ]\n            },\n            {\n                \"sizeX\": 2,\n               
+      \"sizeY\": 3,\n                \"originalX\": 0,\n                \"originalY\":
+      1,\n                \"originalRotation\": 1,\n                \"cells\": [\n                   
+      {\n                        \"x\": 1,\n                        \"y\": 1,\n                       
+      \"originalX\": 1,\n                        \"originalY\": 1\n                   
+      },\n                    {\n                        \"x\": 0,\n                       
+      \"y\": 1,\n                        \"originalX\": 1,\n                       
+      \"originalY\": 2\n                    },\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 0,\n                        \"originalX\":
+      0,\n                        \"originalY\": 2\n                    },\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 2,\n                       
+      \"originalX\": 2,\n                        \"originalY\": 2\n                   
+      }\n                ]\n            },\n            {\n                \"sizeX\":
+      3,\n                \"sizeY\": 2,\n                \"originalX\": 0,\n               
+      \"originalY\": 3,\n                \"originalRotation\": 2,\n               
+      \"cells\": [\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 1,\n                        \"originalX\": 1,\n                       
+      \"originalY\": 3\n                    },\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 1,\n                        \"originalX\":
+      2,\n                        \"originalY\": 3\n                    },\n                   
+      {\n                        \"x\": 2,\n                        \"y\": 1,\n                       
+      \"originalX\": 0,\n                        \"originalY\": 3\n                   
+      },\n                    {\n                        \"x\": 2,\n                       
+      \"y\": 0,\n                        \"originalX\": 0,\n                       
+      \"originalY\": 4\n                    }\n                ]\n            },\n           
+      {\n                \"sizeX\": 3,\n                \"sizeY\": 2,\n               
+      \"originalX\": 0,\n                \"originalY\": 0,\n                \"originalRotation\":
+      0,\n                \"cells\": [\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 1,\n                        \"originalX\":
+      0,\n                        \"originalY\": 1\n                    },\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 0,\n                       
+      \"originalX\": 0,\n                        \"originalY\": 0\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 0,\n                        \"originalX\": 1,\n                       
+      \"originalY\": 0\n                    },\n                    {\n                       
+      \"x\": 2,\n                        \"y\": 0,\n                        \"originalX\":
+      2,\n                        \"originalY\": 0\n                    }\n               
+      ]\n            },\n            {\n                \"sizeX\": 2,\n               
+      \"sizeY\": 2,\n                \"originalX\": 3,\n                \"originalY\":
+      0,\n                \"originalRotation\": 3,\n                \"cells\": [\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 0,\n                       
+      \"originalX\": 4,\n                        \"originalY\": 0\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 0,\n                        \"originalX\": 4,\n                       
+      \"originalY\": 1\n                    },\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 1,\n                        \"originalX\":
+      3,\n                        \"originalY\": 0\n                    }\n               
+      ]\n            },\n            {\n                \"sizeX\": 2,\n               
+      \"sizeY\": 3,\n                \"originalX\": 1,\n                \"originalY\":
+      3,\n                \"originalRotation\": 3,\n                \"cells\": [\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 0,\n                       
+      \"originalX\": 3,\n                        \"originalY\": 3\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 0,\n                        \"originalX\": 3,\n                       
+      \"originalY\": 4\n                    },\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 1,\n                        \"originalX\":
+      2,\n                        \"originalY\": 4\n                    },\n                   
+      {\n                        \"x\": 1,\n                        \"y\": 2,\n                       
+      \"originalX\": 1,\n                        \"originalY\": 4\n                   
+      }\n                ]\n            },\n            {\n                \"sizeX\":
+      2,\n                \"sizeY\": 1,\n                \"originalX\": 4,\n               
+      \"originalY\": 3,\n                \"originalRotation\": 3,\n               
+      \"cells\": [\n                    {\n                        \"x\": 0,\n                       
+      \"y\": 0,\n                        \"originalX\": 4,\n                       
+      \"originalY\": 3\n                    },\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 0,\n                        \"originalX\":
+      4,\n                        \"originalY\": 4\n                    }\n               
+      ]\n            }\n        ]\n    }\n}"
+  - key: 0_3
+    data: "{\n    \"size\": 5,\n    \"container\": {\n        \"shapes\": [\n           
+      {\n                \"sizeX\": 2,\n                \"sizeY\": 2,\n               
+      \"originalX\": 0,\n                \"originalY\": 3,\n                \"originalRotation\":
+      0,\n                \"cells\": [\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 1,\n                        \"originalX\":
+      0,\n                        \"originalY\": 4\n                    },\n                   
+      {\n                        \"x\": 1,\n                        \"y\": 1,\n                       
+      \"originalX\": 1,\n                        \"originalY\": 4\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 0,\n                        \"originalX\": 1,\n                       
+      \"originalY\": 3\n                    },\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 0,\n                        \"originalX\":
+      0,\n                        \"originalY\": 3\n                    }\n               
+      ]\n            },\n            {\n                \"sizeX\": 2,\n               
+      \"sizeY\": 2,\n                \"originalX\": 3,\n                \"originalY\":
+      3,\n                \"originalRotation\": 0,\n                \"cells\": [\n                   
+      {\n                        \"x\": 1,\n                        \"y\": 1,\n                       
+      \"originalX\": 4,\n                        \"originalY\": 4\n                   
+      },\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 0,\n                        \"originalX\": 4,\n                       
+      \"originalY\": 3\n                    },\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 0,\n                        \"originalX\":
+      3,\n                        \"originalY\": 3\n                    },\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 1,\n                       
+      \"originalX\": 3,\n                        \"originalY\": 4\n                   
+      }\n                ]\n            },\n            {\n                \"sizeX\":
+      3,\n                \"sizeY\": 2,\n                \"originalX\": 1,\n               
+      \"originalY\": 2,\n                \"originalRotation\": 0,\n               
+      \"cells\": [\n                    {\n                        \"x\": 1,\n                       
+      \"y\": 1,\n                        \"originalX\": 2,\n                       
+      \"originalY\": 3\n                    },\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 0,\n                        \"originalX\":
+      2,\n                        \"originalY\": 2\n                    },\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 0,\n                       
+      \"originalX\": 1,\n                        \"originalY\": 2\n                   
+      },\n                    {\n                        \"x\": 2,\n                       
+      \"y\": 0,\n                        \"originalX\": 3,\n                       
+      \"originalY\": 2\n                    }\n                ]\n            },\n           
+      {\n                \"sizeX\": 2,\n                \"sizeY\": 2,\n               
+      \"originalX\": 0,\n                \"originalY\": 1,\n                \"originalRotation\":
+      0,\n                \"cells\": [\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 0,\n                        \"originalX\":
+      1,\n                        \"originalY\": 1\n                    },\n                   
+      {\n                        \"x\": 0,\n                        \"y\": 0,\n                       
+      \"originalX\": 0,\n                        \"originalY\": 1\n                   
+      },\n                    {\n                        \"x\": 0,\n                       
+      \"y\": 1,\n                        \"originalX\": 0,\n                       
+      \"originalY\": 2\n                    }\n                ]\n            },\n           
+      {\n                \"sizeX\": 2,\n                \"sizeY\": 2,\n               
+      \"originalX\": 3,\n                \"originalY\": 1,\n                \"originalRotation\":
+      0,\n                \"cells\": [\n                    {\n                       
+      \"x\": 1,\n                        \"y\": 0,\n                        \"originalX\":
+      4,\n                        \"originalY\": 1\n                    },\n                   
+      {\n                        \"x\": 1,\n                        \"y\": 1,\n                       
+      \"originalX\": 4,\n                        \"originalY\": 2\n                   
+      },\n                    {\n                        \"x\": 0,\n                       
+      \"y\": 0,\n                        \"originalX\": 3,\n                       
+      \"originalY\": 1\n                    }\n                ]\n            },\n           
+      {\n                \"sizeX\": 1,\n                \"sizeY\": 1,\n               
+      \"originalX\": 2,\n                \"originalY\": 4,\n                \"originalRotation\":
+      2,\n                \"cells\": [\n                    {\n                       
+      \"x\": 0,\n                        \"y\": 0,\n                        \"originalX\":
+      2,\n                        \"originalY\": 4\n                    }\n               
+      ]\n            },\n            {\n                \"sizeX\": 5,\n               
+      \"sizeY\": 2,\n                \"originalX\": 0,\n                \"originalY\":
+      0,\n                \"originalRotation\": 0,\n                \"cells\": [\n                   
+      {\n                        \"x\": 4,\n                        \"y\": 0,\n                       
+      \"originalX\": 4,\n                        \"originalY\": 0\n                   
+      },\n                    {\n                        \"x\": 3,\n                       
+      \"y\": 0,\n                        \"originalX\": 3,\n                       
+      \"originalY\": 0\n                    },\n                    {\n                       
+      \"x\": 2,\n                        \"y\": 0,\n                        \"originalX\":
+      2,\n                        \"originalY\": 0\n                    },\n                   
+      {\n                        \"x\": 1,\n                        \"y\": 0,\n                       
+      \"originalX\": 1,\n                        \"originalY\": 0\n                   
+      },\n                    {\n                        \"x\": 0,\n                       
+      \"y\": 0,\n                        \"originalX\": 0,\n                       
+      \"originalY\": 0\n                    },\n                    {\n                       
+      \"x\": 2,\n                        \"y\": 1,\n                        \"originalX\":
+      2,\n                        \"originalY\": 1\n                    }\n               
+      ]\n            }\n        ]\n    }\n}"
