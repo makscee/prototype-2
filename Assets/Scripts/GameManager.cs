@@ -44,14 +44,7 @@ public class GameManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (FieldMatrix.Active != null)
-            {
-                FieldMatrix.Active = null;
-            }
-            else
-            {
-                Application.Quit();
-            }
+            Exit();
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -87,6 +80,12 @@ public class GameManager : MonoBehaviour
             ClearProgress();
         }
 
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Progress.ResetPackAndSave(FieldPack.active.packId);
+            SceneManager.LoadScene(0);
+        }
+
         if (Field != null && !Input.GetKey(KeyCode.LeftShift))
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -106,5 +105,17 @@ public class GameManager : MonoBehaviour
     {
         Progress.ResetAndSave();
         SceneManager.LoadScene(0);
+    }
+
+    public void Exit()
+    {
+        if (FieldMatrix.Active != null)
+        {
+            FieldMatrix.Active = null;
+        }
+        else
+        {
+            Application.Quit();
+        }
     }
 }

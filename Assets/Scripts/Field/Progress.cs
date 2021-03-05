@@ -46,4 +46,16 @@ public static class Progress
         _data.Clear();
         Save();
     }
+
+    public static void ResetPackAndSave(int packId)
+    {
+        foreach (var field in FieldPacksCollection.Packs[packId].fields)
+        {
+            var key = $"{packId}_{field.fieldId}";
+            if (_data.Contains(key))
+                _data.Remove(key);
+
+        }
+        Save();
+    }
 }
