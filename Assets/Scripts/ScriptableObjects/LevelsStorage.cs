@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelsStorage", menuName = "ScriptableObjects/LevelsStorage")]
@@ -23,7 +24,7 @@ public class LevelsStorage : ScriptableObject
             InitLevelsMap();
         var key = $"{packId}_{fieldId}";
         if (!levelsMap.ContainsKey(key))
-            return levelsMap["0_0"];
+            return levelsMap["placeholder"];
         return levelsMap[key];
     }
 
@@ -47,7 +48,11 @@ public class LevelsStorage : ScriptableObject
             levelsMap.Add(key, data);
             levels.Add(ld);
         }
-        
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+#endif
     }
 
     void InitLevelsMap()
@@ -57,6 +62,11 @@ public class LevelsStorage : ScriptableObject
         {
             levelsMap.Add(levelData.key, levelData.data);
         }
+    }
+
+    void OnValidate()
+    {
+        levelsMap = null;
     }
 }
 

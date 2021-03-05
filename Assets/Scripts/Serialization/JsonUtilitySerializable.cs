@@ -4,6 +4,6 @@ public abstract class JsonUtilitySerializable
 {    
     public string ToJson()
     {
-        return JsonUtility.ToJson(this, true);
+        return JsonUtility.ToJson(this, false);
     }
 }

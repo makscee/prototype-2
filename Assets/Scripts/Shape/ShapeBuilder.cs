@@ -79,6 +79,7 @@ public class ShapeBuilder : MonoBehaviour
         _curPos += Shape.AddCell(newPos.FromLocalShapeRotation(Shape).ToLocalFieldRotation());
         Matrix.MoveAttachedShapeAccordingToDir(Matrix.currentShapeOffset);
         RefreshGameObjectPosition();
+        lastEditedField = Matrix;
     }
 
     void InvertCell()

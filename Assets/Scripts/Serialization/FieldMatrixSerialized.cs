@@ -21,14 +21,6 @@ public class FieldMatrixSerialized : JsonUtilitySerializable
         container = data.container;
     }
 
-    public FieldMatrix CreateField()
-    {
-        var field = FieldMatrix.Create();
-        field.Size = size;
-        field.CreateCells();
-        return field;
-    }
-
     public void LoadShapesContainer(FieldMatrix field)
     {
         field.Size = size;

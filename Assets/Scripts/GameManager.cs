@@ -65,6 +65,13 @@ public class GameManager : MonoBehaviour
             Progress.SetComplete(Field.packId, Field.fieldId);
             Field.CompleteTransition();
         }
+
+        if (Input.GetKeyDown(KeyCode.V) && Field == null)
+        {
+            foreach (var field in FieldPack.active.fields) 
+                Progress.SetComplete(field.packId, field.fieldId);
+            SceneManager.LoadScene(0);
+        }
         if (Input.GetKeyDown(KeyCode.F))
         {
             var container = Field.shapesContainer; 
@@ -78,6 +85,19 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             ClearProgress();
+        }
+
+        if (Field != null && !Input.GetKey(KeyCode.LeftShift))
+        {
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                Field.Size++;
+                Field.CreateCells();
+            } else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                Field.Size--;
+                Field.CreateCells();
+            }
         }
 #endif
     }

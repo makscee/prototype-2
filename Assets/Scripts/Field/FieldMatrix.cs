@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -51,22 +54,22 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             if (isNull)
             {
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.OnSelectScreen);
-                SoundsPlayer.instance.EnablePlayTheme(false);
+                SoundsPlayer.instance.EnableSelectScreenTheme(true);
             }
             TouchInputObject.SetEnabled(!isNull);
             GameManager.instance.clearProgressButton.SetActive(isNull);
         }
     }
 
-    [SerializeField] int _size;
+    [SerializeField] int size;
 
     public int Size
     {
-        get => _size;
+        get => size;
         set
         {
-            _size = value;
-            backgroundInputSprite.transform.localScale = new Vector3(_size, _size);
+            size = value;
+            backgroundInputSprite.transform.localScale = new Vector3(size, size);
         }
     }
 
@@ -133,33 +136,39 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         if (move != null)
         {
             SoundsPlayer.instance.PlayInsertStartSound();
+            _moveTracker.AddMove(move);
+
             var shape = shapesContainer.GetNext();
+            if (IsAllFilled())
+            {
+                CompleteLevel();
+                return;
+            }
+
             if (shape != null)
                 AttachShape(shape);
             else
-            {
                 attachedShape = null;
-                var allFilled = true;
-                foreach (var cell in _cells)
-                    if (cell.OccupiedBy == null)
-                    {
-                        allFilled = false;
-                        break;
-                    }
-
-                if (allFilled)
-                {
-                    Progress.SetComplete(packId, fieldId);
-                    CompleteTransition();
-                    if (ShapeBuilder.lastEditedField == this)
-                    {
-                        new FieldMatrixSerialized(this).SaveToFile(packId, fieldId);
-                        ShapeBuilder.lastEditedField = null;
-                    }
-                }
-            }
-            _moveTracker.AddMove(move);
         }
+    }
+
+    void CompleteLevel()
+    {
+        Progress.SetComplete(packId, fieldId);
+        if (ShapeBuilder.lastEditedField == this)
+        {
+            new FieldMatrixSerialized(this).SaveToFile(packId, fieldId);
+            ShapeBuilder.lastEditedField = null;
+        }
+        CompleteTransition();
+    }
+
+    bool IsAllFilled()
+    {
+        foreach (var cell in _cells)
+            if (cell.OccupiedBy == null)
+                return false;
+        return true;
     }
 
     public void Undo()
@@ -312,6 +321,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     [SerializeField] Transform cellParent;
     [SerializeField] bool createCells;
+    [SerializeField] bool initFieldFromLevel;
 
     void OnValidate()
     {
@@ -322,6 +332,24 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             createCells = false;
 #endif
         }
+        if (initFieldFromLevel)
+        {
+#if UNITY_EDITOR
+            EditorApplication.delayCall += InitFieldFromLevel;
+            initFieldFromLevel = false;
+#endif
+        }
+    }
+
+    void InitFieldFromLevel()
+    {
+        size = FieldMatrixSerialized.Load(packId, fieldId).size;
+        CreateCells();
+#if UNITY_EDITOR
+        EditorSceneManager.MarkSceneDirty(gameObject.scene);
+        EditorUtility.SetDirty(gameObject);
+        EditorUtility.SetDirty(this);
+#endif
     }
 
     public void CreateCells()
@@ -341,9 +369,19 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 _cells[x, y] = FieldCell.Create(this, x, y, cellParent);
             }
         }
-        RefreshProjection();
-        
+
+        if (Application.isPlaying)
+        {
+            RefreshProjection();
+            foreach (var cell in _cells)
+                cell.RefreshTargets();
+            MoveAttachedShapeAccordingToDir(currentShapeOffset);
+        }
+
+        var scale = 1f / Size;
+        transform.localScale = new Vector3(scale, scale, scale);
         backgroundInputSprite.transform.localScale = new Vector3(Size, Size);
+        unlockedSprite.transform.localScale = new Vector3(Size, Size);
     }
 
     void CollectCells()
@@ -367,7 +405,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 RefreshProjection();
                 Active = this;
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.Disabled, this);
-                SoundsPlayer.instance.EnablePlayTheme(true);
+                SoundsPlayer.instance.EnableSelectScreenTheme(false);
                 break;
             case FieldScreenState.Disabled:
                 gameObject.SetActive(false);
@@ -403,7 +441,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 break;
             case FieldCompletion.Complete:
                 unlockedSprite.SetActive(false);
-                completionSprite.transform.localScale = new Vector3(_size, _size, _size);
+                completionSprite.transform.localScale = new Vector3(size, size, size);
                 completionSprite.transform.GetChild(0).localScale =
                     GetComponentInParent<FieldPack>().transform.localScale;
                 completionSprite.gameObject.SetActive(true);

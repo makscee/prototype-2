@@ -20,10 +20,14 @@ public class FieldCell : MonoBehaviour
 
     public Shape OccupiedBy { get; set; }
 
+    void Awake()
+    {
+        PostFxController.Instance.SubscribeToColors(SetColors);
+    }
+
     void Start()
     {
         field.onShapePlaced += OnShapePlaced;
-        PostFxController.Instance.SubscribeToColors(SetColors);
     }
 
     void OnDestroy()

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -152,6 +153,11 @@ public class PostFxController : MonoBehaviour
         v.color1 = colors[1];
 
         FieldPackPalettes.Instance.palettes[savePackId] = v;
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(FieldPackPalettes.Instance);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+#endif
     }
 }
 
