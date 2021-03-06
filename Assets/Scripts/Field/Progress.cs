@@ -54,7 +54,6 @@ public static class Progress
             var key = $"{packId}_{field.fieldId}";
             if (_data.Contains(key))
                 _data.Remove(key);
-
         }
         Save();
     }

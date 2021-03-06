@@ -5,7 +5,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ShapeCellSidesContainer : MonoBehaviour
 {
-    [SerializeField] bool refresh;
     [SerializeField] ShapeCellSide[] sides;
     [SerializeField] ShapeCellObject shapeCellObject;
     
@@ -17,11 +16,10 @@ public class ShapeCellSidesContainer : MonoBehaviour
         PostFxController.Instance.SubscribeToColors(RefreshColors);
     }
 
-    void OnValidate()
-    {
-        refresh = false;
-        Refresh();
-    }
+    // void OnValidate()
+    // {
+    //     Refresh();
+    // }
 
     public bool[,] surroundingCells;
 

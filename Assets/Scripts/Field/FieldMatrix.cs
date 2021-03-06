@@ -16,6 +16,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     public int packId, fieldId;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
+    public bool isComplete { get; private set; }
 
     public FieldScreenState screenState;    
     public FieldCompletion completion;
@@ -131,8 +132,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     readonly MoveTracker _moveTracker = new MoveTracker();
     public void InsertShape()
     {
-        if (attachedShape == null) return;
-        var move = new ShapeMove(this, attachedShape).Do(); 
+        if (attachedShape == null || isComplete) return;
+        var move = new ShapeMove(this, attachedShape).Do();
         if (move != null)
         {
             SoundsPlayer.instance.PlayInsertStartSound();
@@ -148,7 +149,17 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             if (shape != null)
                 AttachShape(shape);
             else
+            {
                 attachedShape = null;
+                shapesContainer
+                    .InsertAtCurrent(ShapeSerialized.CreateFromString(new[] {"*"})
+                    .Deserialize());
+                AttachShape(shapesContainer.GetNext());
+            }
+        }
+        else
+        {
+            attachedShape.shapeObject.UnableToInsertAnimation();
         }
     }
 
@@ -173,7 +184,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public void Undo()
     {
-        if (_moveTracker.Moves == 0) return;
+        if (_moveTracker.Moves == 0 || isComplete) return;
         if (attachedShape != null)
             shapesContainer.ReturnPrevious();
         var direction = _moveTracker.Last.direction;
@@ -186,7 +197,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public void MoveAttachedShape(bool right)
     {
-        if (attachedShape == null) return;
+        if (attachedShape == null || isComplete) return;
         var curOffset = currentShapeOffset;
         if (right)
         {
@@ -431,6 +442,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     public void SetCompletion(FieldCompletion value)
     {
         completion = value;
+        isComplete = value == FieldCompletion.Complete;
         switch (value)
         {
             case FieldCompletion.Locked:
@@ -446,6 +458,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                     GetComponentInParent<FieldPack>().transform.localScale;
                 completionSprite.gameObject.SetActive(true);
                 shapesContainer?.SetEnabled(false);
+                cellParent.gameObject.SetActive(false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
@@ -498,6 +511,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public void CompleteTransition()
     {
+        isComplete = true;
         completionSprite.balance = 1f;
         completionSprite.balanceTarget = 1f;
         completionSprite.SetShaderProperties();
@@ -514,37 +528,6 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             });
         SequenceFramework.New.Delay(config.sidesThicknessRecoverTime * 2).FieldSet(this)
             .ShapeSidesThicknessChange(1.5f);
-        
-        return;
-        
-        Animator.Interpolate(cellsMaterialProvider.balance, 1f, config.balanceSetAnimationTime)
-            .PassDelta(v =>
-            {
-                cellsMaterialProvider.balance += v;
-                cellsMaterialProvider.SetShaderProperties();
-            })
-            .Delay((config.sidesThicknessRecoverTime + config.fieldCompleteTransitionAnimationTime) * 2)
-            .WhenDone(() =>
-            {
-                Animator.Interpolate(1f, 0.5f, config.balanceSetAnimationTime)
-                    .PassValue(v =>
-                    {
-                        completionSprite.balance = v;
-                        completionSprite.SetShaderProperties();
-                    }).Type(InterpolationType.InvSquare);
-                SetCompletion(FieldCompletion.Complete);
-                FieldPacksCollection.Packs[packId].FieldCompleted();
-                Active = null;
-            });
-        Animator.Interpolate(ShapeSidesThickness.target, 1.5f, config.fieldCompleteTransitionAnimationTime)
-            .PassDelta(v =>
-            {
-                var t = ShapeSidesThickness;
-                t.value += v;
-                ShapeSidesThickness = t;
-            })
-            .Delay(config.sidesThicknessRecoverTime * 2)
-            .Type(InterpolationType.InvSquare);
     }
     
     

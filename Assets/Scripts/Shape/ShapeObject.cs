@@ -31,6 +31,14 @@ public class ShapeObject : MonoBehaviour
         }
         return interpolator;
     }
+
+    public void UnableToInsertAnimation()
+    {
+        var vec = (Vector3)(Vector2)shape.UpDirection * (shape.MaxMoves(shape.UpDirection) + 0.5f);
+        transform.localPosition += vec;
+        Animator.Interpolate(vec, Vector3.zero, GlobalConfig.Instance.shapeAnimationTime)
+            .PassDelta(v => transform.localPosition += v).Type(InterpolationType.Linear).NullCheck(gameObject);
+    }
     
     void ShapePlacedEffect()
     {

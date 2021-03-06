@@ -155,7 +155,7 @@ public class PostFxController : MonoBehaviour
         FieldPackPalettes.Instance.palettes[savePackId] = v;
 #if UNITY_EDITOR
         EditorUtility.SetDirty(FieldPackPalettes.Instance);
-        AssetDatabase.SaveAssets();
+        // AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 #endif
     }
