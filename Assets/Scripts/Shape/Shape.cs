@@ -83,14 +83,13 @@ public class Shape
         if (moveCandidates == null) moveCandidates = new HashSet<Shape>();
         foreach (var shapeCell in cells)
         {
-            if (shapeCell == null)
-                continue;
             var occupiedBy = Field[shapeCell.FieldPos + dir]?.OccupiedBy;
             if (occupiedBy != null && occupiedBy != this && !moveCandidates.Contains(occupiedBy))
                 toPush.Add(occupiedBy);
         }
         var pushedByPush = new HashSet<Shape>();
         var pushCandidates = new HashSet<Shape>(toPush);
+        pushCandidates.UnionWith(moveCandidates);
         pushCandidates.Add(this);
         if (toPush.Count > 0)
             foreach (var moved in toPush.SelectMany(shape => shape.Move(dir, pushCandidates)))
@@ -103,7 +102,7 @@ public class Shape
         return toPush;
     }
 
-    public bool CanMove(Vector2Int dir, int amount = 1, bool allowPush = true, HashSet<Shape> pushCandidates = null)
+    public bool CanMove(Vector2Int dir, int amount = 1, bool allowPush = true, Dictionary<Shape, int> pushCandidates = null)
     {
         return Field == null || cells.All(cell => cell == null || cell.CanMove(dir, amount, allowPush, pushCandidates));
     }

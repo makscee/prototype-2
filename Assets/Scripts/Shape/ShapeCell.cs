@@ -27,28 +27,31 @@ public class ShapeCell
         shapeCellObject = ShapeCellObject.Create(localPos, shape, this);
     }
     
-    public bool CanMove(Vector2Int dir, int moves = 1, bool allowPush = true, HashSet<Shape> pushCandidates = null)
+    public bool CanMove(Vector2Int dir, int moves = 1, bool allowPush = true, Dictionary<Shape, int> pushCandidates = null)
     {
         if (Matrix == null) return true;
-        if (pushCandidates == null) pushCandidates = new HashSet<Shape>();
+        if (pushCandidates == null) pushCandidates = new Dictionary<Shape, int>();
         var pos = FieldPos;
         for (var i = 1; i <= moves; i++)
         {
             var newPos = FieldPos + dir * i;
             if (!Matrix.CheckIndex(newPos))
             {
-                if (moves > (Matrix.Size * dir).magnitude || Matrix.CheckIndex(pos))
+                if (moves > Matrix.Size || Matrix.CheckIndex(pos))
                     return false;
                 continue;
             }
 
             var fieldCell = Matrix[newPos];
-            if (fieldCell.OccupiedBy != null && fieldCell.OccupiedBy != shape &&
-                !pushCandidates.Contains(fieldCell.OccupiedBy))
-            {
-                pushCandidates.Add(shape);
-                return allowPush && fieldCell.OccupiedBy.CanMove(dir, moves - i + 1, true, pushCandidates);
-            }
+            var occupier = fieldCell.OccupiedBy;
+            var neededMoves = moves - i + 1;
+            
+            if (occupier == null || occupier == shape || 
+                pushCandidates.ContainsKey(occupier) && pushCandidates[occupier] >= neededMoves) continue;
+            
+            if (!pushCandidates.ContainsKey(occupier)) pushCandidates.Add(occupier, neededMoves);
+            else pushCandidates[occupier] = neededMoves;
+            return allowPush && fieldCell.OccupiedBy.CanMove(dir, neededMoves, true, pushCandidates);
         }
 
         return true;
