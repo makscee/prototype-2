@@ -417,6 +417,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 Active = this;
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.Disabled, this);
                 SoundsPlayer.instance.EnableSelectScreenTheme(false);
+                SoundsPlayer.instance.PlayFieldOpen();
                 break;
             case FieldScreenState.Disabled:
                 gameObject.SetActive(false);
@@ -518,7 +519,10 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         var config = GlobalConfig.Instance;
         SequenceFramework.New
             .Delay((config.sidesThicknessRecoverTime + config.fieldCompleteTransitionAnimationTime) * 2)
-            .FieldSet(this).CellsPatternBalanceChange(1f)
+            .FieldSet(this).ShapeSidesThicknessRandomBlink()
+            .Chain(config.fieldCompleteTransitionAnimationTime).Field.ShapeSidesThicknessChange(1.5f)
+            .Chain().Lambda(SoundsPlayer.instance.PlayFieldComplete)
+            .Chain().Field.CellsPatternBalanceChange(1f)
             .Chain().Field.CompletionSpriteBalanceChange(0.5f)
             .With().Lambda(() =>
             {
@@ -526,8 +530,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 FieldPacksCollection.Packs[packId].FieldCompleted();
                 Active = null;
             });
-        SequenceFramework.New.Delay(config.sidesThicknessRecoverTime * 2).FieldSet(this)
-            .ShapeSidesThicknessChange(1.5f);
+        // SequenceFramework.New.Delay(config.sidesThicknessRecoverTime * 2).FieldSet(this)
+        //     .ShapeSidesThicknessChange(1.5f);
     }
     
     
@@ -569,24 +573,20 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         get => this[pos.x, pos.y];
     }
 
+    public Action onClick;
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+        onClick?.Invoke();
+        if (Active == this || completion == FieldCompletion.Locked) return;
+        if (FieldPack.active.packId == packId && completion == FieldCompletion.Unlocked)
         {
-            if (Active == this || completion == FieldCompletion.Locked) return;
-            if (FieldPack.active.packId == packId && completion == FieldCompletion.Unlocked)
-            {
-                SetScreenState(FieldScreenState.Active);
-                return;
-            }
-            if (completion != FieldCompletion.Locked && FieldPack.active.packId != packId)
-            {
-                FieldPacksCollection.Packs[packId].Activate();
-            }
+            SetScreenState(FieldScreenState.Active);
+            return;
         }
-        else
+        if (completion != FieldCompletion.Locked && FieldPack.active.packId != packId)
         {
-            SetCompletion(FieldCompletion.Unlocked);
+            FieldPacksCollection.Packs[packId].Activate();
         }
     }
 }

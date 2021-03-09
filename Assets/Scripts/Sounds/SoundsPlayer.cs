@@ -3,7 +3,7 @@
 public class SoundsPlayer : MonoBehaviour
 {
     [SerializeField] AudioSource insertMain, insertStart, undo, moveAttachedLeft, moveAttachedRight,
-        moveAttachedRotateLeft, moveAttachedRotateRight, selectScreenTheme0;
+        moveAttachedRotateLeft, moveAttachedRotateRight, selectScreenTheme0, fieldOpen, fieldComplete, fieldClose;
     
     public static SoundsPlayer instance;
     public void Awake()
@@ -53,7 +53,22 @@ public class SoundsPlayer : MonoBehaviour
         {
             Animator.ClearByOwner(selectScreenTheme0);
             Animator.Interpolate(1f, 0f, 3f).PassValue(v => selectScreenTheme0.volume = v)
-                .WhenDone(selectScreenTheme0.Stop).NullCheck(gameObject).SetOwner(selectScreenTheme0);
+                .WhenDone(selectScreenTheme0.Pause).NullCheck(gameObject).SetOwner(selectScreenTheme0);
         }
+    }
+
+    public void PlayFieldOpen()
+    {
+        fieldOpen.Play();
+    }
+
+    public void PlayFieldComplete()
+    {
+        fieldComplete.Play();
+    }
+
+    public void PlayFieldClose()
+    {
+        fieldClose.Play();
     }
 }

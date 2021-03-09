@@ -11,7 +11,8 @@ public class GlobalConfig : ScriptableObject
         fieldCellsAnimationTime,
         sidesThicknessRecoverTime,
         balanceSetAnimationTime,
-        fieldCompleteTransitionAnimationTime;
+        fieldCompleteTransitionAnimationTime,
+        fieldCompleteShapeThicknessBlinkTime;
     [SerializeField, Range(0f, 1f)] public float thickness, thicknessBase, sinScale, sinTimeScale;
     [SerializeField] public Material shaderPatternMaterial;
     

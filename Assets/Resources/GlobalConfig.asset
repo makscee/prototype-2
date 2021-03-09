@@ -20,15 +20,12 @@ MonoBehaviour:
   sidesThicknessRecoverTime: 0.4
   balanceSetAnimationTime: 1
   fieldCompleteTransitionAnimationTime: 0.5
+  fieldCompleteShapeThicknessBlinkTime: 2.5
   thickness: 0.13405327
   thicknessBase: 0.314
   sinScale: 0.1
   sinTimeScale: 0.429
   shaderPatternMaterial: {fileID: 2100000, guid: 2adf93c9a62b44d45a6968a951484465, type: 2}
-  palette0: {r: 0.9647059, g: 0.9607843, b: 0.9607843, a: 1}
-  palette1: {r: 0.827451, g: 0.8784314, b: 0.91764706, a: 1}
-  palette2: {r: 0.08627451, g: 0.5294118, b: 0.654902, a: 1}
-  palette3: {r: 0.15294118, g: 0.4, b: 0.47058824, a: 1}
   containerScale: 0.25
   containerOffsetX: -1.5
   containerOffsetY: 0.48

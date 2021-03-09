@@ -101,4 +101,14 @@ public class ShapeObject : MonoBehaviour
             shapeCell.shapeCellObject.SetEnabled(value);
         }
     }
+
+    [SerializeField] AudioSource openSidesSource, closeSidesSource;
+    
+
+    public void PlaySidesSound(bool open)
+    {
+        if (open)
+            openSidesSource.Play();
+        else closeSidesSource.Play();
+    }
 }

@@ -7,19 +7,20 @@ public class ShapeCellSidesContainer : MonoBehaviour
 {
     [SerializeField] ShapeCellSide[] sides;
     [SerializeField] ShapeCellObject shapeCellObject;
-    
-    float Thickness => GlobalConfig.Instance.thicknessBase + shapeCellObject.shape.Field.ShapeSidesThickness.value;
+
+    float Thickness => _thicknessOverride == -1
+        ? GlobalConfig.Instance.thicknessBase +
+          (shapeCellObject.shape.Field != null
+              ? shapeCellObject.shape.Field.ShapeSidesThickness.value
+              : 0f)
+        : _thicknessOverride;
+    float _thicknessOverride = -1f;
 
     void Start()
     {
         RefreshSides();
         PostFxController.Instance.SubscribeToColors(RefreshColors);
     }
-
-    // void OnValidate()
-    // {
-    //     Refresh();
-    // }
 
     public bool[,] surroundingCells;
 
@@ -35,6 +36,18 @@ public class ShapeCellSidesContainer : MonoBehaviour
         {
             side.Refresh(Thickness);
         }
+    }
+
+    public void SetThicknessOverride(float value)
+    {
+        _thicknessOverride = value;
+        RefreshSides();
+    }
+
+    public void ClearThicknessOverride()
+    {
+        _thicknessOverride = -1f;
+        RefreshSides();
     }
 
     void RefreshColors(IReadOnlyList<Color> colors)

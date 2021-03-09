@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
         if (FieldMatrix.Active != null)
         {
             FieldMatrix.Active = null;
+            SoundsPlayer.instance.PlayFieldClose();
         }
         else
         {
