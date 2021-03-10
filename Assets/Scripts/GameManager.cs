@@ -26,19 +26,23 @@ public class GameManager : MonoBehaviour
     static FieldMatrix Field => FieldMatrix.Active;
     void DebugInput()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) ||
+            !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Field.MoveAttachedShape(false);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) ||
+            !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.RightArrow))
         {
             Field.MoveAttachedShape(true);
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) ||
+            !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.UpArrow))
         {
             Field.InsertShape();
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) ||
+            !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.DownArrow))
         {
             Field.Undo();
         }
@@ -86,7 +90,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        if (Field != null && !Input.GetKey(KeyCode.LeftShift))
+        if (Field != null && Input.GetKey(KeyCode.LeftControl))
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {

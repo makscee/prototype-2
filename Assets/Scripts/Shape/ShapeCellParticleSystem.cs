@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class ShapeCellParticleSystem : MonoBehaviour
 {
+    const float DefaultRateOverDistance = 5;
     [SerializeField] ParticleSystem particles;
     [SerializeField] Transform cell;
 
@@ -20,9 +21,9 @@ public class ShapeCellParticleSystem : MonoBehaviour
         transform.localScale = cell.lossyScale;
     }
 
-    public void EnableEmission(bool value)
+    public void SetParticlesAmount(float value)
     {
-        var e = particles.emission;
-        e.enabled = value;
+        var particlesEmission = particles.emission;
+        particlesEmission.rateOverDistance = Mathf.Lerp(0f, DefaultRateOverDistance, value);
     }
 }

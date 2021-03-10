@@ -10,7 +10,6 @@ public class FieldCell : MonoBehaviour
     public FieldMatrix field;
     public int X, Y;
     [SerializeField] SpriteRenderer sr;
-    [SerializeField] float sinOffset;
     [SerializeField] float colorLerp, colorAlpha;
 
     Vector3Target _posOffset = new Vector3Target(Vector3.zero);
@@ -28,6 +27,8 @@ public class FieldCell : MonoBehaviour
     void Start()
     {
         field.onShapePlaced += OnShapePlaced;
+        lockedOffset = Random.onUnitSphere * 9f;
+        RefreshTargets();
     }
 
     void OnDestroy()
@@ -58,12 +59,14 @@ public class FieldCell : MonoBehaviour
                     _posOffset.target = lockedOffset;
                     _scale.target = 0.5f;
                     SetAlpha(0.5f);
+                    SetColorLerp(LerpDefault);
                     sr.sortingOrder = 0;
                     break;
                 case FieldCompletion.Unlocked:
                     _posOffset.target = Vector3.zero;
                     _scale.target = 1f;
                     SetAlpha(0.8f);
+                    SetColorLerp(LerpDefault);
                     sr.sortingOrder = 2;
                     break;
                 case FieldCompletion.Complete:
@@ -77,35 +80,33 @@ public class FieldCell : MonoBehaviour
         {
             _scale.target = ActiveScale;
         }
+        _targetsMet = false;
     }
 
     void SetCoords(int x, int y)
     {
         X = x;
         Y = y;
-        sinOffset = X + Y;
         targetProgressSpeed = Mathf.Lerp(8f, 3f, (X + Y) / (field.Size - 1f) / 2f);
-        lockedOffset = Random.onUnitSphere * 9f;
         RefreshTransform();
     }
 
     void RefreshTransform()
     {
         transform.localPosition =
-            (Vector3) (field.ZeroPos + new Vector2(X, Y)) + _posOffset.value;// + new Vector3(0f, 0f, 0.1f);
+            (Vector3) (field.ZeroPos + new Vector2(X, Y)) + _posOffset.value;
         transform.localScale = new Vector3(_scale.value, _scale.value, _scale.value);
     }
 
+    bool _targetsMet;
     void Update()
     {
-        if (field.screenState == FieldScreenState.OnSelectScreen && field.completion == FieldCompletion.Unlocked)
-        {
-            SetColorLerp(LerpDefault + Mathf.Sin(Time.time + sinOffset) / 10f);
-        }
-
+        if (_targetsMet) return;
         var delta = Time.deltaTime * targetProgressSpeed;
         _scale.ProgressToTarget(delta);
         _posOffset.ProgressToTarget(delta);
+        if (_scale.TargetMet && _posOffset.TargetMet)
+            _targetsMet = true;
         RefreshTransform();
     }
     public void SetProjectionState(FieldProjectionState state)

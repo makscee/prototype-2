@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Vector3Target
+public struct Vector3Target
 {
     public Vector3 target, value;
 

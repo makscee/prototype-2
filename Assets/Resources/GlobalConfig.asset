@@ -20,7 +20,7 @@ MonoBehaviour:
   sidesThicknessRecoverTime: 0.4
   balanceSetAnimationTime: 1
   fieldCompleteTransitionAnimationTime: 0.5
-  fieldCompleteShapeThicknessBlinkTime: 2.5
+  fieldCompleteShapeThicknessBlinkTime: 3
   thickness: 0.13405327
   thicknessBase: 0.314
   sinScale: 0.1
