@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        InputSystem.onLeftPress += () => Field.MoveAttachedShape(false);
+        InputSystem.onRightPress += () => Field.MoveAttachedShape(true);
+        InputSystem.onUpPress += () => Field.InsertShape();
+        InputSystem.onDownPress += () => Field.Undo();
     }
 
     public GameObject shapeCellsParticlesContainer;
@@ -26,26 +30,6 @@ public class GameManager : MonoBehaviour
     static FieldMatrix Field => FieldMatrix.Active;
     void DebugInput()
     {
-        if (Input.GetKeyDown(KeyCode.A) ||
-            !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Field.MoveAttachedShape(false);
-        }
-        if (Input.GetKeyDown(KeyCode.D) ||
-            !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            Field.MoveAttachedShape(true);
-        }
-        if (Input.GetKeyDown(KeyCode.W) ||
-            !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            Field.InsertShape();
-        }
-        if (Input.GetKeyDown(KeyCode.S) ||
-            !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            Field.Undo();
-        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Exit();

@@ -21,6 +21,8 @@ public class GlobalConfig : ScriptableObject
     [SerializeField] public float cameraShakeAmount, cameraFollowSpeed;
     [SerializeField] public float cameraFieldSizeMult, cameraFPSizeMult;
     [SerializeField] public float paletteChangeTime;
+
+    [SerializeField] public float keyRepeatDelay, keyRepeatPeriod;
     
     public static GlobalConfig Instance => GetInstance();
 

@@ -58,7 +58,9 @@ public class FieldSequenceDirectory : SequenceDirectoryBase
         var shapes = _field.shapesContainer.shapes;
         var prevIndex = -1;
 
-        var inter = Animator.Interpolate(0f, 0.99999f, GlobalConfig.Instance.fieldCompleteShapeThicknessBlinkTime)
+        var duration = GlobalConfig.Instance.fieldCompleteShapeThicknessBlinkTime;
+        if (_field.packId == 0) duration /= 2;
+        var inter = Animator.Interpolate(0f, 0.99999f, duration)
             .PassValue(v =>
             {
                 var third = v * 6f;
