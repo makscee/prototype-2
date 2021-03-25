@@ -11,10 +11,10 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        InputSystem.onLeftPress += () => Field.MoveAttachedShape(false);
-        InputSystem.onRightPress += () => Field.MoveAttachedShape(true);
-        InputSystem.onUpPress += () => Field.InsertShape();
-        InputSystem.onDownPress += () => Field.Undo();
+        InputSystem.onLeftPress = () => Field.MoveAttachedShape(false);
+        InputSystem.onRightPress = () => Field.MoveAttachedShape(true);
+        InputSystem.onUpPress = () => Field.InsertShape();
+        InputSystem.onDownPress = () => Field.Undo();
     }
 
     public GameObject shapeCellsParticlesContainer;

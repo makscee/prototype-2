@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4211851011463406418}
+  - component: {fileID: 6436492352398440391}
   m_Layer: 0
   m_Name: FieldUnlockedSprite
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   m_Father: {fileID: 8912627421783522403}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6436492352398440391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771198498809909789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9dc85b4dd67451aa6146e681b341368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pmp: {fileID: 6551445855086513996}
+  field: {fileID: 8912627421783522401}
 --- !u!1 &4353744490884049717
 GameObject:
   m_ObjectHideFlags: 0
@@ -5097,7 +5112,6 @@ GameObject:
   m_Component:
   - component: {fileID: 575397462999913541}
   - component: {fileID: 5901019654889786436}
-  - component: {fileID: 1157506247188500727}
   - component: {fileID: 6436087642908199452}
   m_Layer: 0
   m_Name: PatternObject
@@ -5171,25 +5185,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
---- !u!114 &1157506247188500727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7211381451346582158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f7b9764f9f403d84f5c597c236d826, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  balance: 0.86
-  frequency: 0.54
-  speed: 1
-  balanceTarget: 0.86
-  tint: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
-  sr: {fileID: 5901019654889786436}
-  ps: {fileID: 0}
 --- !u!331 &6436087642908199452
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -5250,6 +5245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5041831745380885417}
   - component: {fileID: 3680578882243508849}
+  - component: {fileID: 6412406462344354172}
   m_Layer: 0
   m_Name: InputCollider
   m_TagString: Untagged
@@ -5281,7 +5277,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -5297,6 +5293,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6412406462344354172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8354499636810340281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24da02fc1f554c79a824f50345be057a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: {fileID: 8912627421783522401}
 --- !u!1 &8912627421783522400
 GameObject:
   m_ObjectHideFlags: 0
@@ -5358,9 +5367,11 @@ MonoBehaviour:
   dependencies2: []
   currentShapeOffset: 0
   currentShapeDir: {x: 0, y: 1}
-  _size: 0
+  size: 0
   cellParent: {fileID: 6979695257556868552}
   createCells: 0
+  initFieldFromLevel: 0
+  hovered: 0
 --- !u!114 &7913060807744885928
 MonoBehaviour:
   m_ObjectHideFlags: 0

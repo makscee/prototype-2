@@ -418,9 +418,11 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.Disabled, this);
                 SoundsPlayer.instance.EnableSelectScreenTheme(false);
                 SoundsPlayer.instance.PlayFieldOpen();
+                SetHovered(false);
                 break;
             case FieldScreenState.Disabled:
                 gameObject.SetActive(false);
+                SetHovered(false);
                 break;
             case FieldScreenState.OnSelectScreen:
                 if (completion == FieldCompletion.Unlocked)
@@ -540,6 +542,19 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     void SetCellsState(FieldProjectionState state)
     {
         foreach (var cell in _cells) cell.SetProjectionState(state);
+    }
+
+    public bool hovered;
+    public Action<bool> onHoveredChange;
+    public void SetHovered(bool value)
+    {
+        if (screenState != FieldScreenState.OnSelectScreen && value) return;
+        hovered = value;
+        if (value)
+            foreach (var field in FieldPacksCollection.Packs[packId].fields)
+                if (field.hovered)
+                    field.SetHovered(false);
+        onHoveredChange?.Invoke(value);
     }
 
     public void Destroy()
