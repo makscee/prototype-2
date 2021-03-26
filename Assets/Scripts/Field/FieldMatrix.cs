@@ -13,7 +13,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     [SerializeField] GameObject backgroundInputSprite, unlockedSprite;
     public PatternMaterialProvider completionSprite;
     public PatternMaterialProvider cellsMaterialProvider;
-    public int packId, fieldId;
+    public int packId, fieldId, unlockIndex;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
     public bool isComplete { get; private set; }
@@ -56,6 +56,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             {
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.OnSelectScreen);
                 SoundsPlayer.instance.EnableSelectScreenTheme(true);
+                FieldPack.active.SetHoveredByUnlockIndex();
             }
             TouchInputObject.SetEnabled(!isNull);
             GameManager.instance.clearProgressButton.SetActive(isNull);
@@ -548,11 +549,11 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     public Action<bool> onHoveredChange;
     public void SetHovered(bool value)
     {
-        if (screenState != FieldScreenState.OnSelectScreen && value) return;
+        if (screenState != FieldScreenState.OnSelectScreen && value || hovered == value) return;
         hovered = value;
         if (value)
             foreach (var field in FieldPacksCollection.Packs[packId].fields)
-                if (field.hovered)
+                if (field != this && field.hovered)
                     field.SetHovered(false);
         onHoveredChange?.Invoke(value);
     }

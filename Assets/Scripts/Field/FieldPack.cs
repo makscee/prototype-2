@@ -74,6 +74,21 @@ public class FieldPack : MonoBehaviour
         field.transform.localPosition = FieldIdToUnitPos(field.fieldId) * (field.completion == FieldCompletion.Complete ? 1f : PushApartMult);
     }
 
+    public void SetHoveredByUnlockIndex()
+    {
+        var index = fields.Where(f => f.completion != FieldCompletion.Complete).Min(f => f.unlockIndex);
+        fields.First(f => f.unlockIndex == index).SetHovered(true);
+    }
+
+    public void EnterHoveredField()
+    {
+        var field = fields.First(f => f.hovered);
+        if (field != null)
+        {
+            field.SetScreenState(FieldScreenState.Active);
+        }
+    }
+
     Vector2 FieldIdToUnitPos(int fieldId)
     {
         if (sideSize == 2)
@@ -112,7 +127,7 @@ public class FieldPack : MonoBehaviour
             }
         }
         throw new Exception();
-    } 
+    }
 
     public static FieldPack Create(int packId)
     {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class KeyboardInputObject : MonoBehaviour
 {
-    [SerializeField] KeyCode[] left, right, up, down;
+    [SerializeField] KeyCode[] left, right, up, down, enter;
     
     void Update()
     {
@@ -17,6 +17,7 @@ public class KeyboardInputObject : MonoBehaviour
 #endif
         CheckLeftRightKeys();
         CheckUpDownKeys();
+        CheckEnterKeys();
     }
 
     float leftDownTs, rightDownTs;
@@ -65,6 +66,12 @@ public class KeyboardInputObject : MonoBehaviour
         {
             InputSystem.DownPress();
         }
+    }
+
+    void CheckEnterKeys()
+    {
+        if (enter.Any(Input.GetKeyDown))
+            InputSystem.EnterPress();
     }
 
     bool IsKeyDown(int dir)
