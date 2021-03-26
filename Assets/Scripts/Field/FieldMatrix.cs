@@ -59,6 +59,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 FieldPack.active.SetHoveredByUnlockIndex();
             }
             TouchInputObject.SetEnabled(!isNull);
+            GameManager.instance.keysHintText.SetActive(!isNull);
             GameManager.instance.clearProgressButton.SetActive(isNull);
         }
     }
