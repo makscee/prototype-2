@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TouchInputObject : MonoBehaviour, IDragHandler, IBeginDragHandler
+public class TouchInputObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     Vector2 _startPos, _curPos, _prevPos;
-    bool _horizontalSwipe;
+    bool _horizontalSwipe, _dragging;
 
     public static void SetEnabled(bool value)
     {
@@ -51,9 +51,15 @@ public class TouchInputObject : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        _dragging = true;
         _startPos = eventData.pressPosition / ScreenMaxSquare;
         _prevPos = eventData.pressPosition / ScreenMaxSquare;
         _curPos = eventData.position / ScreenMaxSquare;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        _dragging = false;
     }
 
     static Vector2 _maxSquareCache;
@@ -67,5 +73,14 @@ public class TouchInputObject : MonoBehaviour, IDragHandler, IBeginDragHandler
                     new Vector2(Screen.width, Screen.width);
             return _maxSquareCache;
         }
+    }
+
+    public static Action onTap;
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_dragging)
+            return;
+        onTap?.Invoke();
+        onTap = null;
     }
 }

@@ -33,6 +33,14 @@ public class SequenceBuilder
         return directory;
     }
 
+    public SequenceRootDirectory AnyKeyFastForward()
+    {
+        Action a = () => Interpolator<float>.SpeedUpStack(this);
+        TouchInputObject.onTap = a;
+        KeyboardInputObject.onAnyKey = a;
+        return directory;
+    }
+
     public class SequenceRootDirectory
     {
         public ScreenSequenceDirectory Screen;

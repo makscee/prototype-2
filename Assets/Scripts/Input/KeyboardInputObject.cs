@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class KeyboardInputObject : MonoBehaviour
 {
+    public static Action onAnyKey;
+    
     [SerializeField] KeyCode[] left, right, up, down, enter;
     
     void Update()
@@ -15,6 +18,12 @@ public class KeyboardInputObject : MonoBehaviour
             return;
         }
 #endif
+        if (Input.anyKeyDown)
+        {
+            onAnyKey?.Invoke();
+            onAnyKey = null;
+        }
+        
         CheckLeftRightKeys();
         CheckUpDownKeys();
         CheckEnterKeys();

@@ -74,6 +74,14 @@ public class Interpolator<T> : OwnedUpdatable
         return this;
     }
 
+    float _deltaMultiplier = 1f;
+
+    public Interpolator<T> SetDeltaMultiplier(float value)
+    {
+        _deltaMultiplier = value;
+        return this;
+    }
+
     float _allowedDeltaFrom = 0f, _allowedDeltaTo = 1f;
     public Interpolator<T> AllowedDelta(float from, float to) // [0f, 1f]
     {
@@ -105,8 +113,11 @@ public class Interpolator<T> : OwnedUpdatable
     }
 
     static Dictionary<object, Interpolator<T>> _stackInterpolators = new Dictionary<object,Interpolator<T>>();
+    static HashSet<object> _speedUpStacks = new HashSet<object>();
+    object _stackObject;
     public Interpolator<T> ObjectStack(object stack)
     {
+        _stackObject = stack;
         if (!_stackInterpolators.ContainsKey(stack))
         {
             _stackInterpolators.Add(stack, this);
@@ -141,6 +152,11 @@ public class Interpolator<T> : OwnedUpdatable
         return this;
     }
 
+    public static void SpeedUpStack(object stack)
+    {
+        _speedUpStacks.Add(stack);
+    }
+
     bool _isDone, _isUpdating = true;
     public override void Update()
     {
@@ -152,6 +168,16 @@ public class Interpolator<T> : OwnedUpdatable
             return;
         }
         var delta = Time.deltaTime;
+        if (_stackObject != null && _speedUpStacks.Contains(_stackObject))
+        {
+            SetDeltaMultiplier(5f);
+            if (_stackInterpolators.ContainsKey(_stackObject) && _stackInterpolators[_stackObject] == this)
+            {
+                _speedUpStacks.Remove(_stackObject);
+            }
+        }
+
+        delta *= _deltaMultiplier;
         if (_delay > 0f)
         {
             _delay -= delta;
@@ -203,6 +229,9 @@ public class Interpolator<T> : OwnedUpdatable
         {
             _isDone = true;
             whenDone?.Invoke();
+            if (_stackObject != null && _stackInterpolators.ContainsKey(_stackObject) &&
+                _stackInterpolators[_stackObject] == this)
+                _stackInterpolators.Remove(_stackObject);
             return;
         }
 

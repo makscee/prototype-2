@@ -59,7 +59,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 FieldPack.active.SetHoveredByUnlockIndex();
             }
             TouchInputObject.SetEnabled(!isNull);
-            GameManager.instance.keysHintText.SetActive(!isNull);
+            // GameManager.instance.keysHintText.SetActive(!isNull);
             GameManager.instance.clearProgressButton.SetActive(isNull);
         }
     }
@@ -533,7 +533,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 SetCompletion(FieldCompletion.Complete);
                 FieldPacksCollection.Packs[packId].FieldCompleted();
                 Active = null;
-            });
+            })
+            .AnyKeyFastForward();
         // SequenceFramework.New.Delay(config.sidesThicknessRecoverTime * 2).FieldSet(this)
         //     .ShapeSidesThicknessChange(1.5f);
     }

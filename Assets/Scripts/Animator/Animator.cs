@@ -6,6 +6,7 @@ public static class Animator
 {
     static List<OwnedUpdatable> _updateables = new List<OwnedUpdatable>();
     static List<OwnedUpdatable> _updateablesToAdd = new List<OwnedUpdatable>();
+    static List<OwnedUpdatable> _updateablesToRemove = new List<OwnedUpdatable>();
     public static Interpolator<float> Interpolate(float from, float to, float over)
     {
         var result = new Interpolator<float>(from, to, over, 
@@ -54,7 +55,7 @@ public static class Animator
     {
         for (var i = 0; i < _updateables.Count; i++)
             if (_updateables[i].IsOwnedBy(owner))
-                _updateables.RemoveAt(i--);
+                _updateablesToRemove.Add(_updateables[i]);
 
         for (var i = 0; i < _updateablesToAdd.Count; i++)
             if (_updateablesToAdd[i].IsOwnedBy(owner))
@@ -73,10 +74,22 @@ public static class Animator
             }
         }
 
+        foreach (var updateable in _updateablesToRemove)
+        {
+            _updateables.Remove(updateable);
+        }
+        _updateablesToRemove.Clear();
+
         foreach (var updateable in _updateablesToAdd)
         {
             _updateables.Add(updateable);
         }
+        _updateablesToAdd.Clear();
+    }
+
+    public static void Reset()
+    {
+        _updateables.Clear();
         _updateablesToAdd.Clear();
     }
 }

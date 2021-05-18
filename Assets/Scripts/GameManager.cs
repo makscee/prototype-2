@@ -129,6 +129,7 @@ public class GameManager : MonoBehaviour
     {
         Progress.ResetAndSave();
         SceneManager.LoadScene(0);
+        Animator.Reset();
     }
 
     public void Exit()
