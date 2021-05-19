@@ -34,6 +34,14 @@ public class FieldPacksCollection : MonoBehaviour
         return Packs.Last();
     }
 
+    public static void DebugActivateFieldPack(int packId)
+    {
+        var pack = Packs[packId];
+        pack.Activate();
+        foreach (var field in pack.fields) field.SetCompletion(FieldCompletion.Unlocked);
+        Progress.PauseTracking(true);
+    }
+
     void Init()
     {
         foreach (var fieldPack in GetComponentsInChildren<FieldPack>())

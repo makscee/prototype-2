@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public static class Progress
 {
     static HashSet<string> _data;
+    static bool _trackingPaused;
 
     public static HashSet<string> Data
     {
@@ -27,6 +28,7 @@ public static class Progress
 
     public static void SetComplete(int packId, int fieldId)
     {
+        if (_trackingPaused) return;
         Data.Add($"{packId}_{fieldId}");
         Save();
     }
@@ -45,6 +47,11 @@ public static class Progress
     {
         _data.Clear();
         Save();
+    }
+
+    public static void PauseTracking(bool value)
+    {
+        _trackingPaused = value;
     }
 
     public static void ResetPackAndSave(int packId)

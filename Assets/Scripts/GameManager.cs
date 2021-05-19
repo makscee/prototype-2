@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
         
 #if UNITY_EDITOR
         
+        DebugCheckNumberKeys();
+        
         if (Input.GetKeyDown(KeyCode.C) && Field != null)
         {
             Progress.SetComplete(Field.packId, Field.fieldId);
@@ -142,6 +144,18 @@ public class GameManager : MonoBehaviour
         else
         {
             Application.Quit();
+        }
+    }
+
+    static void DebugCheckNumberKeys()
+    {
+        const int key1 = 49;
+        for (var i = 0; i < 9; i++)
+        {
+            if (Input.GetKeyDown((KeyCode)(key1 + i)))
+            {
+                FieldPacksCollection.DebugActivateFieldPack(i);
+            }
         }
     }
 }
