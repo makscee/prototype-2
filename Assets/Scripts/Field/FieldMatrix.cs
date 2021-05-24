@@ -14,6 +14,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     public PatternMaterialProvider completionSprite;
     public PatternMaterialProvider cellsMaterialProvider;
     public int packId, fieldId, unlockIndex;
+    [Range(-5, 5)]
+    public int packPositionX, packPositionY;
     public ShapeContainer shapesContainer;
     public Shape attachedShape;
     public bool isComplete { get; private set; }
@@ -23,7 +25,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public FieldMatrix[] dependencies1, dependencies2;
     public Vector2 ZeroPos => new Vector2(-(Size - 1) / 2f, -(Size - 1) / 2f);
-    public FieldPack Pack => FieldPacksCollection.Packs[packId];
+    public FieldPack Pack => FieldPacksCollection.Packs == null || FieldPacksCollection.Packs.Length == 0 ? GetComponentInParent<FieldPack>() : FieldPacksCollection.Packs[packId];
 
     FieldCell[,] _cells;
 
@@ -93,6 +95,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     void Awake()
     {
+        prevX = packPositionX;
+        prevY = packPositionY;
         if (Application.isPlaying)
         {
             CollectCells();
@@ -316,11 +320,6 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 cell.OccupiedBy = null;
     }
 
-    void NewActiveFieldHandle()
-    {
-        if (Active != this) SetScreenState(FieldScreenState.OnSelectScreen);
-    }
-
     public void SetContainer(ShapeContainer container)
     {
         shapesContainer = container;
@@ -335,23 +334,29 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     [SerializeField] Transform cellParent;
     [SerializeField] bool createCells;
     [SerializeField] bool initFieldFromLevel;
+    [SerializeField] int prevX, prevY;
 
     void OnValidate()
     {
+#if UNITY_EDITOR
         if (createCells)
         {
-#if UNITY_EDITOR
             EditorApplication.delayCall += CreateCells;
             createCells = false;
-#endif
         }
         if (initFieldFromLevel)
         {
-#if UNITY_EDITOR
             EditorApplication.delayCall += InitFieldFromLevel;
             initFieldFromLevel = false;
-#endif
         }
+
+        if (prevX != packPositionX || prevY != packPositionY)
+        {
+            prevX = packPositionX;
+            prevY = packPositionY;
+            Pack?.PlaceFields();
+        }
+#endif
     }
 
     void InitFieldFromLevel()
@@ -455,6 +460,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 break;
             case FieldCompletion.Unlocked:
                 unlockedSprite.SetActive(true);
+                completionSprite.gameObject.SetActive(false);
                 break;
             case FieldCompletion.Complete:
                 unlockedSprite.SetActive(false);

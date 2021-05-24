@@ -7,20 +7,19 @@ public class FieldPack : MonoBehaviour
 {
     public static FieldPack active;
     
-    const float PushApartMult = 1.5f;
     [SerializeField] int sideSize = 3;
     int FieldsCount => sideSize == 3 ? 8 : 4;
     public int packId;
     public FieldMatrix[] fields;
-    public float cameraSizeMultiplier = 1f;
+    public float cameraSizeMultiplier = 1f, size;
 
-    [SerializeField] bool initFields;
+    [SerializeField] bool refreshPositions;
 
     void OnValidate()
     {
-        if (initFields)
+        if (refreshPositions)
         {
-            initFields = false;
+            refreshPositions = false;
             LoadFields();
             PlaceFields();
         }
@@ -58,20 +57,57 @@ public class FieldPack : MonoBehaviour
         }
     }
 
-    void PlaceFields()
+    public void PlaceFields()
     {
         for (var fieldId = 0; fieldId < FieldsCount; fieldId++)
         {
             var field = fields[fieldId];
             PlaceField(field);
         }
+
+        foreach (var pack in GetPacksByParent()) 
+            pack.RefreshPosition();
     }
 
-    public void PlaceField(FieldMatrix field)
+    void PlaceField(FieldMatrix field)
     {
         var scale = 1f / field.Size;
         field.transform.localScale = new Vector3(scale, scale, scale);
-        field.transform.localPosition = FieldIdToUnitPos(field.fieldId) * (field.completion == FieldCompletion.Complete ? 1f : PushApartMult);
+        // field.transform.localPosition = FieldIdToUnitPos(field.fieldId) * (field.completion == FieldCompletion.Complete ? 1f : PushApartMult);
+        field.transform.localPosition = new Vector3(field.packPositionX, field.packPositionY);
+    }
+
+    protected void RefreshPosition()
+    {
+        Vector2 min = Vector2.zero, max = Vector2.zero;
+        foreach (var field in fields)
+        {
+            min.x = Mathf.Min(field.packPositionX, min.x);
+            min.y = Mathf.Min(field.packPositionY, min.y);
+            max.x = Mathf.Max(field.packPositionX, max.x);
+            max.y = Mathf.Max(field.packPositionY, max.y);
+        }
+        transform.localPosition = -new Vector3((min.x + max.x) / 2, (min.y + max.y) / 2);
+        size = Mathf.Max(max.x - min.x, max.y - min.y) + 1;
+        RefreshScale();
+    }
+
+    protected void RefreshScale()
+    {
+        if (packId == 0)
+        {
+            transform.localScale = Vector3.one;
+            return;
+        }
+
+        var prevPack = GetPacksByParent()[packId - 1];
+        var scale = prevPack.size * prevPack.transform.localScale;
+        transform.localScale = scale;
+    }
+
+    FieldPack[] GetPacksByParent()
+    {
+        return GetComponentInParent<FieldPacksCollection>().GetComponentsInChildren<FieldPack>();
     }
 
     public void SetHoveredByUnlockIndex()
@@ -87,46 +123,6 @@ public class FieldPack : MonoBehaviour
         {
             field.SetScreenState(FieldScreenState.Active);
         }
-    }
-
-    Vector2 FieldIdToUnitPos(int fieldId)
-    {
-        if (sideSize == 2)
-        {
-            switch (fieldId)
-            {
-                case 0:
-                    return new Vector2(-.5f, .5f);
-                case 1:
-                    return new Vector2(.5f, .5f);
-                case 2:
-                    return new Vector2(-.5f, -.5f);
-                case 3:
-                    return new Vector2(.5f, -.5f);
-            }
-        } else if (sideSize == 3)
-        {
-            switch (fieldId)
-            {
-                case 0:
-                    return new Vector2(-1f, 1f);
-                case 1:
-                    return new Vector2(0f, 1f);
-                case 2:
-                    return new Vector2(1f, 1f);
-                case 3:
-                    return new Vector2(-1f, 0f);
-                case 4:
-                    return new Vector2(1f, 0f);
-                case 5:
-                    return new Vector2(-1f, -1f);
-                case 6:
-                    return new Vector2(0f, -1f);
-                case 7:
-                    return new Vector2(1f, -1f);
-            }
-        }
-        throw new Exception();
     }
 
     public static FieldPack Create(int packId)

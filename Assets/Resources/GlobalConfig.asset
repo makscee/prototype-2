@@ -34,7 +34,7 @@ MonoBehaviour:
   cameraShakeAmount: 0.4
   cameraFollowSpeed: 5
   cameraFieldSizeMult: 1
-  cameraFPSizeMult: 2.01
+  cameraFPSizeMult: 1
   paletteChangeTime: 1
   keyRepeatDelay: 0.4
   keyRepeatPeriod: 0.1
