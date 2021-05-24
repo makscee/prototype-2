@@ -6,11 +6,12 @@ public class InputCollider : MonoBehaviour
     [SerializeField] FieldMatrix field;
     void OnMouseEnter()
     {
-        field.SetHovered(true);
+        if (field.completion == FieldCompletion.Unlocked)
+            field.SetHovered(true);
     }
 
     void OnMouseExit()
     {
-        field.SetHovered(false);
+        // field.SetHovered(false);
     }
 }

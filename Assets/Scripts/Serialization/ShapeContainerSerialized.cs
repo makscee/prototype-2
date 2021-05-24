@@ -11,7 +11,7 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
     {
         shapes = new List<ShapeSerialized>(container.shapes.Count);
 
-        var maxInd = container.currentIndex < container.shapes.Count
+        var maxInd = container.currentIndex <= container.shapes.Count
             ? container.currentIndex - 1
             : container.shapes.Count;
         for (var i = 0; i < maxInd; i++)

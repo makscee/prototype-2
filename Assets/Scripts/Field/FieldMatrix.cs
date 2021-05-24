@@ -461,6 +461,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             case FieldCompletion.Unlocked:
                 unlockedSprite.SetActive(true);
                 completionSprite.gameObject.SetActive(false);
+                shapesContainer?.SetEnabled(true);
+                cellParent.gameObject.SetActive(true);
                 break;
             case FieldCompletion.Complete:
                 unlockedSprite.SetActive(false);
