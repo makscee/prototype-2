@@ -174,7 +174,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         Progress.SetComplete(packId, fieldId);
         if (ShapeBuilder.lastEditedField == this)
         {
-            new FieldMatrixSerialized(this).SaveToFile(packId, fieldId);
+            var insertedShapes = new HashSet<Shape>();
+            foreach (var cell in _cells) insertedShapes.Add(cell.OccupiedBy);
+            new FieldMatrixSerialized(this, insertedShapes.Count).SaveToFile(packId, fieldId);
             ShapeBuilder.lastEditedField = null;
         }
         CompleteTransition();

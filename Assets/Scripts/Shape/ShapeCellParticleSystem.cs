@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ShapeCellParticleSystem : MonoBehaviour
 {
-    const float DefaultRateOverDistance = 5;
+    const float DefaultRateOverDistance = 20;
     [SerializeField] ParticleSystem particles;
     [SerializeField] Transform cell;
 

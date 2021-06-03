@@ -7,17 +7,11 @@ public class ShapeContainerSerialized : JsonUtilitySerializable
 {
     public List<ShapeSerialized> shapes;
 
-    public ShapeContainerSerialized(ShapeContainer container)
+    public ShapeContainerSerialized(ShapeContainer container, int insertedShapesCount)
     {
         shapes = new List<ShapeSerialized>(container.shapes.Count);
-
-        var maxInd = container.currentIndex <= container.shapes.Count
-            ? container.currentIndex - 1
-            : container.shapes.Count;
-        for (var i = 0; i < maxInd; i++)
-        {
+        for (var i = 0; i < insertedShapesCount; i++)
             shapes.Add(new ShapeSerialized(container.shapes[i]));
-        }
     }
 
     public ShapeContainer Deserialize(FieldMatrix matrix)

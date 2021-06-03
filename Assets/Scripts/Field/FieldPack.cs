@@ -112,6 +112,7 @@ public class FieldPack : MonoBehaviour
 
     public void SetHoveredByUnlockIndex()
     {
+        if (fields.All(f => f.completion == FieldCompletion.Complete)) return;
         var index = fields.Where(f => f.completion != FieldCompletion.Complete).Min(f => f.unlockIndex);
         fields.First(f => f.unlockIndex == index).SetHovered(true);
     }

@@ -39,12 +39,12 @@ MonoBehaviour:
     gamma: {x: 0.46009737, y: 0.74770844, z: 1, w: 0.15534987}
     gain: {x: 0.29721677, y: 0.64421237, z: 1, w: 0.30343434}
     color0: {r: 0, g: 0, b: 0, a: 1}
-    color1: {r: 0.7874878, g: 0, b: 0.8113208, a: 1}
-    bloomTint: {r: 0.41902456, g: 0.23921567, b: 1, a: 0}
-    vignetteIntensity: 0.43
+    color1: {r: 1, g: 1, b: 1, a: 1}
+    bloomTint: {r: 0.972549, g: 0, b: 0.52421325, a: 0}
+    vignetteIntensity: 0.23
     vignetteSmoothness: 0.44
-    bloomThreshold: 0.92
-    bloomIntensity: 56.97
+    bloomThreshold: 0.81
+    bloomIntensity: 30.97
     bloomScatter: 0.14
   - lift: {x: 1, y: 1, z: 1, w: -0.051150896}
     gamma: {x: 1, y: 1, z: 1, w: 0.20460357}
@@ -57,14 +57,14 @@ MonoBehaviour:
     bloomThreshold: 1.1
     bloomIntensity: 36.18
     bloomScatter: 0.55
-  - lift: {x: 0, y: 0, z: 0, w: 0}
-    gamma: {x: 0, y: 0, z: 0, w: 0}
-    gain: {x: 0, y: 0, z: 0, w: 0}
-    color0: {r: 0, g: 0, b: 0, a: 0}
-    color1: {r: 0, g: 0, b: 0, a: 0}
-    bloomTint: {r: 0, g: 0, b: 0, a: 0}
-    vignetteIntensity: 0
-    vignetteSmoothness: 0
-    bloomThreshold: 0
-    bloomIntensity: 0
-    bloomScatter: 0
+  - lift: {x: 0.26085722, y: 0.49009436, z: 1, w: -0.07202643}
+    gamma: {x: 0.7405164, y: 1, z: 0.8468308, w: 0.33039653}
+    gain: {x: 0.9474175, y: 0.9969242, z: 1, w: 0.42988166}
+    color0: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+    color1: {r: 1, g: 1, b: 1, a: 1}
+    bloomTint: {r: 0.38685048, g: 1, b: 0, a: 0}
+    vignetteIntensity: 0.17
+    vignetteSmoothness: 1
+    bloomThreshold: 1.1
+    bloomIntensity: 36.18
+    bloomScatter: 0.55

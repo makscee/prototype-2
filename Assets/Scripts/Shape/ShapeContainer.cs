@@ -4,12 +4,10 @@ using UnityEngine;
 public class ShapeContainer
 {
     public readonly List<Shape> shapes = new List<Shape>();
-    public readonly FieldMatrix matrix;
     readonly ShapeContainerObject _containerObject;
 
     public ShapeContainer(FieldMatrix matrix)
     {
-        this.matrix = matrix;
         _containerObject = new GameObject("Shapes Container").AddComponent<ShapeContainerObject>();
         _containerObject.container = this;
         Transform transform;

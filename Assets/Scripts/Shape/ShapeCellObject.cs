@@ -28,11 +28,11 @@ public class ShapeCellObject : MonoBehaviour
         particles = ShapeCellParticleSystem.Create(this);
         var fieldSize = shape.Field.Size;
         const float sizeLimit = 6;
+        var amount = 1 / shape.Field.Pack.transform.localScale.x;
         if (fieldSize > sizeLimit)
-        {
-            var t = sizeLimit * sizeLimit / (fieldSize * fieldSize);
-            particles.SetParticlesAmount(t);
-        }
+            amount *= sizeLimit * sizeLimit / (fieldSize * fieldSize);
+        
+        particles.SetParticlesAmount(amount);
     }
 
     public void SetEnabled(bool value)

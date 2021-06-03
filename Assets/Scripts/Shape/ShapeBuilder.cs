@@ -66,6 +66,7 @@ public class ShapeBuilder : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.LeftArrow)) dir = Vector2Int.left;
         ReadInput(dir);
         if (Input.GetKeyDown(KeyCode.Space)) InvertCell();
+        if (Input.GetKeyDown(KeyCode.Q)) ResetShape();
 #endif
     }
 
@@ -96,5 +97,13 @@ public class ShapeBuilder : MonoBehaviour
         Matrix.MoveAttachedShapeAccordingToDir(Matrix.currentShapeOffset);
         RefreshGameObjectPosition();
         lastEditedField = Matrix;
+    }
+
+    void ResetShape()
+    {
+        var curShape = Matrix.attachedShape;
+        if (curShape == null) return;
+        curShape.ClearCells();
+        curShape.AddCell(Vector2Int.zero);
     }
 }

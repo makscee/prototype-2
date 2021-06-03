@@ -130,6 +130,12 @@ public class Shape
         return RepackCells();
     }
 
+    public void ClearCells()
+    {
+        foreach (var cell in cells) cell.Destroy();
+        cells.Clear();
+    }
+
     Vector2Int RepackCells()
     {
         var minPos = cells[0].LocalPos;
