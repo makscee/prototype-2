@@ -89,10 +89,14 @@ public class ShapeBuilder : MonoBehaviour
         if (curShape == null) return;
         var localShapePos = CurPos.FromLocalShapeRotation(curShape).ToLocalFieldRotation();
         var shapeCell = curShape[localShapePos];
-        var delta = Vector2Int.zero;
+        Vector2Int delta;
         if (shapeCell == null)
             delta = curShape.AddCell(localShapePos);
-        else delta = curShape.RemoveCell(localShapePos);
+        else
+        {
+            if (curShape.cells.Count == 1) return;
+            delta = curShape.RemoveCell(localShapePos);
+        }
         _curPos += delta;
         Matrix.MoveAttachedShapeAccordingToDir(Matrix.currentShapeOffset);
         RefreshGameObjectPosition();
@@ -105,5 +109,7 @@ public class ShapeBuilder : MonoBehaviour
         if (curShape == null) return;
         curShape.ClearCells();
         curShape.AddCell(Vector2Int.zero);
+        Matrix.MoveAttachedShapeAccordingToDir(Matrix.currentShapeOffset);
+        RefreshGameObjectPosition();
     }
 }
