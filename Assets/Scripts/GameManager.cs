@@ -79,11 +79,11 @@ public class GameManager : MonoBehaviour
         
         DebugCheckNumberKeys();
         
-        if (Input.GetKeyDown(KeyCode.C) && Field != null)
-        {
-            Progress.SetComplete(Field.packId, Field.fieldId);
-            Field.CompleteTransition();
-        }
+        // if (Input.GetKeyDown(KeyCode.C) && Field != null)
+        // {
+        //     Progress.SetComplete(Field.packId, Field.fieldId);
+        //     Field.CompleteTransition();
+        // }
 
         if (Input.GetKeyDown(KeyCode.V) && Field == null)
         {

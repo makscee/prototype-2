@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -37,6 +38,11 @@ public class FieldPack : MonoBehaviour
             field.fieldId = fieldId;
             field.packId = packId;
             field.gameObject.name = $"fm {packId}_{fieldId}";
+            
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(field);
+            AssetDatabase.Refresh();
+#endif
         }
     }
 
