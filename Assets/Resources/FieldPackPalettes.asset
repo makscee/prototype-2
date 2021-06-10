@@ -79,12 +79,12 @@ MonoBehaviour:
     bloomThreshold: 1.1
     bloomIntensity: 36.18
     bloomScatter: 0.55
-  - lift: {x: 0.7495496, y: 1, z: 0, w: -0.07202643}
-    gamma: {x: 0.9353677, y: 0.5025898, z: 1, w: 0.000000012823397}
-    gain: {x: 0.15454215, y: 0.45173997, z: 1, w: 0.48458156}
-    color0: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+  - lift: {x: 0, y: 1, z: 0.73317957, w: -0.094052866}
+    gamma: {x: 0.94786197, y: 0.5452411, z: 1, w: 0.000000012823397}
+    gain: {x: 0.4193673, y: 0, z: 1, w: 0.7488988}
+    color0: {r: 0, g: 0.25527555, b: 0.3490566, a: 1}
     color1: {r: 1, g: 1, b: 1, a: 1}
-    bloomTint: {r: 0.38685048, g: 1, b: 0, a: 0}
+    bloomTint: {r: 1, g: 0.8142001, b: 0, a: 0}
     vignetteIntensity: 0.17
     vignetteSmoothness: 1
     bloomThreshold: 1.1
