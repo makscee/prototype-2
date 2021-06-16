@@ -61,6 +61,7 @@ public class PostFxController : MonoBehaviour
         _prevPackId = _curPackId;
         _curPackId = packId;
         loadPackId = packId;
+        savePackId = packId;
         _t = 0;
     }
 
