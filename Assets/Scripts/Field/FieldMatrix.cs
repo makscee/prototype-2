@@ -57,7 +57,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             if (isNull)
             {
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.OnSelectScreen);
-                SoundsPlayer.instance.EnableSelectScreenTheme(true);
+                // SoundsPlayer.instance.EnableSelectScreenTheme(true);
+                SoundsPlayer.instance.SetBgVolume(GlobalConfig.Instance.bgVolumeSelectScreen);
                 FieldPack.active.SetHoveredByUnlockIndex();
             }
             TouchInputObject.SetEnabled(!isNull);
@@ -425,8 +426,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 RefreshProjection();
                 Active = this;
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.Disabled, this);
-                SoundsPlayer.instance.EnableSelectScreenTheme(false);
+                // SoundsPlayer.instance.EnableSelectScreenTheme(false);
                 SoundsPlayer.instance.PlayFieldOpen();
+                SoundsPlayer.instance.SetBgVolume(GlobalConfig.Instance.bgVolumeActiveField);
                 SetHovered(false);
                 break;
             case FieldScreenState.Disabled:
@@ -531,6 +533,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         completionSprite.balanceTarget = 1f;
         completionSprite.SetShaderProperties();
         var config = GlobalConfig.Instance;
+        SoundsPlayer.instance.SetBgVolume(0f);
         SequenceFramework.New
             .Delay((config.sidesThicknessRecoverTime + config.fieldCompleteTransitionAnimationTime) * 2)
             .FieldSet(this).ShapeSidesThicknessRandomBlink()
@@ -543,6 +546,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 SetCompletion(FieldCompletion.Complete);
                 FieldPacksCollection.Packs[packId].FieldCompleted();
                 Active = null;
+                SoundsPlayer.instance.SetBgVolume(GlobalConfig.Instance.bgVolumeSelectScreen);
             })
             .AnyKeyFastForward();
         // SequenceFramework.New.Delay(config.sidesThicknessRecoverTime * 2).FieldSet(this)

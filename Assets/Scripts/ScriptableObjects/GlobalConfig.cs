@@ -23,6 +23,7 @@ public class GlobalConfig : ScriptableObject
     [SerializeField] public float paletteChangeTime;
 
     [SerializeField] public float keyRepeatDelay, keyRepeatPeriod;
+    [SerializeField] public float bgVolumeSelectScreen, bgVolumeActiveField;
     
     public static GlobalConfig Instance => GetInstance();
 

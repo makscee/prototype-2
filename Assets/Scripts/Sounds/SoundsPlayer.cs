@@ -1,19 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SoundsPlayer : MonoBehaviour
 {
     [SerializeField] AudioSource insertMain, insertStart, undo, moveAttachedLeft, moveAttachedRight,
-        moveAttachedRotateLeft, moveAttachedRotateRight, selectScreenTheme0, fieldOpen, fieldComplete, fieldClose;
+        moveAttachedRotateLeft, moveAttachedRotateRight, selectScreenTheme0, fieldOpen, fieldComplete, fieldClose, bg;
+
+    [SerializeField] AudioClip[] bgClips;
+    Queue<AudioClip> bgClipsQueue;
     
     public static SoundsPlayer instance;
     public void Awake()
     {
         instance = this;
+        _curBgVolume = bg.volume;
+        var arr = bgClips.ToArray();
+        for (var i = arr.Length - 1; i > 0; i--)
+        {
+            var randomIndex = Random.Range(0, i + 1);
+ 
+            var temp = arr[i];
+            arr[i] = arr[randomIndex];
+            arr[randomIndex] = temp;
+        }
+        bgClipsQueue = new Queue<AudioClip>(arr);
+        GetNextBgClip();
+        SetBgVolume(GlobalConfig.Instance.bgVolumeSelectScreen);
     }
 
     public void PlayInsertSound()
     {
         insertMain.Play();
+        DuckBg(0.5f);
     }
 
     public void PlayInsertStartSound()
@@ -42,6 +64,7 @@ public class SoundsPlayer : MonoBehaviour
 
     public void EnableSelectScreenTheme(bool value)
     {
+        return;
         if (value)
         {
             Animator.ClearByOwner(selectScreenTheme0);
@@ -70,5 +93,32 @@ public class SoundsPlayer : MonoBehaviour
     public void PlayFieldClose()
     {
         fieldClose.Play();
+    }
+
+    float _curBgVolume;
+    public void SetBgVolume(float value)
+    {
+        bg.volume = value;
+        _curBgVolume = value;
+    }
+
+    public void DuckBg(float release)
+    {
+        Animator.Interpolate(0f, 1f, release).PassValue(v => bg.volume = Mathf.Lerp(0f, _curBgVolume, v));
+    }
+
+    void GetNextBgClip()
+    {
+        bg.clip = bgClipsQueue.Dequeue();
+        bgClipsQueue.Enqueue(bg.clip);
+        bg.Play();
+    }
+
+    void Update()
+    {
+        if (!bg.isPlaying)
+        {
+            GetNextBgClip();
+        }
     }
 }

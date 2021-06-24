@@ -7,7 +7,7 @@ using UnityEngine;
 public class ProgressSerialized : JsonUtilitySerializable
 {
     public List<string> data;
-    const string Path = "progress";
+    static string Path => "progress" + Progress.Version;
 
     public ProgressSerialized(IEnumerable<string> data)
     {
