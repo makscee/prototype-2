@@ -57,8 +57,9 @@ public class ShapeContainerObject : MonoBehaviour
         {
             var shape = container.shapes[i];
             curY -= shape.Height * GlobalConfig.Instance.containerSizeScale + GlobalConfig.Instance.containerPaddingY;
+            var curX = -shape.Width * GlobalConfig.Instance.containerSizeScale;
             shape.shapeObject.SetTargetPosition(
-                new Vector3(0f, curY));
+                new Vector3(curX, curY));
             shape.shapeObject.SetTargetScale(GlobalConfig.Instance.containerScale);
         }
     }

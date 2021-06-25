@@ -27,7 +27,7 @@ MonoBehaviour:
   sinTimeScale: 0.429
   shaderPatternMaterial: {fileID: 2100000, guid: 2adf93c9a62b44d45a6968a951484465, type: 2}
   containerScale: 0.25
-  containerOffsetX: -1.5
+  containerOffsetX: -0.8
   containerOffsetY: 0.48
   containerPaddingY: 0.12
   containerSizeScale: 0.25
