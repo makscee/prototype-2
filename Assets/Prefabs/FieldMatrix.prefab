@@ -5231,9 +5231,9 @@ SpriteMask:
   m_BackSortingLayerID: 0
   m_FrontSortingLayer: 0
   m_BackSortingLayer: 0
-  m_FrontSortingOrder: 0
+  m_FrontSortingOrder: 11
   m_BackSortingOrder: 0
-  m_IsCustomRangeActive: 0
+  m_IsCustomRangeActive: 1
   m_SpriteSortPoint: 0
 --- !u!1 &8354499636810340281
 GameObject:
@@ -5361,6 +5361,9 @@ MonoBehaviour:
   cellsMaterialProvider: {fileID: 7913060807744885928}
   packId: 0
   fieldId: 0
+  unlockIndex: 0
+  packPositionX: 0
+  packPositionY: 0
   screenState: 0
   completion: 0
   dependencies1: []
@@ -5371,6 +5374,8 @@ MonoBehaviour:
   cellParent: {fileID: 6979695257556868552}
   createCells: 0
   initFieldFromLevel: 0
+  prevX: 0
+  prevY: 0
   hovered: 0
 --- !u!114 &7913060807744885928
 MonoBehaviour:

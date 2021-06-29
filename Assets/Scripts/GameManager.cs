@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public GameObject clearProgressButton, keysHintText;
-
     void Awake()
     {
         instance = this;

@@ -72,7 +72,7 @@ public class FieldSequenceDirectory : SequenceDirectoryBase
                 var shapeThickness = Mathf.Lerp(GlobalConfig.Instance.thicknessBase, 1.2f,
                     closing ? shapeT : 1f - shapeT);
                 if (prevIndex != shapeIndex)
-                    shapes[shapeIndex].shapeObject.PlaySidesSound(!closing);
+                    ShapeObject.PlaySidesSound(!closing);
                 if (shapeIndex > 0 && prevIndex != shapeIndex)
                 {
                     var prevThickness = Mathf.Lerp(GlobalConfig.Instance.thicknessBase, 1.2f,

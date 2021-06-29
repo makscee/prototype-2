@@ -102,13 +102,10 @@ public class ShapeObject : MonoBehaviour
         }
     }
 
-    [SerializeField] AudioSource openSidesSource, closeSidesSource;
-    
-
-    public void PlaySidesSound(bool open)
+    public static void PlaySidesSound(bool open)
     {
         if (open)
-            openSidesSource.Play();
-        else closeSidesSource.Play();
+            SoundsPlayer.instance.PlaySidesOpenSound();
+        else SoundsPlayer.instance.PlaySidesCloseSound();
     }
 }

@@ -38,5 +38,5 @@ MonoBehaviour:
   paletteChangeTime: 1
   keyRepeatDelay: 0.4
   keyRepeatPeriod: 0.1
-  bgVolumeSelectScreen: 0.25
-  bgVolumeActiveField: 0.5
+  bgVolumeSelectScreen: 0.5
+  bgVolumeActiveField: 1

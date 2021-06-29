@@ -7,9 +7,20 @@ using Random = UnityEngine.Random;
 
 public class SoundsPlayer : MonoBehaviour
 {
-    [SerializeField] AudioSource insertMain, insertStart, undo, moveAttachedLeft, moveAttachedRight,
-        moveAttachedRotateLeft, moveAttachedRotateRight, selectScreenTheme0, fieldOpen, fieldComplete, fieldClose, bg;
+    [SerializeField] AudioSource fx, bg;
 
+    [SerializeField] AudioClip insertMain,
+        insertStart,
+        undo,
+        moveAttachedLeft,
+        moveAttachedRight,
+        moveAttachedRotateLeft,
+        moveAttachedRotateRight,
+        fieldOpen,
+        fieldComplete,
+        fieldClose,
+        sidesOpen,
+        sidesClose;
     [SerializeField] AudioClip[] bgClips;
     Queue<AudioClip> bgClipsQueue;
     
@@ -34,65 +45,57 @@ public class SoundsPlayer : MonoBehaviour
 
     public void PlayInsertSound()
     {
-        insertMain.Play();
+        fx.PlayOneShot(insertMain);
         DuckBg(0.5f);
     }
 
     public void PlayInsertStartSound()
     {
-        insertStart.Play();
+        fx.PlayOneShot(insertStart);
     }
 
     public void PlayUndoSound()
     {
-        undo.Play();
+        fx.PlayOneShot(undo);
     }
 
     public void PlayMoveAttachedSound(bool left)
     {
         if (left)
-            moveAttachedLeft.Play();
-        else moveAttachedRight.Play();
+            fx.PlayOneShot(moveAttachedLeft);
+        else fx.PlayOneShot(moveAttachedRight);
     }
 
     public void PlayMoveAttachedRotateSound(bool left)
     {
         if (left)
-            moveAttachedRotateLeft.Play();
-        else moveAttachedRotateRight.Play();
-    }
-
-    public void EnableSelectScreenTheme(bool value)
-    {
-        return;
-        if (value)
-        {
-            Animator.ClearByOwner(selectScreenTheme0);
-            selectScreenTheme0.Play();
-            Animator.Interpolate(0f, 1f, 3f).PassValue(v => selectScreenTheme0.volume = v)
-                .NullCheck(gameObject).SetOwner(selectScreenTheme0);
-        }
-        else
-        {
-            Animator.ClearByOwner(selectScreenTheme0);
-            Animator.Interpolate(1f, 0f, 3f).PassValue(v => selectScreenTheme0.volume = v)
-                .WhenDone(selectScreenTheme0.Pause).NullCheck(gameObject).SetOwner(selectScreenTheme0);
-        }
+            fx.PlayOneShot(moveAttachedRotateLeft);
+        else fx.PlayOneShot(moveAttachedRotateRight);
     }
 
     public void PlayFieldOpen()
     {
-        fieldOpen.Play();
+        fx.PlayOneShot(fieldOpen);
     }
 
     public void PlayFieldComplete()
     {
-        fieldComplete.Play();
+        fx.PlayOneShot(fieldComplete);
     }
 
     public void PlayFieldClose()
     {
-        fieldClose.Play();
+        fx.PlayOneShot(fieldClose);
+    }
+
+    public void PlaySidesOpenSound()
+    {
+        fx.PlayOneShot(sidesOpen);
+    }
+
+    public void PlaySidesCloseSound()
+    {
+        fx.PlayOneShot(sidesClose);
     }
 
     float _curBgVolume;
