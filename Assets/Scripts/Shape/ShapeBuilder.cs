@@ -10,6 +10,7 @@ public class ShapeBuilder : MonoBehaviour
     static Shape Shape => Matrix.attachedShape;
     static FieldMatrix Matrix => FieldMatrix.Active;
     public static FieldMatrix lastEditedField;
+    FieldMatrix _matrix;
 
     public bool Enabled
     {
@@ -39,6 +40,11 @@ public class ShapeBuilder : MonoBehaviour
         transform.localPosition = _curPos.FromLocalShapeRotation(Shape).ToField() + Matrix.ZeroPos;
     }
 
+    void Awake()
+    {
+        _matrix = GetComponentInParent<FieldMatrix>();
+    }
+
     void Update()
     {
 #if UNITY_EDITOR
@@ -48,7 +54,7 @@ public class ShapeBuilder : MonoBehaviour
             return;
         }
 
-        if (!Enabled && Input.GetKeyDown(KeyCode.LeftShift) && Shape != null)
+        if (!Enabled && Input.GetKeyDown(KeyCode.LeftShift) && Shape != null && _matrix == Matrix)
         {
             Enabled = true;
             Shape.originalRotation = Utils.DirFromCoords(Shape.UpDirection);

@@ -4,8 +4,8 @@ using UnityEngine;
 public class CameraScript : MonoBehaviour
 {
     public static CameraScript instance;
-    Vector2 _targetPosition = Vector2.zero;
-    Quaternion _targetRotation = Quaternion.identity;
+    public Vector2 targetPosition = Vector2.zero;
+    public Quaternion targetRotation = Quaternion.identity;
     float _targetSize = 5;
 
     Camera _camera;
@@ -59,10 +59,10 @@ public class CameraScript : MonoBehaviour
     void ApplyTarget()
     {
         Transform t;
-        var targetPosition = new Vector3(_targetPosition.x, _targetPosition.y, transform.position.z);
+        var targetPosition = new Vector3(this.targetPosition.x, this.targetPosition.y, transform.position.z);
         var lerpDelta = Time.deltaTime * _speed;
         (t = transform).position = Vector3.Lerp(t.position, targetPosition, lerpDelta);
-        t.rotation = Quaternion.Lerp(t.rotation, _targetRotation, lerpDelta);
+        t.rotation = Quaternion.Lerp(t.rotation, targetRotation, lerpDelta);
         _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, _targetSize, lerpDelta);
     }
 
@@ -73,8 +73,8 @@ public class CameraScript : MonoBehaviour
         // _targetPosition = (shape.shapeObject.transform.position + (Vector3)(Vector2)shape.size / 2 + FieldMatrix.current.transform.position) / 2;
         // _targetPosition = FieldMatrix.current.MatrixAttachLocalPosition + FieldMatrix.current.ZeroPos;
         var t = matrix.transform;
-        _targetPosition = t.position;
-        _targetRotation = shape.RotationQuaternion * matrix.transform.rotation;
+        targetPosition = t.position;
+        targetRotation = shape.RotationQuaternion * matrix.transform.rotation;
         SetSizeTarget(matrix.Size * t.lossyScale.x);
     }
 
@@ -82,8 +82,8 @@ public class CameraScript : MonoBehaviour
     {
         var matrix = FieldMatrix.Active;
         var t = matrix.transform;
-        _targetPosition = t.position;
-        _targetRotation = t.rotation;
+        targetPosition = t.position;
+        targetRotation = t.rotation;
         SetSizeTarget(matrix.Size * t.lossyScale.x * GlobalConfig.Instance.cameraFieldSizeMult);
     }
 
@@ -92,11 +92,11 @@ public class CameraScript : MonoBehaviour
         var fp = FieldPack.active;
         var t = fp.transform;
         SetSizeTarget(fp.size * fp.transform.localScale.x * GlobalConfig.Instance.cameraFPSizeMult);
-        _targetPosition = Vector2.zero;
-        _targetRotation = t.rotation;
+        targetPosition = Vector2.zero;
+        targetRotation = t.rotation;
     }
 
-    void SetSizeTarget(float sizeToFit)
+    public void SetSizeTarget(float sizeToFit)
     {
         var aspectRatio = (float) Screen.height / Screen.width;
         if (Screen.width > Screen.height) 

@@ -17,3 +17,4 @@ MonoBehaviour:
   shapeObject: {fileID: 5598629549521729983, guid: 02a6989db6fe04d59ad2e9c90d31ada2, type: 3}
   shapeCellObject: {fileID: 7962846756057869799, guid: 0c00052e761e54d3eb8ba3836151b108, type: 3}
   shapeCellParticles: {fileID: 2203104090816468950, guid: 82f6b41127e030e439ac378c3468e2ed, type: 3}
+  shapeCellParticlesNoRot: {fileID: 6560160845402199725, guid: d0868a960204c544184489710214e515, type: 3}

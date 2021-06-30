@@ -9,7 +9,7 @@ public class ShapeCellParticleSystem : MonoBehaviour
 
     public static ShapeCellParticleSystem Create(ShapeCellObject cell)
     {
-        var scp = Instantiate(Prefabs.Instance.shapeCellParticles,
+        var scp = Instantiate(GameManager.IsTrailer ? Prefabs.Instance.shapeCellParticlesNoRot : Prefabs.Instance.shapeCellParticles,
             GameManager.instance.shapeCellsParticlesContainer.transform).GetComponent<ShapeCellParticleSystem>();
         scp.cell = cell.transform;
         return scp;

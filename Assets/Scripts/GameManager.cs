@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public static bool IsTrailer => instance.isTrailer;
+    [SerializeField] bool isTrailer;
 
     void Awake()
     {
@@ -16,31 +18,31 @@ public class GameManager : MonoBehaviour
         InputSystem.onEnterPress = OnEnter;
     }
 
-    void OnEnter()
+    static void OnEnter()
     {
         if (Field != null) return;
         FieldPack.active.EnterHoveredField();
     }
 
-    void OnUp()
+    static void OnUp()
     {
         if (Field == null) return;
         Field.InsertShape();
     }
 
-    void onDown()
+    static void onDown()
     {
         if (Field == null) return;
         Field.Undo();
     }
 
-    void OnLeft()
+    static void OnLeft()
     {
         if (Field == null) return;
         Field.MoveAttachedShape(false);
     }
 
-    void OnRight()
+    static void OnRight()
     {
         if (Field == null) return;
         Field.MoveAttachedShape(true);
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (FieldPack.active == null) return;
         FieldPack.active.SetHoveredByUnlockIndex();
     }
 

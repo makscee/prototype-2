@@ -28,7 +28,7 @@ public class ShapeCellObject : MonoBehaviour
         particles = ShapeCellParticleSystem.Create(this);
         var fieldSize = shape.Field.Size;
         const float sizeLimit = 6;
-        var amount = 1 / shape.Field.Pack.transform.localScale.x;
+        var amount = GameManager.IsTrailer ? 1 : 1 / shape.Field.Pack.transform.localScale.x;
         if (fieldSize > sizeLimit)
             amount *= sizeLimit * sizeLimit / (fieldSize * fieldSize);
         

@@ -54,7 +54,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         {
             _active = value;
             var isNull = value == null;
-            if (isNull)
+            if (isNull && !GameManager.IsTrailer)
             {
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.OnSelectScreen);
                 // SoundsPlayer.instance.EnableSelectScreenTheme(true);
@@ -170,7 +170,6 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     void CompleteLevel()
     {
-        Progress.SetComplete(packId, fieldId);
         if (ShapeBuilder.lastEditedField == this)
         {
             var insertedShapes = new HashSet<Shape>();
@@ -178,6 +177,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             new FieldMatrixSerialized(this, insertedShapes.Count).SaveToFile(packId, fieldId);
             ShapeBuilder.lastEditedField = null;
         }
+        if (GameManager.IsTrailer)
+            return;
+        Progress.SetComplete(packId, fieldId);
         CompleteTransition();
     }
 
@@ -333,13 +335,18 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     }
 
     [SerializeField] Transform cellParent;
-    [SerializeField] bool createCells;
+    [SerializeField] bool createCells, openField;
     [SerializeField] bool initFieldFromLevel;
     [SerializeField] int prevX, prevY;
 
     void OnValidate()
     {
 #if UNITY_EDITOR
+        if (openField)
+        {
+            SetScreenState(FieldScreenState.Active);
+            openField = false;
+        }
         if (createCells)
         {
             EditorApplication.delayCall += CreateCells;
@@ -423,11 +430,13 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 attachedShape?.shapeObject.gameObject.SetActive(true);
                 RefreshProjection();
                 Active = this;
-                FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.Disabled, this);
-                // SoundsPlayer.instance.EnableSelectScreenTheme(false);
-                SoundsPlayer.instance.PlayFieldOpen();
-                SoundsPlayer.instance.SetBgVolume(GlobalConfig.Instance.bgVolumeActiveField);
-                SetHovered(false);
+                if (!GameManager.IsTrailer)
+                {
+                    FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.Disabled, this);
+                    SoundsPlayer.instance.PlayFieldOpen();
+                    SoundsPlayer.instance.SetBgVolume(GlobalConfig.Instance.bgVolumeActiveField);
+                    SetHovered(false);
+                }
                 break;
             case FieldScreenState.Disabled:
                 gameObject.SetActive(false);
@@ -564,6 +573,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     public Action<bool> onHoveredChange;
     public void SetHovered(bool value)
     {
+        if (GameManager.IsTrailer) return;
         if (screenState != FieldScreenState.OnSelectScreen && value || hovered == value) return;
         hovered = value;
         if (value)
@@ -610,7 +620,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         if (eventData.button != PointerEventData.InputButton.Left) return;
         onClick?.Invoke();
         if (Active == this || completion == FieldCompletion.Locked) return;
-        if (FieldPack.active.packId == packId && completion == FieldCompletion.Unlocked)
+        if (GameManager.IsTrailer || FieldPack.active.packId == packId && completion == FieldCompletion.Unlocked)
         {
             SetScreenState(FieldScreenState.Active);
             return;
