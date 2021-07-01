@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public static bool IsTrailer => instance.isTrailer;
     [SerializeField] bool isTrailer;
+    [SerializeField] AudioMixerSnapshot game, trailer;
+    [SerializeField] SettingsUI settings;
 
     void Awake()
     {
@@ -16,6 +19,24 @@ public class GameManager : MonoBehaviour
         InputSystem.onUpPress = OnUp;
         InputSystem.onDownPress = onDown;
         InputSystem.onEnterPress = OnEnter;
+        if (isTrailer)
+        {
+            trailer.TransitionTo(0f);
+        }
+        else
+        {
+            game.TransitionTo(0f);
+        }
+    }
+
+    void Start()
+    {
+        if (!isTrailer)
+            settings.Init();
+        if (FieldPack.active == null) return;
+        FieldPack.active.SetHoveredByUnlockIndex();
+        if (!Progress.IsComplete(0, 0)) 
+            FieldPack.active.EnterHoveredField();
     }
 
     static void OnEnter()
@@ -46,12 +67,6 @@ public class GameManager : MonoBehaviour
     {
         if (Field == null) return;
         Field.MoveAttachedShape(true);
-    }
-
-    void Start()
-    {
-        if (FieldPack.active == null) return;
-        FieldPack.active.SetHoveredByUnlockIndex();
     }
 
     public GameObject shapeCellsParticlesContainer;
@@ -132,6 +147,12 @@ public class GameManager : MonoBehaviour
     {
         Progress.ResetAndSave();
         SceneManager.LoadScene(0);
+        Animator.Reset();
+    }
+
+    public void LoadGame()
+    {
+        SceneManager.LoadScene("game");
         Animator.Reset();
     }
 

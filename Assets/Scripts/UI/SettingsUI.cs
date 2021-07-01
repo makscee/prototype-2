@@ -15,7 +15,7 @@ public class SettingsUI : MonoBehaviour
 
     const string MasterParam = "MasterVolume", MusicParam = "MusicVolume", SfxParam = "SFXVolume";
 
-    void Start()
+    public void Init()
     {
         var currentResolutionIndex = 0;
         // _resolutions = Screen.resolutions;
@@ -47,9 +47,20 @@ public class SettingsUI : MonoBehaviour
         music.onValueChange += v => mixer.SetFloat(MusicParam, Mathf.Log10(v) * 30f);
         sfx.onValueChange += v => mixer.SetFloat(SfxParam, Mathf.Log10(v) * 30f);
 
-        master.value = PlayerPrefs.HasKey(MasterParam) ? PlayerPrefs.GetFloat(MasterParam) : 1f;
-        music.value = PlayerPrefs.HasKey(MusicParam) ? PlayerPrefs.GetFloat(MusicParam) : 0.69f;
-        sfx.value = PlayerPrefs.HasKey(SfxParam) ? PlayerPrefs.GetFloat(SfxParam) : 1f;
+        var masterV = PlayerPrefs.HasKey(MasterParam) ? PlayerPrefs.GetFloat(MasterParam) : 1f;
+        var musicV = PlayerPrefs.HasKey(MusicParam) ? PlayerPrefs.GetFloat(MusicParam) : 0.69f;
+        var sfxV = PlayerPrefs.HasKey(SfxParam) ? PlayerPrefs.GetFloat(SfxParam) : 1f;
+        
+        mixer.SetFloat(MasterParam, Mathf.Log10(masterV) * 30f);
+        mixer.SetFloat(MusicParam, Mathf.Log10(musicV) * 30f);
+        mixer.SetFloat(SfxParam, Mathf.Log10(sfxV) * 30f);
+        Debug.Log($"{musicV}");
+
+        master.value = masterV;
+        music.value = musicV;
+        sfx.value = sfxV;
+        
+        
     }
 
     void OnDisable()

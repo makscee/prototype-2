@@ -53,9 +53,18 @@ public class TrailerOrchestrator : MonoBehaviour
         _fieldsCopy = fields.ToArray();
     }
 
+    [SerializeField] float doneWait = 8f;
     void Update()
     {
         if (!_isDone && _curBeat != BeatNum && BeatNum >= 0) Beat();
+        if (_isDone)
+        {
+            doneWait -= Time.deltaTime;
+            if (doneWait < 0f)
+            {
+                GameManager.instance.LoadGame();
+            }
+        }
     }
 
     void Beat()
@@ -77,12 +86,10 @@ public class TrailerOrchestrator : MonoBehaviour
 
                 FieldMatrix.Active = null;
                 var cs = CameraScript.instance;
-                cs.SetSizeTarget(6);
+                cs.SetSizeTarget(5.5f);
                 cs.targetPosition = Vector2.zero;
                 cs.targetRotation = Quaternion.identity;
                 PostFxController.Instance.LoadPackPalette(0);
-                
-                
                 return;
             }
             inserter.gameObject.SetActive(false);

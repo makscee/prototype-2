@@ -53,8 +53,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         set
         {
             _active = value;
+            if (GameManager.IsTrailer) return;
             var isNull = value == null;
-            if (isNull && !GameManager.IsTrailer)
+            if (isNull)
             {
                 FieldPacksCollection.PropagateFieldMatrixState(FieldScreenState.OnSelectScreen);
                 // SoundsPlayer.instance.EnableSelectScreenTheme(true);

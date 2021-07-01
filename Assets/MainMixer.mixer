@@ -53,7 +53,9 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
-  m_StartSnapshot: {fileID: 24500006}
+  - {fileID: 7698114570772671415}
+  - {fileID: 9059090392535841742}
+  m_StartSnapshot: {fileID: 7698114570772671415}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
@@ -72,7 +74,7 @@ AudioMixerController:
     - 73a2f60754692334abd670331efe3b7f
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 24500006}
+  m_TargetSnapshot: {fileID: 7698114570772671415}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -155,7 +157,7 @@ AudioMixerGroupController:
   m_Effects:
   - {fileID: -1363569352664992800}
   m_UserColorIndex: 0
-  m_Mute: 1
+  m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
 --- !u!243 &1946578466639400242
@@ -174,6 +176,32 @@ AudioMixerGroupController:
   m_Effects:
   - {fileID: -5058143538953876633}
   m_UserColorIndex: 0
-  m_Mute: 1
+  m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!245 &7698114570772671415
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: game
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 06d9edac0edce1b45b349191ed41304f
+  m_FloatValues:
+    ed373dfaf2aeec942b3098cc8d3ad70b: -80
+    18b0076d64bbffb4b8b49f30cd5169f1: -0.037667945
+  m_TransitionOverrides: {}
+--- !u!245 &9059090392535841742
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: trailer
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 20a6923f0f25f19488636f02c7f58185
+  m_FloatValues:
+    89a1346758cad514d95a4949fc159c81: -80
+    18b0076d64bbffb4b8b49f30cd5169f1: -80
+  m_TransitionOverrides: {}
