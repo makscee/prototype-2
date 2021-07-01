@@ -57,6 +57,7 @@ public class PostFxController : MonoBehaviour
 
     public void LoadPackPalette(int packId)
     {
+        packId %= 9;
         if (packId == _curPackId) return;
         _prevPackId = _curPackId;
         _curPackId = packId;

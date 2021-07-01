@@ -92,7 +92,7 @@ public class CameraScript : MonoBehaviour
         var fp = FieldPack.active;
         var t = fp.transform;
         SetSizeTarget(fp.size * fp.transform.localScale.x * GlobalConfig.Instance.cameraFPSizeMult);
-        targetPosition = Vector2.zero;
+        targetPosition = fp.transform.position;
         targetRotation = t.rotation;
     }
 

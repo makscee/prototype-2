@@ -54,13 +54,10 @@ public class SettingsUI : MonoBehaviour
         mixer.SetFloat(MasterParam, Mathf.Log10(masterV) * 30f);
         mixer.SetFloat(MusicParam, Mathf.Log10(musicV) * 30f);
         mixer.SetFloat(SfxParam, Mathf.Log10(sfxV) * 30f);
-        Debug.Log($"{musicV}");
 
         master.value = masterV;
         music.value = musicV;
         sfx.value = sfxV;
-        
-        
     }
 
     void OnDisable()

@@ -9,7 +9,7 @@ public class FieldPack : MonoBehaviour
     public static FieldPack active;
     
     [SerializeField] int sideSize = 3;
-    int FieldsCount => sideSize == 3 ? 8 : 4;
+    int FieldsCount => sideSize == 3 ? 8 : (sideSize == 2 ? 4 : 1);
     public int packId;
     public FieldMatrix[] fields;
     public float cameraSizeMultiplier = 1f, size;
@@ -94,6 +94,10 @@ public class FieldPack : MonoBehaviour
             max.y = Mathf.Max(field.packPositionY, max.y);
         }
         transform.localPosition = -new Vector3((min.x + max.x) / 2, (min.y + max.y) / 2);
+        if (packId > 8)
+        {
+            transform.localPosition = new Vector3(0f, -transform.localScale.y * (packId - 8));
+        }
         size = Mathf.Max(max.x - min.x, max.y - min.y) + 1;
         RefreshScale();
     }
@@ -107,7 +111,7 @@ public class FieldPack : MonoBehaviour
         }
 
         var prevPack = GetPacksByParent()[packId - 1];
-        var scale = prevPack.size * prevPack.transform.localScale;
+        var scale = (packId > 9 ? 1f : prevPack.size) * prevPack.transform.localScale;
         transform.localScale = scale;
     }
 

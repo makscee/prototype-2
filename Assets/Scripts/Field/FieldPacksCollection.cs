@@ -7,7 +7,7 @@ using UnityEngine;
 public class FieldPacksCollection : MonoBehaviour
 {
     public static FieldPack[] Packs;
-    [SerializeField] bool initPacks;
+    // [SerializeField] bool initPacks;
 
     void Awake()
     {
@@ -17,13 +17,13 @@ public class FieldPacksCollection : MonoBehaviour
 
     void OnValidate()
     {
-        if (initPacks)
-        {
-#if UNITY_EDITOR
-            EditorApplication.delayCall += Init;
-            initPacks = false;
-#endif
-        }
+//         if (initPacks)
+//         {
+// #if UNITY_EDITOR
+//             EditorApplication.delayCall += Init;
+//             initPacks = false;
+// #endif
+//         }
     }
 
     public static FieldPack GetFirstIncompletePack()

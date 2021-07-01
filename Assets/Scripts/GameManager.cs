@@ -171,12 +171,17 @@ public class GameManager : MonoBehaviour
 
     static void DebugCheckNumberKeys()
     {
-        const int key1 = 49;
+        const int key1 = (int)KeyCode.Alpha1;
+        const int keyf1 = (int)KeyCode.F1;
         for (var i = 0; i < 9; i++)
         {
             if (Input.GetKeyDown((KeyCode)(key1 + i)))
             {
                 FieldPacksCollection.DebugActivateFieldPack(i);
+            }
+            if (Input.GetKeyDown((KeyCode)(keyf1 + i)))
+            {
+                FieldPacksCollection.DebugActivateFieldPack(i + 9);
             }
         }
     }
