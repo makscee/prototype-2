@@ -10,7 +10,7 @@ public class KeyboardInputObject : MonoBehaviour
     
     void Update()
     {
-        if (GameManager.IsTrailer) return;
+        if (GameManager.IsTrailer || GameManager.IsEnding) return;
 #if UNITY_EDITOR
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftControl))
         {

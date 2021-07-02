@@ -110,6 +110,13 @@ public class SoundsPlayer : MonoBehaviour
         Animator.Interpolate(0f, 1f, release).PassValue(v => bg.volume = Mathf.Lerp(0f, _curBgVolume, v));
     }
 
+    bool _bgStopped;
+    public void StopBg()
+    {
+        bg.Stop();
+        _bgStopped = true;
+    }
+
     void GetNextBgClip()
     {
         bg.clip = bgClipsQueue.Dequeue();
@@ -119,7 +126,7 @@ public class SoundsPlayer : MonoBehaviour
 
     void Update()
     {
-        if (!bg.isPlaying)
+        if (!_bgStopped && !bg.isPlaying)
         {
             GetNextBgClip();
         }

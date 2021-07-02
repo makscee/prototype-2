@@ -51,6 +51,7 @@ public class FieldCell : MonoBehaviour
 
     public void RefreshTargets()
     {
+        if (_scatter) return;
         if (field.screenState == FieldScreenState.OnSelectScreen)
         {
             switch (field.completion)
@@ -130,6 +131,7 @@ public class FieldCell : MonoBehaviour
 
     void SetColorLerp(float value)
     {
+        if (_white) return;
         sr.color = Color.Lerp(_colors[0], _colors[1], value)
             .ChangeAlpha(colorAlpha);
         colorLerp = value;
@@ -139,6 +141,29 @@ public class FieldCell : MonoBehaviour
     {
         sr.color = sr.color.ChangeAlpha(value);
         colorAlpha = value;
+    }
+
+    public void SetWhite()
+    {
+        sr.color = Color.white;
+        _white = true;
+        SetAlpha(1f);
+    }
+
+    bool _scatter, _white;
+    public void Scatter()
+    {
+        if (lockedOffset == Vector3.zero)
+            lockedOffset = Random.onUnitSphere * 9f;
+        _posOffset.target = lockedOffset;
+        _scale.target = 0.5f;
+        // SetAlpha(0.5f);
+        // SetColorLerp(LerpDefault);
+        sr.sortingOrder = 0;
+        _targetsMet = false;
+        _scatter = true;
+        Animator.Interpolate(1f, 0f, 3f).PassValue(SetAlpha).Type(InterpolationType.Square).NullCheck(gameObject);
+        Destroy(gameObject, 3.1f);
     }
 
     public void Destroy()

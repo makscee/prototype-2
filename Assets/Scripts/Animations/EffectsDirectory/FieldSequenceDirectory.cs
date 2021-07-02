@@ -11,22 +11,28 @@ public class FieldSequenceDirectory : SequenceDirectoryBase
 
     public SequenceBuilder CellsPatternBalanceChange(float value)
     {
-        var inter = ChangeBalance(_field.cellsMaterialProvider, value);
+        var inter = ChangeBalance(_field.cellsMaterialProvider, value, GlobalConfig.Instance.balanceSetAnimationTime);
         AddInterpolationToBuilder(inter);
         return builder;
     }
 
     public SequenceBuilder CompletionSpriteBalanceChange(float value)
     {
-        var inter = ChangeBalance(_field.completionSprite, value);
+        var inter = ChangeBalance(_field.completionSprite, value, GlobalConfig.Instance.balanceSetAnimationTime);
         AddInterpolationToBuilder(inter);
         return builder;
     }
 
-    Interpolator<float> ChangeBalance(PatternMaterialProvider provider, float value)
+    public SequenceBuilder EndingSpriteBalanceChange(float value, float duration)
     {
-        var inter = Animator.Interpolate(provider.balanceTarget, value,
-                GlobalConfig.Instance.balanceSetAnimationTime)
+        var inter = ChangeBalance(_field.completionSprite, value, duration);
+        AddInterpolationToBuilder(inter);
+        return builder;
+    }
+
+    Interpolator<float> ChangeBalance(PatternMaterialProvider provider, float value, float duration)
+    {
+        var inter = Animator.Interpolate(provider.balanceTarget, value, duration)
             .PassDelta(v =>
             {
                 provider.balance += v;

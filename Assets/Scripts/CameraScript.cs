@@ -28,6 +28,7 @@ public class CameraScript : MonoBehaviour
     int _curTarget = -1;
     void RefreshTarget()
     {
+        if (_endingPanningOut) return;
         var newTarget = -1;
         if (FieldMatrix.Active != null)
         {
@@ -58,6 +59,7 @@ public class CameraScript : MonoBehaviour
     float _speed;
     void ApplyTarget()
     {
+        if (_endingPanningOut) return;
         Transform t;
         var targetPosition = new Vector3(this.targetPosition.x, this.targetPosition.y, transform.position.z);
         var lerpDelta = Time.deltaTime * _speed;
@@ -92,7 +94,7 @@ public class CameraScript : MonoBehaviour
         var fp = FieldPack.active;
         var t = fp.transform;
         SetSizeTarget(fp.size * fp.transform.localScale.x * GlobalConfig.Instance.cameraFPSizeMult);
-        targetPosition = fp.transform.position;
+        targetPosition = fp.transform.position - (fp.packId == 0 ? new Vector3(0.5f, 0.5f) : Vector3.zero);
         targetRotation = t.rotation;
     }
 
@@ -102,5 +104,15 @@ public class CameraScript : MonoBehaviour
         if (Screen.width > Screen.height) 
             aspectRatio = (float) Screen.width / Screen.height;
         _targetSize = sizeToFit * aspectRatio;
+    }
+
+    [SerializeField] float endingPanOutSize;
+    [SerializeField] float endingPanOutTime;
+    bool _endingPanningOut;
+    public void EndingPanOut()
+    {
+        _endingPanningOut = true;
+        Animator.Interpolate(_camera.orthographicSize, endingPanOutSize, endingPanOutTime - 2f)
+            .PassValue(v => _camera.orthographicSize = v).Type(InterpolationType.Square).Delay(2f);
     }
 }

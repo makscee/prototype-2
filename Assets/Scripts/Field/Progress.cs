@@ -34,6 +34,13 @@ public static class Progress
         Save();
     }
 
+    public static void UnsetComplete(int packId, int fieldId)
+    {
+        var key = $"{packId}_{fieldId}";
+        if (Data.Contains(key)) Data.Remove(key);
+        Save();
+    }
+
     public static void Load()
     {
         Data = new HashSet<string>(ProgressSerialized.Load().data);

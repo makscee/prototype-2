@@ -7,9 +7,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public static bool IsTrailer => instance.isTrailer;
+    public static bool IsEnding => instance.isEnding;
+    public bool isEnding;
     [SerializeField] bool isTrailer;
     [SerializeField] AudioMixerSnapshot game, trailer;
     [SerializeField] SettingsUI settings;
+    [SerializeField] bool resetProgress, completeAllButOne;
 
     void Awake()
     {
@@ -141,6 +144,31 @@ public class GameManager : MonoBehaviour
             }
         }
 #endif
+    }
+
+    void OnValidate()
+    {
+        if (resetProgress)
+        {
+            Progress.ResetAndSave();
+            resetProgress = false;
+        }
+
+        if (completeAllButOne)
+        {
+            for (var i = 0; i < 17; i++)
+            {
+                var jMax = 8;
+                if (i == 0)
+                    jMax = 4;
+                if (i > 8)
+                    jMax = 1;
+                for (var j = 0; j < jMax; j++) Progress.SetComplete(i, j);
+            }
+            Progress.UnsetComplete(17, 0);
+
+            completeAllButOne = false;
+        }
     }
 
     public void ClearProgress()

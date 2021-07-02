@@ -368,6 +368,27 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 #endif
     }
 
+    public void Explode(int stage, float duration)
+    {
+        if (stage == 0)
+        {
+            SequenceFramework.New.FieldSet(this).EndingSpriteBalanceChange(1f, duration);
+            cellParent.gameObject.SetActive(true);
+            foreach (var cell in _cells)
+            {
+                cell.SetWhite();
+            }
+        }
+        else if (stage == 1)
+        {
+            completionSprite.gameObject.SetActive(false);
+            foreach (var cell in _cells)
+            {
+                cell.Scatter();
+            }
+        }
+    }
+
     void InitFieldFromLevel()
     {
         size = FieldMatrixSerialized.Load(packId, fieldId).size;
@@ -556,10 +577,14 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 Active = null;
                 SoundsPlayer.instance.SetBgVolume(GlobalConfig.Instance.bgVolumeSelectScreen);
                 SoundsPlayer.instance.DuckBg(3f);
+                if (packId == 17)
+                {
+                    GameManager.instance.isEnding = true;
+                    SoundsPlayer.instance.StopBg();
+                    Animator.Invoke(GetComponentInParent<EndingOrchestrator>().Begin).In(3f);
+                }
             })
             .AnyKeyFastForward();
-        // SequenceFramework.New.Delay(config.sidesThicknessRecoverTime * 2).FieldSet(this)
-        //     .ShapeSidesThicknessChange(1.5f);
     }
     
     
@@ -618,6 +643,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     public Action onClick;
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (GameManager.IsEnding) return;
         if (eventData.button != PointerEventData.InputButton.Left) return;
         onClick?.Invoke();
         if (Active == this || completion == FieldCompletion.Locked) return;
