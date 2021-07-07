@@ -20,7 +20,8 @@ public class SoundsPlayer : MonoBehaviour
         fieldComplete,
         fieldClose,
         sidesOpen,
-        sidesClose;
+        sidesClose,
+        insertWrong;
     [SerializeField] AudioClip[] bgClips;
     Queue<AudioClip> bgClipsQueue;
     
@@ -47,6 +48,11 @@ public class SoundsPlayer : MonoBehaviour
     {
         fx.PlayOneShot(insertMain);
         DuckBg(0.5f);
+    }
+
+    public void PlayInsertWrong()
+    {
+        fx.PlayOneShot(insertWrong);
     }
 
     public void PlayInsertStartSound()
@@ -124,11 +130,13 @@ public class SoundsPlayer : MonoBehaviour
         bg.Play();
     }
 
+    int _bgFrames;
     void Update()
     {
-        if (!_bgStopped && !bg.isPlaying)
+        if (!_bgStopped && !bg.isPlaying && _bgFrames++ > 5)
         {
             GetNextBgClip();
+            _bgFrames = 0;
         }
     }
 }

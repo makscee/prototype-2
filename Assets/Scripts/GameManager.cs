@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -11,6 +13,7 @@ public class GameManager : MonoBehaviour
     public bool isEnding;
     [SerializeField] bool isTrailer;
     [SerializeField] AudioMixerSnapshot game, trailer;
+    [SerializeField] AudioMixer mixer;
     [SerializeField] SettingsUI settings;
     [SerializeField] bool resetProgress, completeAllButOne;
 
@@ -22,24 +25,35 @@ public class GameManager : MonoBehaviour
         InputSystem.onUpPress = OnUp;
         InputSystem.onDownPress = onDown;
         InputSystem.onEnterPress = OnEnter;
-        if (isTrailer)
-        {
-            trailer.TransitionTo(0f);
-        }
-        else
-        {
-            game.TransitionTo(0f);
-        }
     }
 
     void Start()
     {
         if (!isTrailer)
             settings.Init();
+        if (isTrailer)
+        {
+            StartCoroutine(TransitionToSnapshot(trailer));
+            Mute();
+        }
+        else
+            StartCoroutine(TransitionToSnapshot(game));
         if (FieldPack.active == null) return;
         FieldPack.active.SetHoveredByUnlockIndex();
         if (!Progress.IsComplete(0, 0)) 
             FieldPack.active.EnterHoveredField();
+    }
+
+    void Mute()
+    {
+        mixer.SetFloat(SettingsUI.MusicParam, -80f);
+        mixer.SetFloat(SettingsUI.SfxParam, -80f);
+    }
+
+    IEnumerator TransitionToSnapshot(AudioMixerSnapshot s)
+    {
+        yield return null;
+        s.TransitionTo(0f);
     }
 
     static void OnEnter()
@@ -50,26 +64,81 @@ public class GameManager : MonoBehaviour
 
     static void OnUp()
     {
-        if (Field == null) return;
+        if (Field == null)
+        {
+            DirSelectField(0);
+            return;
+        }
         Field.InsertShape();
     }
 
     static void onDown()
     {
-        if (Field == null) return;
+        if (Field == null)
+        {
+            DirSelectField(2);
+            return;
+        }
         Field.Undo();
     }
 
     static void OnLeft()
     {
-        if (Field == null) return;
+        if (Field == null)
+        {
+            DirSelectField(3);
+            return;
+        }
         Field.MoveAttachedShape(false);
     }
 
     static void OnRight()
     {
-        if (Field == null) return;
+        if (Field == null)
+        {
+            DirSelectField(1);
+            return;
+        }
         Field.MoveAttachedShape(true);
+    }
+
+    static void DirSelectField(int dir)
+    {
+        if (Field != null || FieldPack.active == null)
+            return;
+        
+        var hovered = FieldPack.active.fields.FirstOrDefault(f => f.hovered);
+        if (hovered == null) return;
+
+        FieldMatrix next = null;
+        switch (dir)
+        {
+            case 0:
+                next = FieldPack.active.fields.FirstOrDefault(f =>
+                    f.completion == FieldCompletion.Unlocked && hovered.packPositionX == f.packPositionX &&
+                    hovered.packPositionY < f.packPositionY);
+                break;
+            case 1:
+                next = FieldPack.active.fields.FirstOrDefault(f =>
+                    f.completion == FieldCompletion.Unlocked && hovered.packPositionX < f.packPositionX &&
+                    hovered.packPositionY == f.packPositionY);
+                break;
+            case 2:
+                next = FieldPack.active.fields.FirstOrDefault(f =>
+                    f.completion == FieldCompletion.Unlocked && hovered.packPositionX == f.packPositionX &&
+                    hovered.packPositionY > f.packPositionY);
+                break;
+            case 3:
+                next = FieldPack.active.fields.FirstOrDefault(f =>
+                    f.completion == FieldCompletion.Unlocked && hovered.packPositionX > f.packPositionX &&
+                    hovered.packPositionY == f.packPositionY);
+                break;
+        }
+
+        if (next != null)
+        {
+            next.SetHovered(true);
+        }
     }
 
     public GameObject shapeCellsParticlesContainer;
@@ -174,13 +243,19 @@ public class GameManager : MonoBehaviour
     public void ClearProgress()
     {
         Progress.ResetAndSave();
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("entry");
         Animator.Reset();
     }
 
     public void LoadGame()
     {
         SceneManager.LoadScene("game");
+        Animator.Reset();
+    }
+
+    public void LoadTrailer()
+    {
+        SceneManager.LoadScene("trailer");
         Animator.Reset();
     }
 
@@ -195,6 +270,11 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     static void DebugCheckNumberKeys()

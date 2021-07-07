@@ -69,4 +69,16 @@ public class FieldPacksCollection : MonoBehaviour
             }
         }
     }
+
+    public static void CloseReopenedFields(FieldMatrix except)
+    {
+        foreach (var fieldPack in Packs)
+        {
+            foreach (var fieldMatrix in fieldPack.fields)
+            {
+                if (fieldMatrix == except) continue;
+                fieldMatrix.CloseIfReopened();
+            }
+        }
+    }
 }

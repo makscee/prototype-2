@@ -5373,6 +5373,7 @@ MonoBehaviour:
   size: 0
   cellParent: {fileID: 6979695257556868552}
   createCells: 0
+  openField: 0
   initFieldFromLevel: 0
   prevX: 0
   prevY: 0
@@ -5392,7 +5393,7 @@ MonoBehaviour:
   balance: 0.5
   frequency: 1
   speed: 1
-  balanceTarget: 0
+  balanceTarget: 0.5
   tint: {r: 1, g: 1, b: 1, a: 1}
   sr: {fileID: 2735136612931146570}
   ps: {fileID: 0}

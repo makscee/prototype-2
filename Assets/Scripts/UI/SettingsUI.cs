@@ -13,7 +13,7 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] SplitSlider master, music, sfx;
     Resolution[] _resolutions;
 
-    const string MasterParam = "MasterVolume", MusicParam = "MusicVolume", SfxParam = "SFXVolume";
+    public const string MasterParam = "MasterVolume", MusicParam = "MusicVolume", SfxParam = "SFXVolume";
 
     public void Init()
     {
@@ -58,6 +58,12 @@ public class SettingsUI : MonoBehaviour
         master.value = masterV;
         music.value = musicV;
         sfx.value = sfxV;
+    }
+
+    public void Mute()
+    {
+        mixer.SetFloat(MusicParam, 0f);
+        mixer.SetFloat(SfxParam, 0f);
     }
 
     void OnDisable()

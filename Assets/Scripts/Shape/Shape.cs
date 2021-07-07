@@ -162,7 +162,8 @@ public class Shape
     public void Destroy()
     {
         UnityEngine.Object.Destroy(shapeObject.gameObject);
-        FieldMatrix.Active.RemoveShape(this);
+        if (Field != null)
+            Field.RemoveShape(this);
     }
     
     public ShapeCell this[Vector2Int pos]

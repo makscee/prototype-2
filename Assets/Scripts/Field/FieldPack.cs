@@ -48,18 +48,22 @@ public class FieldPack : MonoBehaviour
 
     public void Activate()
     {
+        if (active != null)
+            foreach (var field in active.fields)
+                field.SetHovered(false);
         active = this;
         PostFxController.Instance.LoadPackPalette(packId);
     }
 
     public bool Complete { get; private set; }
-    public void FieldCompleted()
+    public void FieldCompleted(bool reopenedField = false)
     {
         PlaceFields();
         if (fields.All(field => field.completion == FieldCompletion.Complete))
         {
             Complete = true;
-            FieldPacksCollection.GetFirstIncompletePack().Activate();
+            if (!reopenedField)
+                FieldPacksCollection.GetFirstIncompletePack().Activate();
         }
     }
 
@@ -129,7 +133,7 @@ public class FieldPack : MonoBehaviour
 
     public void EnterHoveredField()
     {
-        var field = fields.First(f => f.hovered);
+        var field = fields.FirstOrDefault(f => f.hovered);
         if (field != null)
         {
             field.SetScreenState(FieldScreenState.Active);

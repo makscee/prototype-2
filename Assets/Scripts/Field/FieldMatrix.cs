@@ -166,6 +166,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         else
         {
             attachedShape.shapeObject.UnableToInsertAnimation();
+            SoundsPlayer.instance.PlayInsertWrong();
         }
     }
 
@@ -180,7 +181,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         }
         if (GameManager.IsTrailer)
             return;
-        Progress.SetComplete(packId, fieldId);
+        if (!_reopened)
+            Progress.SetComplete(packId, fieldId);
         CompleteTransition();
     }
 
@@ -469,7 +471,8 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                     unlockedSprite.SetActive(true);
                 gameObject.SetActive(true);
                 shapesContainer?.SetEnabled(false);
-                attachedShape?.shapeObject.gameObject.SetActive(false);
+                if (attachedShape != null && attachedShape.shapeObject != null)
+                    attachedShape.shapeObject.gameObject.SetActive(false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
@@ -573,8 +576,9 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             .With().Lambda(() =>
             {
                 SetCompletion(FieldCompletion.Complete);
-                FieldPacksCollection.Packs[packId].FieldCompleted();
+                FieldPacksCollection.Packs[packId].FieldCompleted(_reopened);
                 Active = null;
+                FieldPacksCollection.CloseReopenedFields(this);
                 SoundsPlayer.instance.SetBgVolume(GlobalConfig.Instance.bgVolumeSelectScreen);
                 SoundsPlayer.instance.DuckBg(3f);
                 if (packId == 17)
@@ -600,7 +604,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     public void SetHovered(bool value)
     {
         if (GameManager.IsTrailer) return;
-        if (screenState != FieldScreenState.OnSelectScreen && value || hovered == value) return;
+        if ((screenState != FieldScreenState.OnSelectScreen || FieldPack.active.packId != packId) && value || hovered == value) return;
         hovered = value;
         if (value)
             foreach (var field in FieldPacksCollection.Packs[packId].fields)
@@ -641,16 +645,57 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
     }
 
     public Action onClick;
+    bool _reopened;
+
+    public void CloseIfReopened()
+    {
+        if (!_reopened) return;
+        SetCompletion(FieldCompletion.Complete);
+        completionSprite.balance = 0.5f;
+        completionSprite.SetShaderProperties();
+        _reopened = false;
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
         if (GameManager.IsEnding) return;
         if (eventData.button != PointerEventData.InputButton.Left) return;
         onClick?.Invoke();
-        if (Active == this || completion == FieldCompletion.Locked) return;
-        if (GameManager.IsTrailer || FieldPack.active.packId == packId && completion == FieldCompletion.Unlocked)
+        if (GameManager.IsTrailer || Active == this || completion == FieldCompletion.Locked) return;
+        if (FieldPack.active.packId == packId && completion == FieldCompletion.Unlocked)
         {
+            FieldPacksCollection.CloseReopenedFields(this);
             SetScreenState(FieldScreenState.Active);
             return;
+        }
+        if (completion == FieldCompletion.Complete && FieldPack.active.packId == packId)
+        {
+            FieldPacksCollection.CloseReopenedFields(this);
+            Animator.Interpolate(0.5f, 1f, 0.1f).PassValue(v =>
+            {
+                completionSprite.balance = v;
+                completionSprite.SetShaderProperties();
+            });
+            completionSprite.balanceTarget = 1f;
+            shapesContainer?.Destroy();
+            shapesContainer = null;
+            _shapeSidesThickness.value = 0f;
+            _shapeSidesThickness.target = 0f;
+            cellsMaterialProvider.balance = 0.5f;
+            cellsMaterialProvider.balanceTarget = 0.5f;
+            cellsMaterialProvider.SetShaderProperties();
+            _reopened = true;
+            Animator.Invoke(() =>
+            {
+                if (_reopened)
+                {
+                    SetCompletion(FieldCompletion.Unlocked);
+                    SetHovered(true);
+                }
+                else
+                {
+                    CloseIfReopened();
+                }
+            }).In(0.5f);
         }
         if (completion != FieldCompletion.Locked && FieldPack.active.packId != packId)
         {

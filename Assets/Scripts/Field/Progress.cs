@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public static class Progress
 {
-    public const int Version = 1;
+    public const int Version = 2;
     static HashSet<string> _data;
     static bool _trackingPaused;
 
@@ -53,7 +53,7 @@ public static class Progress
 
     public static void ResetAndSave()
     {
-        _data.Clear();
+        Data.Clear();
         Save();
     }
 
@@ -67,8 +67,8 @@ public static class Progress
         foreach (var field in FieldPacksCollection.Packs[packId].fields)
         {
             var key = $"{packId}_{field.fieldId}";
-            if (_data.Contains(key))
-                _data.Remove(key);
+            if (Data.Contains(key))
+                Data.Remove(key);
         }
         Save();
     }
