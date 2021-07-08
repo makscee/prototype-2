@@ -54,7 +54,7 @@ public class ShapeBuilder : MonoBehaviour
             return;
         }
 
-        if (!Enabled && Input.GetKeyDown(KeyCode.LeftShift) && Shape != null && _matrix == Matrix)
+        if (!Enabled && Input.GetKeyDown(KeyCode.LeftShift) && FieldMatrix.Active != null && Shape != null && _matrix == Matrix)
         {
             Enabled = true;
             Shape.originalRotation = Utils.DirFromCoords(Shape.UpDirection);

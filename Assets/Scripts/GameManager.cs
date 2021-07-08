@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioMixerSnapshot game, trailer;
     [SerializeField] AudioMixer mixer;
     [SerializeField] SettingsUI settings;
+    [SerializeField] HelpCanvas helpCanvas;
     [SerializeField] bool resetProgress, completeAllButOne;
 
     void Awake()
@@ -268,7 +269,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Application.Quit();
+            if (helpCanvas.isEnabled)
+                helpCanvas.Enable(false);
+            else Application.Quit();
         }
     }
 
