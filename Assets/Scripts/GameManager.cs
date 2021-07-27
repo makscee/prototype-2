@@ -265,6 +265,9 @@ public class GameManager : MonoBehaviour
         if (helpCanvas.isEnabled)
         {
             helpCanvas.Enable(false);
+        } else if (settings.gameObject.activeSelf)
+        {
+            settings.gameObject.SetActive(false);
         }
         else if (FieldMatrix.Active != null)
         {
