@@ -262,16 +262,18 @@ public class GameManager : MonoBehaviour
 
     public void Exit()
     {
-        if (FieldMatrix.Active != null)
+        if (helpCanvas.isEnabled)
+        {
+            helpCanvas.Enable(false);
+        }
+        else if (FieldMatrix.Active != null)
         {
             FieldMatrix.Active = null;
             SoundsPlayer.instance.PlayFieldClose();
         }
         else
         {
-            if (helpCanvas.isEnabled)
-                helpCanvas.Enable(false);
-            else Application.Quit();
+            Application.Quit();
         }
     }
 
