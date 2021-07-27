@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public static class Progress
 {
-    public const int Version = 2;
+    public const int Version = 3;
     static HashSet<string> _data;
     static bool _trackingPaused;
 
