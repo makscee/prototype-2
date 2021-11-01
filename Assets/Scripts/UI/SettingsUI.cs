@@ -9,16 +9,24 @@ public class SettingsUI : MonoBehaviour
 {
     [SerializeField] TMP_Dropdown resolutionDropdown;
     [SerializeField] GameObject fullscreenCheckmark;
+    [SerializeField] GameObject vibrationCheckmark;
+    [SerializeField] GameObject fpsCheckmark;
+    [SerializeField] GameObject fpsCanvas;
     [SerializeField] AudioMixer mixer;
     [SerializeField] SplitSlider master, music, sfx;
     Resolution[] _resolutions;
 
-    public const string MasterParam = "MasterVolume", MusicParam = "MusicVolume", SfxParam = "SFXVolume";
+    public const string
+        MasterParam = "MasterVolume",
+        MusicParam = "MusicVolume",
+        SfxParam = "SFXVolume",
+        VibrationParam = "Vibration",
+        FPSParam = "ShowFPS"
+        ;
 
     public void Init()
     {
         var currentResolutionIndex = 0;
-        // _resolutions = Screen.resolutions;
         _resolutions = Screen.resolutions.Select(resolution => new Resolution { width = resolution.width, height = resolution.height }).Distinct().ToArray();
 
         resolutionDropdown.ClearOptions();
@@ -58,6 +66,9 @@ public class SettingsUI : MonoBehaviour
         master.value = masterV;
         music.value = musicV;
         sfx.value = sfxV;
+
+        SetVibration(!PlayerPrefs.HasKey(VibrationParam) || PlayerPrefs.GetInt(VibrationParam) > 0);
+        SetFPS(!PlayerPrefs.HasKey(FPSParam) || PlayerPrefs.GetInt(FPSParam) > 0);
     }
 
     public void Mute()
@@ -71,6 +82,8 @@ public class SettingsUI : MonoBehaviour
         PlayerPrefs.SetFloat(MasterParam, master.value);
         PlayerPrefs.SetFloat(MusicParam, music.value);
         PlayerPrefs.SetFloat(SfxParam, sfx.value);
+        PlayerPrefs.SetInt(VibrationParam, Vibration.isEnabled ? 1 : 0);
+        PlayerPrefs.SetInt(FPSParam, fpsCanvas.activeSelf ? 1 : 0);
     }
 
     public void SetResolution(int resolutionIndex)
@@ -88,5 +101,27 @@ public class SettingsUI : MonoBehaviour
     public void NegateFullscreen()
     {
         SetFullscreen(!Screen.fullScreen);
+    }
+
+    public void SetVibration(bool value)
+    {
+        Vibration.isEnabled = value;
+        vibrationCheckmark.SetActive(value);
+    }
+
+    public void NegateVibration()
+    {
+        SetVibration(!Vibration.isEnabled);
+    }
+
+    public void SetFPS(bool value)
+    {
+        fpsCanvas.SetActive(value);
+        fpsCheckmark.SetActive(value);
+    }
+
+    public void NegateFPS()
+    {
+        SetFPS(!fpsCanvas.activeSelf);
     }
 }

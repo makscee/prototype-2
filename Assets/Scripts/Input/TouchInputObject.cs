@@ -5,7 +5,8 @@ using UnityEngine.EventSystems;
 public class TouchInputObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerClickHandler
 {
     Vector2 _startPos, _curPos, _prevPos;
-    bool _horizontalSwipe, _dragging;
+    bool _horizontalSwipe, _done, _dragging;
+    const float SquarePercent = 0.1f;
 
     public static void SetEnabled(bool value)
     {
@@ -29,21 +30,23 @@ public class TouchInputObject : MonoBehaviour, IDragHandler, IBeginDragHandler, 
         else delta.x = 0;
         _curPos += delta;
         
-        if (Mathf.Abs(_curPos.x - _startPos.x) > 0.1f)
+        if (!_done && Mathf.Abs(_curPos.x - _startPos.x) > SquarePercent)
         {
             if (_curPos.x > _startPos.x)
                 FieldMatrix.Active.MoveAttachedShape(true);
             else FieldMatrix.Active.MoveAttachedShape(false);
             Vibration.Vibrate(25);
             _startPos = _curPos;
+            _horizontalSwipe = true;
         }
-        if (Mathf.Abs(_curPos.y - _startPos.y) > 0.2f)
+        if (!_horizontalSwipe && !_done && Mathf.Abs(_curPos.y - _startPos.y) > SquarePercent * 2)
         {
             if (_curPos.y > _startPos.y)
                 FieldMatrix.Active.InsertShape();
             else FieldMatrix.Active.Undo();
             Vibration.Vibrate(100);
             _startPos = _curPos;
+            _done = true;
         }
 
         _prevPos = _curPos;
@@ -55,6 +58,8 @@ public class TouchInputObject : MonoBehaviour, IDragHandler, IBeginDragHandler, 
         _startPos = eventData.pressPosition / ScreenMaxSquare;
         _prevPos = eventData.pressPosition / ScreenMaxSquare;
         _curPos = eventData.position / ScreenMaxSquare;
+        _horizontalSwipe = false;
+        _done = false;
     }
 
     public void OnEndDrag(PointerEventData eventData)

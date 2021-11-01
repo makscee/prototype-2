@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+#if UNITY_ANDROID || UNITY_IPHONE
+        Application.targetFrameRate = 60;
+#endif
         if (!isTrailer)
             settings.Init();
         if (isTrailer)

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
+// [ExecuteInEditMode]
 public class PatternMaterialProvider : MonoBehaviour
 {
     public float balance = 0f, frequency = 0.1f, speed = 0.01f;
@@ -68,6 +68,6 @@ public class PatternMaterialProvider : MonoBehaviour
         Material.SetFloat(BalanceProperty, balance);
         Material.SetFloat(FrequencyProperty, frequency);
         Material.SetColor(TintProperty, tint);
-        Material.SetFloat(SpeedProperty, speed);
+        Material.SetFloat(SpeedProperty, Application.isPlaying ? speed : 0f);
     }
 }

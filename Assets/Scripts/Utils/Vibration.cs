@@ -13,9 +13,11 @@ public static class Vibration
     public static AndroidJavaObject currentActivity;
     public static AndroidJavaObject vibrator;
 #endif
+    public static bool isEnabled;
 
     public static void Vibrate()
     {
+        if (!isEnabled) return;
 #if UNITY_ANDROID || UNITY_IPHONE
         if (isAndroid())
             vibrator.Call("vibrate");
@@ -27,6 +29,7 @@ public static class Vibration
 
     public static void Vibrate(long milliseconds)
     {
+        if (!isEnabled) return;
 #if UNITY_ANDROID || UNITY_IPHONE
         if (isAndroid())
             vibrator.Call("vibrate", milliseconds);
@@ -37,6 +40,7 @@ public static class Vibration
 
     public static void Vibrate(long[] pattern, int repeat)
     {
+        if (!isEnabled) return;
 #if UNITY_ANDROID || UNITY_IPHONE
         if (isAndroid())
             vibrator.Call("vibrate", pattern, repeat);
