@@ -68,7 +68,7 @@ public class SettingsUI : MonoBehaviour
         sfx.value = sfxV;
 
         SetVibration(!PlayerPrefs.HasKey(VibrationParam) || PlayerPrefs.GetInt(VibrationParam) > 0);
-        SetFPS(!PlayerPrefs.HasKey(FPSParam) || PlayerPrefs.GetInt(FPSParam) > 0);
+        SetFPS(PlayerPrefs.HasKey(FPSParam) && PlayerPrefs.GetInt(FPSParam) > 0);
     }
 
     public void Mute()
