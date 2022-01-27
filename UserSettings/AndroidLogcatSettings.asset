@@ -1,5 +1,5 @@
 {
-    "m_SelectedDeviceId": "688f5566",
+    "m_SelectedDeviceId": "18291FDF6006MQ",
     "m_SelectedPackage": {
         "deviceId": "",
         "name": "",
@@ -12,12 +12,24 @@
             "deviceId": "688f5566",
             "name": "com.DefaultCompany.prototype2",
             "processId": 20920,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "688f5566",
             "name": "net.oneplus.launcher",
             "processId": 12118,
+            "exited": true
+        },
+        {
+            "deviceId": "688f5566",
+            "name": "net.oneplus.launcher",
+            "processId": 10653,
+            "exited": false
+        },
+        {
+            "deviceId": "688f5566",
+            "name": "com.android.vending",
+            "processId": 30929,
             "exited": false
         }
     ],
@@ -29,7 +41,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "",
@@ -45,7 +57,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "CRASH",

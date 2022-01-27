@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2203104090816468950, guid: 82f6b41127e030e439ac378c3468e2ed, type: 3}
       propertyPath: m_Name
-      value: ShapeCellParticles
+      value: ShapeCellParticles NoRot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82f6b41127e030e439ac378c3468e2ed, type: 3}
