@@ -62,6 +62,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
                 SoundsPlayer.instance.SetBgVolume(GlobalConfig.Instance.bgVolumeSelectScreen);
                 FieldPack.active.SetHoveredByUnlockIndex();
             }
+            else GameManager.instance.ResetInserts();
             TouchInputObject.SetEnabled(!isNull);
         }
     }
@@ -146,6 +147,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             _moveTracker.AddMove(move);
 
             var shape = shapesContainer.GetNext();
+            GameManager.instance.RegisterInsert();
             if (IsAllFilled())
             {
                 CompleteLevel();
@@ -205,6 +207,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
         var shape = _moveTracker.Undo();
         AttachShape(shape);
         SoundsPlayer.instance.PlayUndoSound();
+        GameManager.instance.RegisterUndo();
     }
 
     public void MoveAttachedShape(bool right)

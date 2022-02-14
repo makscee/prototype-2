@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioMixer mixer;
     [SerializeField] SettingsUI settings;
     [SerializeField] HelpCanvas helpCanvas;
+    public SwipeDownHint swipeDownHint;
     [SerializeField] bool resetProgress, completeAllButOne;
 
     void Awake()
@@ -146,13 +147,43 @@ public class GameManager : MonoBehaviour
     }
 
     public GameObject shapeCellsParticlesContainer;
+    static float? _sinceLastInsert;
+    static int _undos;
+    const float HintDelay = 10;
     void Update()
     {
+        if (_sinceLastInsert.HasValue)
+            _sinceLastInsert += Time.deltaTime;
+        if (_sinceLastInsert is > HintDelay && _undos < 3 && !swipeDownHint.IsPlaying && Field)
+        {
+            swipeDownHint.Play();
+        }
         Animator.Update();
 
         // var config = GlobalConfig.Instance;
         // config.thickness = config.thicknessBase + Mathf.Sin(Time.time * config.sinTimeScale) * config.sinScale;
         DebugInput();
+    }
+
+    public void RegisterUndo()
+    {
+        if (swipeDownHint.IsPlaying)
+            swipeDownHint.Stop();
+        _undos++;
+        _sinceLastInsert = 0;
+    }
+
+    public void RegisterInsert()
+    {
+        _sinceLastInsert = 0;
+        if (swipeDownHint.IsPlaying)
+            swipeDownHint.Stop();
+    }
+
+    public void ResetInserts()
+    {
+        _sinceLastInsert = null;
+        swipeDownHint.Stop();
     }
 
     static FieldMatrix Field => FieldMatrix.Active;
@@ -276,6 +307,8 @@ public class GameManager : MonoBehaviour
         {
             FieldMatrix.Active = null;
             SoundsPlayer.instance.PlayFieldClose();
+            swipeDownHint.Stop();
+            _sinceLastInsert = null;
         }
         else
         {
