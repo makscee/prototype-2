@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -150,6 +151,9 @@ public class GameManager : MonoBehaviour
     static float? _sinceLastInsert;
     static int _undos;
     const float HintDelay = 10;
+
+    public static bool flicker;
+    static float _t, _maxT;
     void Update()
     {
         if (_sinceLastInsert.HasValue)
@@ -160,6 +164,15 @@ public class GameManager : MonoBehaviour
         }
         Animator.Update();
 
+        _t += Time.deltaTime;
+        if (_t > _maxT)
+        {
+            flicker = !flicker;
+            _t = 0f;
+            const float from = 0.01f;
+            var to = flicker ? 3f : 0.04f;
+            _maxT = Random.Range(from, to);
+        }
         // var config = GlobalConfig.Instance;
         // config.thickness = config.thicknessBase + Mathf.Sin(Time.time * config.sinTimeScale) * config.sinScale;
         DebugInput();

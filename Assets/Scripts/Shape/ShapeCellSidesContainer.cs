@@ -7,6 +7,7 @@ public class ShapeCellSidesContainer : MonoBehaviour
 {
     [SerializeField] ShapeCellSide[] sides;
     [SerializeField] ShapeCellObject shapeCellObject;
+    [SerializeField] GameObject darkenSprite;
 
     float Thickness => _thicknessOverride == -1
         ? GlobalConfig.Instance.thicknessBase +
@@ -15,11 +16,20 @@ public class ShapeCellSidesContainer : MonoBehaviour
               : 0f)
         : _thicknessOverride;
     float _thicknessOverride = -1f;
+    bool _wrongSide;
 
     void Start()
     {
         RefreshSides();
         PostFxController.Instance.SubscribeToColors(RefreshColors);
+    }
+
+    void Update()
+    {
+        if (!_wrongSide) return;
+        if (GameManager.flicker)
+            ClearThicknessOverride();
+        else SetThicknessOverride(0f);
     }
 
     public bool[,] surroundingCells;
@@ -40,14 +50,22 @@ public class ShapeCellSidesContainer : MonoBehaviour
 
     public void SetThicknessOverride(float value)
     {
+        if (_thicknessOverride == value) return;
         _thicknessOverride = value;
         RefreshSides();
     }
 
     public void ClearThicknessOverride()
     {
+        if (_thicknessOverride == -1f) return;
         _thicknessOverride = -1f;
         RefreshSides();
+    }
+
+    public void SetWrongSide(bool value)
+    {
+        _wrongSide = value;
+        darkenSprite.SetActive(value);
     }
 
     void RefreshColors(IReadOnlyList<Color> colors)

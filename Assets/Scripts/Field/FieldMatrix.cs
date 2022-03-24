@@ -118,6 +118,7 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
 
     public void AttachShape(Shape shape)
     {
+        shape.SetWrongSide(false);
         shape.Field = this;
         shape.AttachToMatrix();
         attachedShape = shape;
@@ -170,6 +171,11 @@ public class FieldMatrix : MonoBehaviour, IPointerClickHandler
             attachedShape.shapeObject.UnableToInsertAnimation();
             SoundsPlayer.instance.PlayInsertWrong();
         }
+    }
+
+    public Shape GetFirstPlacedShape()
+    {
+        return _moveTracker.Moves == 0 ? null : _moveTracker.First.mover;
     }
 
     void CompleteLevel()

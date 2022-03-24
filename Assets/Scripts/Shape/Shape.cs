@@ -10,9 +10,9 @@ public class Shape
     
     public Vector2Int pos;
     public ShapeObject shapeObject;
-    public List<ShapeCell> cells = new List<ShapeCell>();
+    public List<ShapeCell> cells;
     public Vector2Int size;
-    public Vector2Int ShapeRotationSize => new Vector2Int(Width, Height);
+    public Vector2Int ShapeRotationSize => new(Width, Height);
 
     public int Width => Mathf.RoundToInt((UpDirection.Rotate90(true) * size).magnitude);
     public int Height => Mathf.RoundToInt((UpDirection * size).magnitude);
@@ -48,6 +48,14 @@ public class Shape
         foreach (var shapeCell in cells)
         {
             shapeCell.UpdateRotation();
+        }
+    }
+
+    public void SetWrongSide(bool value)
+    {
+        foreach (var cell in cells)
+        {
+            cell.shapeCellObject.sidesContainer.SetWrongSide(value);
         }
     }
 

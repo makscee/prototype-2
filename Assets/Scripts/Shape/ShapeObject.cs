@@ -59,6 +59,15 @@ public class ShapeObject : MonoBehaviour
                 field.ShapeSidesThickness = t;
             })
             .Type(InterpolationType.InvSquare);
+        var firstShape = field.GetFirstPlacedShape();
+        var isWrongSide = false;
+        if (firstShape != null)
+        {
+            var rotationDelta = firstShape.originalRotation - firstShape.Rotation;
+            isWrongSide = shape.originalRotation - shape.Rotation != rotationDelta;
+        }
+
+        shape.SetWrongSide(isWrongSide);
     }
     public Interpolator<Vector3> SetTargetScale(float scale)
     {
